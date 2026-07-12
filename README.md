@@ -55,4 +55,4 @@ Keep instructions concise and task-oriented. Use the exact labels displayed in t
 
 ---
 
-Copyright © Aificient.
+Copyright © Concord Software SLU.
