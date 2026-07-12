@@ -1,60 +1,58 @@
-# Aificient Studio — User Guide
+# Aificient Studio Documentation
 
-The open-source documentation for **[Aificient Studio](https://aificient.io/)**, the
-desktop app that turns a line of text into a finished, faceless AI video and posts it
-straight to TikTok, Reels & Shorts.
+Official user documentation for [Aificient Studio](https://aificient.io/), a desktop application for creating and publishing AI-generated videos.
 
-> 🌐 **Website:** <https://aificient.io/> · ⬇️ **Download the app:** <https://aificient.io/download> · 💬 **Support:** <https://aificient.io/contact>
+The documentation covers the complete workflow: developing a concept, generating scenes and media, managing local or rented GPU resources, reviewing the result, making targeted revisions, and publishing the finished video.
 
-This repo holds the canonical user guide
-([`AIFICIENT_STUDIO_USER_GUIDE.md`](./AIFICIENT_STUDIO_USER_GUIDE.md)) that grounds
-the in-app support assistant. It is open source so the documentation is public and
-always up to date — the Aificient backend reads this file on every start and commits
-reviewed improvements back here automatically.
+## User guide
 
-## What is Aificient Studio?
+**[Read the Aificient Studio User Guide](./AIFICIENT_STUDIO_USER_GUIDE.md)**
 
-[Aificient Studio](https://aificient.io/) is a [faceless video generator](https://aificient.io/faceless-video-generator):
-you write the idea, and it produces a finished scene — script, visuals, voice, and
-sound effects — ready to publish. It runs as an [AI TikTok video generator](https://aificient.io/ai-tiktok-video-generator)
-and works either on [your own GPU or a rented one](https://aificient.io/local-ai-video-generator),
-so you can render a wall of posts for cents.
+The guide includes:
 
-- 🎬 [Faceless video generator](https://aificient.io/faceless-video-generator) — text in, finished scene out
-- 📲 [AI TikTok video generator](https://aificient.io/ai-tiktok-video-generator) — built for TikTok, Reels & Shorts
-- 🖥️ [Local AI video generator](https://aificient.io/local-ai-video-generator) — render on your GPU or a rented one
-- 🗓️ [TikTok scheduler](https://aificient.io/tiktok-scheduler) — publish on a schedule
-- 🆚 Compare: [AutoShorts alternative](https://aificient.io/autoshorts-alternative) · [SendShort alternative](https://aificient.io/sendshort-alternative)
+- Sign-in, account access, and workspace navigation
+- Project creation and concept development
+- Character, voice, visual style, and render controls
+- Local runtime setup and rented GPU management
+- Scene generation, review, editing, and regeneration
+- Video assembly, downloads, and social publishing
+- Application settings and troubleshooting
 
-## Get started
+## Typical workflow
 
-1. **[Download Aificient Studio](https://aificient.io/download)** for macOS or Windows.
-2. Sign in and write your first idea — your first post is one line away.
-3. Need help? Read the [user guide](./AIFICIENT_STUDIO_USER_GUIDE.md) or
-   [contact the team](https://aificient.io/contact).
+1. Create a project from an idea or brainstorming session.
+2. Review the generated concept, scenes, and characters.
+3. Configure the visual style, voice, format, and render quality.
+4. Generate the project using a local or rented GPU runtime.
+5. Review individual assets and the assembled video.
+6. Edit or regenerate only the parts that need revision.
+7. Download or publish the final result.
 
-## Links
+## About this repository
 
-- Home: <https://aificient.io/>
-- Download: <https://aificient.io/download>
-- About: <https://aificient.io/about>
-- Contact / Support: <https://aificient.io/contact>
-- Faceless video generator: <https://aificient.io/faceless-video-generator>
-- AI TikTok video generator: <https://aificient.io/ai-tiktok-video-generator>
-- Local AI video generator: <https://aificient.io/local-ai-video-generator>
-- TikTok scheduler: <https://aificient.io/tiktok-scheduler>
-- AutoShorts alternative: <https://aificient.io/autoshorts-alternative>
-- SendShort alternative: <https://aificient.io/sendshort-alternative>
-- Español: <https://aificient.io/es>
-- Privacy: <https://aificient.io/privacy> · Terms: <https://aificient.io/terms>
+This repository contains the maintained reference documentation for the Aificient Studio interface. The guide follows the terminology used in the application and is organized around visible screens, controls, and common tasks.
+
+If the interface differs from the documentation, check the guide's **Last reviewed** date. Product changes may appear before the corresponding documentation update.
 
 ## Contributing
 
-Spotted something wrong or missing? Open an issue or a pull request. Reviewed updates
-made through the in-app support tooling are committed here automatically, so this file
-stays the single source of truth for both the app and the website at
-[aificient.io](https://aificient.io/).
+Corrections and documentation improvements are welcome. Please open an issue or submit a pull request with:
+
+- The section affected
+- The behavior currently shown in the application
+- The proposed correction
+- A screenshot, when it helps clarify an interface change
+
+Keep instructions concise and task-oriented. Use the exact labels displayed in the application for buttons, menus, settings, and status messages.
+
+## Links
+
+- [Aificient Studio website](https://aificient.io/)
+- [Download Aificient Studio](https://aificient.io/download)
+- [Support](https://aificient.io/contact)
+- [Privacy policy](https://aificient.io/privacy)
+- [Terms of service](https://aificient.io/terms)
 
 ---
 
-© Aificient · [aificient.io](https://aificient.io/)
+Copyright © Aificient.
