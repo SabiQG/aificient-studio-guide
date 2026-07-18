@@ -1,6 +1,6 @@
 # Aificient Studio User Guide
 
-Last reviewed: June 20, 2026.
+Last reviewed: July 18, 2026.
 
 This guide explains how to use Aificient Studio from the application interface. It focuses on visible screens, menus, controls, generation workflows, editing tools, GPU management, settings, and common troubleshooting.
 
@@ -14,7 +14,7 @@ Aificient Studio helps you create AI-generated videos from a written idea. You c
 - Generate scene images, narration, sound effects, video clips, and a final stitched video.
 - Review and edit individual scenes.
 - Regenerate only the parts that need changes.
-- Use a local GPU runtime or rented GPU instances for video rendering.
+- Render scene videos with a local GPU runtime, rented GPU instances, or Aificient Cloud when that option is available.
 
 Most projects follow this path:
 
@@ -50,16 +50,6 @@ The code screen also lets you:
 - Resend the code after the cooldown.
 - Use a different email.
 - See when the code expires.
-
-### Access Pending
-
-If your account is not approved yet, the app shows an `Access pending` screen.
-
-Actions shown there:
-
-- `Request access`: currently visible but not connected to a submission flow.
-- `Check access`: refreshes your account status.
-- `Sign out`: signs out of the current account.
 
 ## 3. Main Workspace
 
@@ -105,10 +95,12 @@ Deleting a project is permanent from the app's point of view, so use it carefull
 
 The lower part of the left sidebar manages generation resources.
 
-Video rendering needs a ready runtime. A runtime can be:
+Initial video rendering with a GPU you manage needs a ready runtime. A runtime can be:
 
 - Local: uses your machine's GPU.
 - Rented: uses a remote GPU instance.
+
+For an existing project whose images and audio are ready, `Resume Generation` can also offer subscription-backed Aificient Cloud rendering without requiring your own ready runtime (see below).
 
 The manager groups resources by status:
 
@@ -155,14 +147,15 @@ When an instance is running, its detail view also shows a **render queue** for t
 
 ### Render Queue
 
-GPUs are no longer locked to a single project. Each GPU has its own render queue, and every scene video (plus the final stitch) becomes a job that waits its turn on the GPU you chose for it. This means several projects can line up on the same GPU at once, and a busy GPU is still a valid choice — your videos simply render after the ones already ahead of them.
+GPUs are no longer locked to a single project. Each GPU has its own render queue, and every scene video becomes a job that waits its turn on the GPU you chose for it. This means several projects can line up on the same GPU at once, and a busy GPU is still a valid choice — your videos simply render after the ones already ahead of them.
+
+The final stitch does not use a GPU: it runs locally in the app once all of a project's scene clips are ready. Local stitches have their own one-at-a-time queue — if several projects finish rendering around the same time, their stitches run one after another (see the Stitch Node section).
 
 The render queue appears in the local runtime and rented instance detail views while the GPU is ready/running. For each GPU it shows:
 
 - Jobs grouped by project, in the order they will run.
 - The job currently rendering, with a live progress bar and percentage.
 - Queued jobs marked as waiting, with their position in line.
-- Whether each job is a scene video or the final stitch.
 
 From the render queue you can:
 
@@ -170,6 +163,18 @@ From the render queue you can:
 - Cancel all of a project's videos across every GPU at once with `Cancel all` next to the project name.
 
 The lower sidebar also shows a small `N queued` count next to each local or rented GPU so you can see at a glance how loaded it is without opening the detail view.
+
+### Aificient Cloud Rendering
+
+In addition to GPUs you manage yourself, eligible projects can use `Aificient Cloud` to render missing scene videos. This option appears in the selected project's `Resume Generation` menu after its source images and audio are ready. It is not part of the initial render-settings GPU list.
+
+The Aificient Cloud option shows the project's `Lite` or `Pro` tier, resolution, and estimated credit cost before submission. It requires an active subscription, enough credits, and valid image/audio inputs. A submission can contain up to 32 missing scenes, and each scene's audio plus configured voice delays must fit within the 13-second cloud-render limit.
+
+Aificient Cloud is selected by itself; it cannot be combined with local or rented GPUs in the same submission. Once submitted, each scene appears as a separate cloud job. The app refreshes completed clips into the project automatically.
+
+When cloud jobs exist, open `Aificient Cloud` in the lower sidebar to view the current session's queue and history. The window shows queued, running, completed, failed, and cancelled jobs with progress and status messages. You can remove an individual queued job or use `Cancel queued` for all queued jobs in a project. Reserved credits are refunded when a cloud job fails or is cancelled.
+
+For account-wide cloud render history, including settled prices, use `Settings > Usage > Load latest generation jobs`.
 
 ## 6. Renting a GPU
 
@@ -331,8 +336,6 @@ Available durations include:
 - 60 seconds.
 - 120 seconds.
 - 180 seconds.
-- 240 seconds.
-- 300 seconds.
 
 Longer videos usually mean more scenes, more assets, and more render time.
 
@@ -401,7 +404,7 @@ Use `9:16` for vertical/social video. Use `16:9` for widescreen video.
 
 ### GPU
 
-Choose one or more ready GPUs if you want to render video. Each ready runtime (local and rented) is listed with a checkbox; tick every GPU you want this project to use.
+For the first generation, choose one or more ready GPUs if you want to render video. Each ready runtime (local and rented) is listed with a checkbox; tick every GPU you want this project to use. Aificient Cloud becomes available later from `Resume Generation` when the project's non-video inputs are ready.
 
 - **One GPU selected:** all scene videos render on that GPU, in queue order.
 - **Several GPUs selected:** the scene videos are split across the chosen GPUs so the project finishes faster. Each option also shows how many jobs are already `in queue` on it.
@@ -417,31 +420,18 @@ What you can do depends on GPU availability:
 - Rented GPU ready: render video on any selected rented instance.
 - Busy GPU: no need to wait — selecting it queues your videos behind the current job. Select additional GPUs to spread the work and finish sooner.
 
-### Quality Mode
+### Quality
 
-The three modes are shown as labelled buttons, each with an icon and a short blurb:
+Two tiers are shown as labelled buttons, each with an icon and a short blurb:
 
-- `Fast`: "Quickest profile" — lowest quality, useful for tests.
-- `Pro`: "Best motion quality" — balanced quality and speed, recommended default.
-- `Max`: "Highest quality" — highest quality target, slower and more demanding.
-
-Suggested use:
-
-- Use `Fast` for short previews or when you want quick feedback.
-- Use `Pro` for most finished videos.
-- Use `Max` only when you have a strong GPU available and are comfortable with longer render times.
-
-### Model Precision
-
-Available precision options:
-
-- `FP8`: lower memory use, recommended for many GPUs.
-- `BF16`: higher memory use, better for larger GPUs.
+- `Lite`: "Faster, lower VRAM" — renders faster and runs on smaller GPUs.
+- `Pro`: "Best quality" — takes longer but gives the best quality.
 
 Suggested use:
 
-- Use `FP8` when you are unsure, when VRAM is limited, or when using consumer GPUs.
-- Use `BF16` when the selected GPU has enough memory and you want the higher-memory render path.
+- Use `Lite` for previews, quick feedback, or when your GPU has less than 31 GB of VRAM (the app shows a `Recommended` badge on `Lite` in that case).
+- Use `Pro` for finished videos when the selected GPU has enough memory.
+- A100 runtimes require `Pro`; the app blocks the `Lite`/FP8 path on an A100 and asks you to switch.
 
 ### Images and Audio Only
 
@@ -549,7 +539,7 @@ Regenerating audio can affect later video stages because video timing depends on
 
 Shows a generated scene video clip.
 
-While a clip is waiting in a GPU's render queue (selected for rendering but not started yet), the node is outlined and shows a blue `Queued` badge — a small stacked-layers icon next to the word `Queued` — instead of its status icon. Once the GPU picks it up, it switches to the normal rendering/progress state.
+While a clip is waiting in a local, rented, or Aificient Cloud render queue, the node shows a colored `Queued` badge with a small queue icon instead of its normal status icon. Once rendering starts, it switches to the normal active/progress state.
 
 Actions can include:
 
@@ -557,21 +547,34 @@ Actions can include:
 - Seek.
 - Fullscreen preview.
 - Delete video.
+- Rate the clip with thumbs up or thumbs down. A dislike can include an optional preset reason or custom comment; select the active rating again to clear it.
 
 Deleting a scene video means the final video must be regenerated.
 
 ### Stitch Node
 
-Shows final video stitching status. The stitch also runs as a job on the GPU render queue, so it may show as `Queued` until its turn comes.
+Shows final video stitching status. The stitch runs locally in the desktop app (no GPU needed) as soon as every scene clip is ready: the app downloads the clips, combines them with the configured transition, writes the provenance watermark, and uploads the final video to your project.
+
+Only one stitch runs at a time. If several projects finish rendering around the same time, their stitches queue up and run one after another — a waiting stitch shows `Queued` with a `Waiting for another stitch to finish` message until it is its turn. Cancelling a generation also removes its stitch from this queue.
+
+While a stitch is running, the node can report these steps:
+
+- Downloading scene videos.
+- Analyzing scene videos.
+- Stitching scene videos (with live progress).
+- Writing the provenance watermark.
+- Uploading the final video.
 
 Possible states:
 
-- Queued (waiting in the GPU render queue).
+- Queued (waiting for another local stitch to finish, or preparing to start).
 - Waiting.
 - Running.
 - Completed.
 - Error.
 - Skipped.
+
+Local stitching needs a working internet connection to download the clips and upload the result, plus temporary free disk space. Temporary files are cleaned up after the stitch finishes.
 
 ### Output Node
 
@@ -583,6 +586,7 @@ Actions can include:
 - Seek.
 - Fullscreen.
 - Download.
+- Rate the final video with thumbs up or thumbs down, optionally adding a reason when you dislike it.
 
 ## 13. Fullscreen Media Viewer
 
@@ -660,8 +664,7 @@ You can change:
 
 - Aspect ratio.
 - Resolution.
-- Quality mode.
-- Precision.
+- Quality (Lite or Pro).
 - Guidance values (Video/Audio CFG).
 - Speech pace.
 - Voice timing.
@@ -686,6 +689,7 @@ Use it after:
 The resume menu lets you:
 
 - Choose one or more ready GPUs for video (selecting several splits the render across them).
+- Choose `Aificient Cloud` by itself to render eligible missing scene videos for the displayed credit estimate.
 - Generate images and audio only.
 
 The app reuses existing completed assets where possible and only regenerates missing or affected parts.
@@ -696,10 +700,11 @@ Depending on project state and available GPU resources, Resume can be used for:
 
 - Images and audio only: does not require a ready video GPU.
 - Scene video rendering: requires at least one ready local or rented runtime. You can select several GPUs to split the remaining scene videos across them.
-- Final stitching: requires the scene videos to be ready.
+- Aificient Cloud scene rendering: requires eligible source assets, a subscription, enough credits, no more than 32 missing scenes, and supported scene lengths. It does not require your own ready GPU.
+- Final stitching: requires the scene videos to be ready; it then runs locally in the desktop app without using a GPU.
 - Recovery after failure: reruns only the missing or failed stages where possible.
 
-If the project already has images and audio, Resume can move directly toward video rendering once you pick one or more GPUs. The work is added to those GPUs' render queues, so it starts even if a GPU is currently busy. If only video is missing, it does not need to recreate the whole concept.
+If the project already has images and audio, Resume can move directly toward video rendering once you pick Aificient Cloud or one or more of your own GPUs. Work sent to your GPUs is added to their render queues, so it starts even if a GPU is currently busy. If only video is missing, the app does not need to recreate the whole concept.
 
 ## 16. Stop Generation
 
@@ -727,7 +732,7 @@ To clear the box, click the trash/`Clear` button next to the header. This dismis
 
 When expanded, the box lists every failure from the most recent finished generation, grouped into two categories:
 
-- `Runtime tasks`: work that runs on the GPU runtime, such as video generation, audio alignment, and final stitching.
+- `Runtime tasks`: work that runs on the GPU runtime (video generation and audio alignment) plus the final stitch, which runs locally in the app.
 - `API tasks`: work that runs on the cloud service, such as character images, scene images, narration, and sound effects.
 
 Each entry shows:
@@ -745,7 +750,7 @@ Cancelled steps are not listed as errors. If you stop a generation, the box stil
 Use the summary to decide what to fix or rerun:
 
 - For `API task` failures (images, audio, SFX, characters), review or rewrite the affected scene or character, then use `Resume Generation`.
-- For `Runtime task` failures (video, alignment, stitch), check that a GPU runtime is ready and review its logs, then use `Resume Generation`.
+- For `Runtime task` failures (video, alignment), check that a GPU runtime is ready and review its logs, then use `Resume Generation`. Stitch failures happen locally — check your internet connection and disk space, then use `Resume Generation` to retry the stitch.
 
 If you encounter a **409 error**, this indicates the runtime is busy with a task, possibly due to a state mismatch between the runtime and the UI. Wait a few minutes and try again; if the issue persists, restart the runtime.
 
@@ -859,8 +864,7 @@ Common settings:
 
 - Aspect ratio.
 - Resolution.
-- Quality mode.
-- Precision.
+- Quality (Lite or Pro).
 - Video guidance (Video CFG).
 - Audio guidance (Audio CFG).
 - Speech pace.
@@ -879,6 +883,9 @@ Open Settings from the user/profile area in the left sidebar.
 Sections:
 
 - General.
+- Usage.
+- Storage.
+- Notifications.
 - Social Accounts.
 - API Keys.
 - GPU Config.
@@ -892,8 +899,43 @@ Shows:
 
 - App version.
 - User account information.
+- Current subscription and an upgrade action.
 - Update check.
 - Help/contact link.
+
+### Usage
+
+This section shows the credits included with your plan, credits used and remaining, renewal or cancellation information, and usage over time. Depending on the subscription source, it can also provide plan-management, upgrade, or pending-change actions.
+
+At the bottom, click **Load latest generation jobs** to open your account-wide Aificient Cloud video render history. This history includes jobs from all projects and lists the newest jobs first.
+
+Each job can show:
+
+- Content and scene name.
+- Status: `Queued`, `Running`, `Completed`, `Failed`, `Cancelled`, or `Unknown`.
+- Quality tier and resolution.
+- Requested and finished times.
+- Progress percentage plus the current stage or message while the job is queued or running.
+- The settled credit price for a completed job, shown with the credit icon (for example, `1.2 credits`).
+
+A price appears only when a completed render has been successfully settled by billing. Queued, running, failed, cancelled, and unknown jobs do not show a price. A completed job may also omit the price while billing is not settled.
+
+Use **Previous** and **Next** to move through longer histories. The app refreshes the current page automatically while it contains queued or running jobs, and stops refreshing when no active jobs remain. Use the refresh control to check manually, or **Hide** to collapse the history.
+
+### Storage
+
+This section shows how much cloud storage your projects and assets use, your plan limit, the percentage consumed, and the remaining space. Warning and critical states explain when storage is close to or over the allowance.
+
+If you need more room, remove unneeded project data or use **Upgrade your plan**. Storage-limit errors also appear in a banner at the top of the app with shortcuts to manage storage or view plans.
+
+### Notifications
+
+This section controls desktop alerts independently for:
+
+- A scene video finishing.
+- A final stitched project becoming ready.
+- A GPU render queue becoming empty.
+- A local or Vast.ai GPU finishing setup and becoming ready.
 
 ### Social Accounts
 
@@ -928,25 +970,28 @@ Common options:
 - Disk space.
 - Max price.
 - Minimum reliability.
-- GPU family.
+
+Choose the GPU family in the `Create Instance` modal. `GPU Config` shows the selectable families and controls the shared Vast.ai search limits.
 
 If offers are too expensive or no offers appear, adjust these settings.
 
 ### Model Config
 
-Controls default generation quality settings.
+Controls the default video-model settings used by new projects.
 
 Common options:
 
-- Quality mode.
-- Precision.
+- Quality (Lite or Pro).
 - Negative prompt.
 - Caption instructions.
+- Local runtime download folder.
 - Video guidance (Video CFG).
 - Audio guidance (Audio CFG).
 - Prefetch count.
 
 **Caption Instructions** is optional free-form guidance the AI follows when it drafts a publish caption (with the **Generate** button in the Publish dialog). Use it to set a tone, style, call-to-action, emoji use, or other constraints — for example, "casual and punchy, end with a question, no more than two emojis." It applies to every project, and you can leave it blank.
+
+The runtime download folder can only be changed while the local runtime is stopped and is not downloading, setting up, or booting. Use `Default` to return to the app's standard data folder.
 
 ### Audio Config
 
@@ -1123,9 +1168,10 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Aspect ratio | Render settings in the `New` modal, or selected project > right sidebar > `Settings` tab. |
 | Resolution | Render settings in the `New` modal, or selected project > right sidebar > `Settings` tab. |
 | GPU choice for rendering | Render settings in the `New` modal, or `Resume Generation` menu on the right sidebar. |
+| Aificient Cloud rendering | Select a project with ready images/audio and missing scene videos, then open the right sidebar > `Resume Generation` and choose `Aificient Cloud`. |
+| Aificient Cloud queue and current-session history | Lower left GPU/runtime manager > `Aificient Cloud`; the row appears after cloud jobs have been submitted. |
 | Generate images and audio only | Render settings in the `New` modal, or `Resume Generation` menu when available. |
-| Quality mode | Render settings in the `New` modal, selected project > right sidebar > `Settings`, or global `Settings > Model Config`. |
-| Precision, FP8, or BF16 | Render settings in the `New` modal, selected project > right sidebar > `Settings`, or global `Settings > Model Config`. |
+| Quality (Lite or Pro) | Render settings in the `New` modal, selected project > right sidebar > `Settings`, or global `Settings > Model Config`. |
 | Negative prompt | Global `Settings > Model Config`. |
 | Video guidance (Video CFG) | Selected project > right sidebar > `Settings`, or global `Settings > Model Config`. |
 | Audio guidance (Audio CFG) | Selected project > right sidebar > `Settings`, or global `Settings > Model Config`. |
@@ -1166,6 +1212,7 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Delete scene image | Scene image node on the center canvas. |
 | Regenerate audio | Audio node on the center canvas. |
 | Delete scene video | Video node on the center canvas. |
+| Like, dislike, or clear feedback on a video | Scene Video node or final Output node on the center canvas; use the thumbs controls on the video. |
 | Regenerate character visuals | Character node on the center canvas. |
 | Fullscreen media viewer | Click an image or video preview in the canvas or asset views. |
 | Download an asset | Right scene sidebar > `Assets`, a canvas media node, the Output node, or the fullscreen media viewer. |
@@ -1180,13 +1227,20 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Account information | `Settings > General`, or the user/profile area in the left sidebar. |
 | Check for updates | `Settings > General`. |
 | Help/contact link | `Settings > General`. |
+| Credit usage and usage timeline | `Settings > Usage`. |
+| Cloud video generation history across all projects | `Settings > Usage`, then `Load latest generation jobs`. |
+| Settled price for a completed cloud render | `Settings > Usage`, then `Load latest generation jobs`; the price appears on the completed job when billing has settled. |
+| Storage used, limit, or available space | `Settings > Storage`. |
+| Desktop notification preferences | `Settings > Notifications`. |
 | Connect or remove a social account (TikTok, etc.) | `Settings > Social Accounts`. |
 | Refresh account name, avatar, or follower count | `Settings > Social Accounts`, `Refresh metadata`. |
 | Caption instructions / guidance for AI captions | `Settings > Model Config`. |
 | Vast.ai key or API key | `Settings > API Keys`. |
 | Vast.ai balance | `Settings > API Keys`. |
-| GPU rental disk space, max price, reliability, or GPU family filters | `Settings > GPU Config`; GPU family can also be chosen in the GPU rental modal. |
-| Default model quality, precision, negative prompt, guidance, or prefetch | `Settings > Model Config`. |
+| GPU rental disk space, max price, or reliability filters | `Settings > GPU Config`. |
+| GPU family for a rental | Lower left GPU/runtime manager > `Create Instance`, then choose a GPU profile. |
+| Default model quality, negative prompt, guidance, or prefetch | `Settings > Model Config`. |
+| Local runtime download folder | `Settings > Model Config`; stop the local runtime before changing it. |
 | Default speech pace, SFX volume, SFX cues, or default narrator voices | `Settings > Audio Config`. |
 | Default voice timing, transition duration, or captions | `Settings > Video Config`. |
 
@@ -1240,15 +1294,6 @@ Try:
 - If using email, request a new code.
 - If the app says your version cannot sign in, update or reinstall the app.
 
-### My account says Access Pending
-
-Your account is not approved yet.
-
-Try:
-
-- Click `Check access` after your account has been approved.
-- Sign out and sign in again if needed.
-
 ### No GPU is available
 
 Check:
@@ -1258,6 +1303,24 @@ Check:
 - Vast.ai key is configured if using rented GPUs.
 - A rented instance is running and ready.
 - GPU search filters are not too strict.
+
+If your project's images and audio are already ready, you may also be able to use `Aificient Cloud` from `Resume Generation`. This requires an active plan, enough credits, and eligible scene inputs.
+
+### Aificient Cloud is unavailable
+
+Check:
+
+- The project has missing scene videos and its scene images and audio are ready.
+- Your subscription is active and has enough credits for the displayed estimate.
+- The submission has no more than 32 missing scenes.
+- Each scene's audio plus voice delays is no longer than 13 seconds.
+- `Settings > Storage` is not over its allowance.
+
+If a queued or running cloud render fails, open the lower-sidebar `Aificient Cloud` window for its status. Failed and cancelled cloud jobs refund their reserved credits.
+
+### Storage limit reached
+
+Open `Settings > Storage` to see usage, the plan limit, and available space. Remove unneeded project data or view the available plans for more storage. Generation actions that would add assets can remain blocked until the account is under its allowance or the plan is upgraded.
 
 ### Local runtime will not install
 
@@ -1330,7 +1393,7 @@ Use this when you want a final video immediately.
 1. Create or select a concept.
 2. Choose aspect ratio and resolution.
 3. Select one or more ready GPUs (pick several to split the render and finish faster).
-4. Use `Pro` for balanced quality.
+4. Choose `Lite` for speed/lower VRAM or `Pro` for best quality.
 5. Start generation.
 6. Monitor the canvas.
 7. Download the final video from Output.
@@ -1367,7 +1430,11 @@ A local or rented GPU environment used for video rendering.
 
 ### Render Queue
 
-The per-GPU line of pending work. Each scene video and the final stitch is a job that waits its turn on the GPU it was assigned to, so multiple projects can share a GPU and a single project's videos can be split across several GPUs.
+The per-GPU line of pending work. Each scene video is a job that waits its turn on the GPU it was assigned to, so multiple projects can share a GPU and a single project's videos can be split across several GPUs. The final stitch is not a GPU job — it runs locally in the app.
+
+### Aificient Cloud
+
+The subscription-backed render service available from `Resume Generation` for eligible missing scene videos. It uses credits and has its own queue, separate from local and rented GPU queues.
 
 ### Scene Image
 
@@ -1387,7 +1454,7 @@ A generated scene video before final stitching.
 
 ### Stitch
 
-The process of combining scene clips into the final video.
+The process of combining scene clips into the final video. It runs locally in the desktop app once every scene clip is ready. Only one stitch runs at a time; additional stitches wait in a local queue.
 
 ### Final Output
 
