@@ -1,6 +1,6 @@
 # Aificient Studio User Guide
 
-Last reviewed: July 18, 2026.
+Last reviewed: July 20, 2026.
 
 This guide explains how to use Aificient Studio from the application interface. It focuses on visible screens, menus, controls, generation workflows, editing tools, GPU management, settings, and common troubleshooting.
 
@@ -79,6 +79,8 @@ A project row can show:
 - Running/generation indicator.
 - Final video completed indicator.
 - Scene count.
+
+When you open a project, a progress overlay can move through `Loading project`, `Checking for active renders`, `Building canvas`, and `Preparing scenes` before the canvas becomes ready. Media previews are loaded in a controlled queue during this process so large projects do not try to decode every image and video at once.
 
 ### Project Menu
 
@@ -576,6 +578,8 @@ Possible states:
 
 Local stitching needs a working internet connection to download the clips and upload the result, plus temporary free disk space. Temporary files are cleaned up after the stitch finishes.
 
+If every required scene clip is ready but the final video is missing, the action at the bottom of the right sidebar is labelled `Stitch Final Video`. Select it to start the local stitch without choosing a GPU.
+
 ### Output Node
 
 Shows the final video when available.
@@ -659,6 +663,7 @@ Sections:
 - Format.
 - Model.
 - Audio.
+- Captions.
 
 You can change:
 
@@ -670,6 +675,8 @@ You can change:
 - Voice timing.
 - Sound effect volume.
 - Transition duration.
+- Whether captions are burned into this project's videos.
+- Caption position, font, size, and colors.
 
 If settings are changed, apply them before rendering video. The app may block video generation while project settings have unsaved changes.
 
@@ -694,6 +701,8 @@ The resume menu lets you:
 
 The app reuses existing completed assets where possible and only regenerates missing or affected parts.
 
+When all raw scene clips are already ready, no GPU choice is needed. The same sidebar action runs the remaining caption burns and final stitch locally. If only the final stitch remains, its label changes to `Stitch Final Video`.
+
 ### What Resume Can Run
 
 Depending on project state and available GPU resources, Resume can be used for:
@@ -701,6 +710,7 @@ Depending on project state and available GPU resources, Resume can be used for:
 - Images and audio only: does not require a ready video GPU.
 - Scene video rendering: requires at least one ready local or rented runtime. You can select several GPUs to split the remaining scene videos across them.
 - Aificient Cloud scene rendering: requires eligible source assets, a subscription, enough credits, no more than 32 missing scenes, and supported scene lengths. It does not require your own ready GPU.
+- Missing captioned clips: uses saved word timings when available, burns captions locally, and does not require a GPU.
 - Final stitching: requires the scene videos to be ready; it then runs locally in the desktop app without using a GPU.
 - Recovery after failure: reruns only the missing or failed stages where possible.
 
@@ -871,6 +881,8 @@ Common settings:
 - Voice delays.
 - SFX volume.
 - Transition duration.
+- Burn-in captions on or off.
+- Caption position, font, size, and colors.
 
 **Guidance (CFG)** controls how strictly the AI follows your prompts. **Video guidance (Video CFG)** determines how closely the video matches the scene description. **Audio guidance (Audio CFG)** determines how closely the generated audio matches the sound description. Higher values force stricter adherence to the prompt, while lower values allow more creative freedom.
 
@@ -946,7 +958,8 @@ Key points:
 - Everything is **local to this computer**. Connecting an account opens a secure sign-in window, and your session stays on this device — nothing about your accounts is sent to a server.
 - Each platform (TikTok, Instagram, YouTube) has its own row. **TikTok is supported today**; Instagram and YouTube show a `Coming soon` tag.
 - Click `Connect` (or `Add` if you already have one) to sign in. You can connect **multiple TikTok accounts**.
-- Each connected account shows its avatar, display name, and a status dot — green for `Connected`, amber for `Reconnect needed` when its session has expired.
+- Each connected account shows its avatar, display name, and a status dot — green for `Connected`, amber for `Session expired` when its login needs to be refreshed.
+- For an account marked `Session expired`, select its amber refresh/reconnect icon and sign in again. `Refresh metadata` checks account details and session state, but it does not replace an expired login.
 - Hover an account and click the trash icon to remove it. Removing an account also forgets its local login.
 - **Refresh metadata** (bottom-right of the panel) re-fetches the name, avatar, and follower count for your connected accounts without reconnecting them.
 
@@ -1008,14 +1021,18 @@ This section sets a fallback `Male` and `Female` voice, each chosen with the voi
 
 ### Video Config
 
-Controls:
+Controls the defaults used when creating new projects:
 
 - Start voice delay.
 - End voice delay.
 - Transition duration.
 - Captions.
 
+Changing these global defaults does not alter an existing project. To change captions, timing, or other video settings for the selected project, use the right scene sidebar's `Settings` tab and apply the changes there.
+
 ### Captions
+
+For an existing project, open the right scene sidebar's `Settings` tab, find `Captions`, and set `Burn-in captions` to `On` or `Off`. Apply the changes before continuing generation. Global `Settings > Video Config` supplies the caption defaults for newly created projects only.
 
 When captions are enabled, you can adjust:
 
@@ -1026,6 +1043,54 @@ When captions are enabled, you can adjust:
 - Highlight color.
 - Outline color.
 - Optional background color.
+
+**How captions are made.** Captions are added *after* a scene's video is
+rendered, not during it. Each scene gets a second box on the board — **raw clip
+→ captioned clip** — and the captioned one is produced in two steps: Aificient
+transcribes the finished clip to get word-by-word timings (a small paid step,
+billed like other generations), then your own machine burns those captions into
+a copy of the clip. That local render shares the same queue as the final
+stitch, so it never competes with video generation on the GPU.
+
+After caption generation, both versions of each scene are saved to your
+project: the plain clip and the captioned one. You can therefore open the
+project on another computer and still see and use the generated captioned cuts.
+
+When captions are on, the final video is stitched from the captioned clips, so
+the captions are baked into the video you publish.
+
+Because the word timings are saved too, re-burning a scene's captions later —
+to try a different font or color, say — is **free**. You are only charged again
+if something changes the narration itself (a new script, new audio, or a
+different voice), because that makes the old timings wrong.
+
+### Turning Captions On or Off Later
+
+Captions can be switched at any time from the selected project's right-sidebar
+`Settings` tab. The raw scene videos do not have to be regenerated.
+
+- **Turning captions on** adds the captioned-clip column to the board. Applying
+  the change removes the old final video because it no longer matches the
+  project's caption setting. Select `Resume Generation` to create all missing
+  captioned clips locally and stitch a new captioned final video.
+- **Changing caption style while captions remain on** removes the old
+  captioned clips because their burned style is stale. The saved word timings
+  are retained, so select `Resume Generation` to re-burn the clips locally at
+  no additional transcription charge and rebuild the final video. Until that
+  finishes, an older final video may still be available.
+- **Turning captions off** hides the captioned-clip column and removes the old
+  captioned cuts and final video. The plain clips are kept. Select
+  `Stitch Final Video` to rebuild the final video from those plain clips.
+
+In some restored or older projects, the Stitch node can instead show a
+`Re-stitch with captions` or `Re-stitch without captions` shortcut when the
+existing final video's recorded caption mode does not match the current
+setting.
+
+> Note: re-rendering a scene's video replaces its plain cut, and its captioned
+> cut is removed at the same time — the old captions were burned onto the take
+> you just replaced. The scene's captioned box goes back to empty, ready to be
+> generated again through `Resume Generation`.
 
 ## 21. Publishing the Final Video
 
@@ -1182,8 +1247,12 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Default narrator voices (male/female fallback) | Global `Settings > Audio Config`, in the `Default Narrator Voices` section. |
 | Start voice delay or end voice delay | Selected project > right sidebar > `Settings`, or global `Settings > Video Config`. |
 | Transition duration | Selected project > right sidebar > `Settings`, or global `Settings > Video Config`. |
-| Captions | Global `Settings > Video Config`; caption styling appears after captions are enabled. |
-| Caption position, font, size, colors, outline, or background | Global `Settings > Video Config`, inside the captions controls. |
+| Enable or disable captions for an existing project | Select the project > right sidebar > `Settings` > `Captions` > `Burn-in captions`, then apply the changes. |
+| Set caption defaults for new projects | Global `Settings > Video Config`; caption styling appears after captions are enabled. |
+| Change caption position, font, size, colors, outline, or background for an existing project | Select the project > right sidebar > `Settings` > `Captions`, then apply the changes. |
+| Generate all missing captioned clips | Right sidebar > `Resume Generation`; when the raw clips are ready, the caption work runs locally without a GPU picker. |
+| Re-burn captions after changing their style | Apply the project caption-style change, then select `Resume Generation`; saved word timings are reused. |
+| Build a missing final video when all required clips are ready | Bottom of the right sidebar > `Stitch Final Video`. Some restored projects may instead offer `Re-stitch with captions` / `Re-stitch without captions` on the Stitch node. |
 | Resume Generation | Right scene sidebar for the selected project, shown when assets are missing or invalidated. |
 | Stop or cancel video/asset generation | During active generation, in the visible generation/progress controls or right sidebar stop action. To cancel a brainstorm/concept/character chat request instead, use the stop button in the `New` modal chat. |
 | Generation error summary, error box, or list of failed tasks | Top-right corner of the center canvas, shown after a generation finishes with one or more errors. |
@@ -1233,6 +1302,7 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Storage used, limit, or available space | `Settings > Storage`. |
 | Desktop notification preferences | `Settings > Notifications`. |
 | Connect or remove a social account (TikTok, etc.) | `Settings > Social Accounts`. |
+| Reconnect an account marked `Session expired` | `Settings > Social Accounts`, then select the amber refresh/reconnect icon on that account. |
 | Refresh account name, avatar, or follower count | `Settings > Social Accounts`, `Refresh metadata`. |
 | Caption instructions / guidance for AI captions | `Settings > Model Config`. |
 | Vast.ai key or API key | `Settings > API Keys`. |
@@ -1366,7 +1436,7 @@ For the full walkthrough of the Publish dialog (compose, review, scheduling, and
 
 - **The `Publish` button is greyed out.** It only activates once the project has a final video. Finish video generation first.
 - **No accounts to post to.** Connect one in `Settings > Social Accounts` (TikTok is the only platform you can connect today). The dialog also links you there, and you can reach it any time via the **Manage** link.
-- **An account shows "Reconnect needed".** Its login session has expired. Open `Settings > Social Accounts` and connect that platform again. Use **Refresh metadata** there to re-check status without reconnecting.
+- **An account shows "Session expired".** Open `Settings > Social Accounts`, select the amber refresh/reconnect icon on that account, and sign in again. `Refresh metadata` can re-check the account, but an expired login still requires reconnection.
 - **The upload stopped with an error.** TikTok changes its site often, so a step may occasionally fail to complete automatically. Your caption, sound, and cover are kept — choose **Back to editor** and try again. If it keeps failing, confirm the account still shows `Connected`.
 - **I closed the Publish window mid-upload.** That's fine — the post keeps running and the progress is saved app-wide. Reopen `Publish` to see it resume until it finishes.
 - **I want to stop a post.** Use **Cancel** on the upload progress screen (it stops the background hand-off), or cancel a queued/scheduled post from the **History** view.
