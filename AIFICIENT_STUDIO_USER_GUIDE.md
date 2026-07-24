@@ -1,6 +1,6 @@
 # Aificient Studio User Guide
 
-Last reviewed: July 20, 2026.
+Last reviewed: July 24, 2026.
 
 This guide explains how to use Aificient Studio from the application interface. It focuses on visible screens, menus, controls, generation workflows, editing tools, GPU management, settings, and common troubleshooting.
 
@@ -53,32 +53,38 @@ The code screen also lets you:
 
 ## 3. Main Workspace
 
-After signing in, the main workspace is divided into three main areas:
+After signing in, the left sidebar stays visible while the main area changes with what you are doing:
 
-- Left sidebar: projects, search, new project button, GPU/runtime manager, user/settings area.
-- Center canvas: a visual flow of the project and generated assets.
-- Right scene sidebar: project outline, asset browser, project-specific settings, and resume actions.
+- Left sidebar: primary navigation, recent projects, project search, generation assets, and the user/settings area.
+- Home/new-project screen: appears in the main area when no project is open. It contains the Concept, Brainstorm, and Character creation chats.
+- Center canvas: appears when a project is open and shows its visual flow and generated assets.
+- Right scene sidebar: appears with an open project and contains the project outline, asset browser, project-specific settings, and resume actions.
 
 The top-right window controls let you minimize, maximize/restore, or close the app. The same top-right area also has an `Ask AI` button that opens the Support Assistant, an in-app help chat (see "Support Assistant (Ask AI)").
 
-If no project is selected, the canvas shows an empty state asking you to select or create a project.
+If no project is selected, the main area shows the home/new-project screen instead of an empty canvas. The left sidebar remains available so you can open an existing project, search, manage characters, or inspect generation assets without closing the creation screen.
 
 ## 4. Left Sidebar
 
-### Projects
+### Primary Navigation
 
-The projects section contains:
+The top of the sidebar contains:
 
-- `New`: opens the creation workflow.
-- Search box: filters projects by name.
-- Project list: shows projects stored in your workspace.
+- `New project`: leaves the currently open project, shows the home/new-project screen in the main area, and starts a fresh creation chat when needed.
+- `Character list`: opens the reusable-character library over the current screen.
+- `Generation assets`: opens a flyout beside the sidebar with Aificient Cloud jobs, the local GPU, rented GPU instances, and the create-instance action.
+
+The magnifying-glass button in the sidebar header opens project search. With an empty search it lists recent projects; type to filter by name. You can click a result or use the up/down arrow keys and `Enter`. Press `Esc` or click outside the dialog to close it.
+
+### Recent Projects
+
+The `Recent projects` list shows projects stored in your workspace. Click a row to leave the home screen and open that project's canvas.
 
 A project row can show:
 
 - Active selection.
 - Running/generation indicator.
 - Final video completed indicator.
-- Scene count.
 
 When you open a project, a progress overlay can move through `Loading project`, `Checking for active renders`, `Building canvas`, and `Preparing scenes` before the canvas becomes ready. Media previews are loaded in a controlled queue during this process so large projects do not try to decode every image and video at once.
 
@@ -95,7 +101,9 @@ Deleting a project is permanent from the app's point of view, so use it carefull
 
 ## 5. GPU and Runtime Manager
 
-The lower part of the left sidebar manages generation resources.
+Open `Generation assets` in the primary sidebar navigation to manage generation resources. Its flyout appears beside the sidebar and closes when you select an item, click elsewhere, or press `Esc`.
+
+The `Generation assets` row can show compact counts for resources that are actively working and resources that are ready. Inside the flyout, select the local GPU or a rented instance to open its detail view. If cloud jobs exist, the flyout also includes `Aificient Cloud`.
 
 Initial video rendering with a GPU you manage needs a ready runtime. A runtime can be:
 
@@ -164,23 +172,25 @@ From the render queue you can:
 - Remove a single queued video, or cancel the one that is currently rendering, using the `X` on its row.
 - Cancel all of a project's videos across every GPU at once with `Cancel all` next to the project name.
 
-The lower sidebar also shows a small `N queued` count next to each local or rented GPU so you can see at a glance how loaded it is without opening the detail view.
+The `Generation assets` flyout shows a small `N queued` count next to each local or rented GPU so you can see at a glance how loaded it is without opening the detail view.
 
 ### Aificient Cloud Rendering
 
-In addition to GPUs you manage yourself, eligible projects can use `Aificient Cloud` to render missing scene videos. This option appears in the selected project's `Resume Generation` menu after its source images and audio are ready. It is not part of the initial render-settings GPU list.
+In addition to GPUs you manage yourself, eligible projects can use `Aificient Cloud` to render scene videos. It can appear as a runtime on the initial render-settings screen and later in the selected project's `Resume Generation` menu when source images and audio are ready.
 
 The Aificient Cloud option shows the project's `Lite` or `Pro` tier, resolution, and estimated credit cost before submission. It requires an active subscription, enough credits, and valid image/audio inputs. A submission can contain up to 32 missing scenes, and each scene's audio plus configured voice delays must fit within the 13-second cloud-render limit.
 
 Aificient Cloud is selected by itself; it cannot be combined with local or rented GPUs in the same submission. Once submitted, each scene appears as a separate cloud job. The app refreshes completed clips into the project automatically.
 
-When cloud jobs exist, open `Aificient Cloud` in the lower sidebar to view the current session's queue and history. The window shows queued, running, completed, failed, and cancelled jobs with progress and status messages. You can remove an individual queued job or use `Cancel queued` for all queued jobs in a project. Reserved credits are refunded when a cloud job fails or is cancelled.
+When cloud jobs exist, open `Generation assets > Aificient Cloud` to view the current session's queue and history. The window shows queued, running, completed, failed, and cancelled jobs with progress and status messages. You can remove an individual queued job or use `Cancel queued` for all queued jobs in a project. Reserved credits are refunded when a cloud job fails or is cancelled.
+
+While cloud clips are queued or rendering, the center canvas keeps showing the project's overall generation progress and the bottom of the right scene sidebar shows the Aificient Cloud queue/rendering status. Cancel queued cloud clips from `Generation assets > Aificient Cloud`; the canvas progress bar does not include a cloud-cancel button.
 
 For account-wide cloud render history, including settled prices, use `Settings > Usage > Load latest generation jobs`.
 
 ## 6. Renting a GPU
 
-Click the add/rent GPU action in the GPU manager to open the GPU rental modal.
+Open `Generation assets` and click `Create instance` to open the GPU rental modal. If no Vast.ai key is configured, the flyout shows `Add Vast.ai key` instead.
 
 The modal lets you choose a GPU profile and shows available offers.
 
@@ -215,13 +225,15 @@ If no offers appear, try adjusting GPU settings in `Settings > GPU Config`.
 
 ## 7. Creating a New Project
 
-Click `New` in the sidebar to open the creation modal.
+Click `New project` in the sidebar to show the creation home screen in the main workspace. It is no longer a centered modal: the left sidebar stays visible, and the creation screen replaces the project canvas until you open or create a project. Clicking `New project` while a project is open deselects that project and begins a fresh creation chat when needed.
 
-The modal has three modes:
+The creation home screen has three modes in the segmented control at the top of the chat composer:
 
 - `Concept`.
 - `Brainstorm`.
 - `Character`.
+
+The top-right `History` control opens previous Concept, Brainstorm, and Character chats. You can reopen a chat, refresh the history, or delete a saved chat. The active conversation title appears in the top bar after the conversation has started.
 
 ### Concept Mode
 
@@ -291,9 +303,9 @@ Yes — you can change the script before you start generating. There are two way
 
 **1. Ask the AI in the chat (concept/brainstorm screen).** While you are still in the chat conversation, keep typing to request changes in natural language — for example, "make scene 2 funnier", "rename the main character to Mia", or "shorten the narration". The assistant rewrites the concept for you and the conversation updates with the result. This is best when you want the AI to rework wording, tone, or whole sections.
 
-**2. Edit by hand on the generate screen.** When you continue from the concept to the generate/render settings screen, a `Script` preview panel appears on the right. Click `Edit` at the top-right of that panel to switch it into edit mode. The button changes to `Done`; click it again to apply your changes and leave edit mode. This is best for small, exact fixes, and it sits right next to the render settings and the `Generate` button.
+**2. Edit by hand on the render-settings screen.** When you continue from the concept, the render-settings screen slides into the main workspace and a `Script` preview panel appears on the right. Click `Edit` at the top-right of that panel to switch it into edit mode. The button changes to `Done`; click it again to apply your changes and leave edit mode. This is best for small, exact fixes, and it sits next to the render settings and the `Generate` button. Use the back arrow in the render-settings header to return to the chat.
 
-While editing by hand on the generate screen, you can change:
+While editing by hand on the render-settings screen, you can change:
 
 - Video title.
 - Narrator voice profile (the short description of how the narrator should sound).
@@ -303,12 +315,14 @@ While editing by hand on the generate screen, you can change:
 
 Notes:
 
-- The `Edit` button is on the generate/render settings screen, not on the chat screen. On the chat screen you edit by asking the AI with a prompt instead.
+- The `Edit` button is on the render-settings screen, not on the chat screen. On the chat screen you edit by asking the AI with a prompt instead.
 - Library (global) characters and the narrator are locked in the hand editor. The panel labels them and points you to the character library to change a global character.
 - Your edits, whether from the chat or made by hand, are applied to the concept that gets generated, so they directly affect the resulting video.
 - This editing happens on the concept before generation. To change scenes or assets after generation, use the canvas nodes and rewrite tools (see "Editing and Regeneration").
 
 ## 8. Creation Controls
+
+The creation controls sit in and directly below the chat composer at the bottom of the home screen. Switch modes along the composer's top edge; use the pills and segmented controls below the prompt for style, duration, language, pinned characters, and Character-mode options.
 
 ### Visual Style
 
@@ -367,7 +381,7 @@ Each row has a play button. Click it to hear a short preview of that voice, and 
 
 ## 9. Character Library
 
-The character library stores reusable characters.
+The character library stores reusable characters. Open it from `Character list` in the left sidebar; it appears as an overlay without leaving the current home screen or project.
 
 A character can include:
 
@@ -381,13 +395,17 @@ A character can include:
 
 The all-characters view lets you:
 
+- Create a new character with `New character` (this closes the library and opens Character mode on the home screen).
 - Search characters.
 - Filter by type.
 - Filter by gender.
 - Filter by voice.
 - Open details.
+- Rename characters from their detail view.
 - Preview images.
 - Delete characters.
+
+When Character mode is open on an empty creation chat, the home screen also shows up to six characters from your cast; use `See all` when more are available.
 
 Characters from the library are treated as global references. They cannot be edited directly from a project canvas node.
 
@@ -404,22 +422,24 @@ Choose:
 
 Use `9:16` for vertical/social video. Use `16:9` for widescreen video.
 
-### GPU
+### Runtime
 
-For the first generation, choose one or more ready GPUs if you want to render video. Each ready runtime (local and rented) is listed with a checkbox; tick every GPU you want this project to use. Aificient Cloud becomes available later from `Resume Generation` when the project's non-video inputs are ready.
+For the first generation, choose one or more ready GPUs or select `Aificient Cloud` if it is available for your account. Each ready local or rented runtime is listed with a checkbox; tick every GPU you want this project to use. Aificient Cloud is a separate, mutually exclusive target, so selecting it clears the local/rented GPU selection. Its row shows the selected `Lite` or `Pro` tier, resolution, and estimated credit cost.
 
 - **One GPU selected:** all scene videos render on that GPU, in queue order.
 - **Several GPUs selected:** the scene videos are split across the chosen GPUs so the project finishes faster. Each option also shows how many jobs are already `in queue` on it.
+- **Aificient Cloud selected:** scene videos are submitted to the cloud after their source images and audio are prepared; the app continues through captions and final stitching as the clips arrive.
 
 GPUs are queued rather than blocked, so a busy GPU is still a fine choice — selecting it just adds this project's videos to its queue behind any work already running. By default the app pre-selects the lightest-loaded GPU.
 
-If no GPU is ready, you can still generate images and audio only.
+If no local or rented GPU is ready, you can select Aificient Cloud when available or generate images and audio only.
 
 What you can do depends on GPU availability:
 
-- No ready GPU: generate images and audio only, review assets, edit scenes, prepare the project for later video rendering.
+- No local/rented GPU and no Aificient Cloud option: generate images and audio only, review assets, edit scenes, and prepare the project for later video rendering.
 - Local GPU ready: render video if the app shows the local runtime as supported and ready.
 - Rented GPU ready: render video on any selected rented instance.
+- Aificient Cloud available: render scene videos without starting your own GPU runtime.
 - Busy GPU: no need to wait — selecting it queues your videos behind the current job. Select additional GPUs to spread the work and finish sooner.
 
 ### Quality
@@ -728,7 +748,7 @@ Stopping generation:
 
 You can usually continue later with `Resume Generation`.
 
-This stop action is for video and asset generation. To cancel a brainstorm, concept, or character request while you are still in the `New` modal chat, use the stop button that replaces the chat's send button (see "Stopping an In-Progress Chat Request").
+This stop action is for video and asset generation. To cancel a brainstorm, concept, or character request on the creation home screen, use the stop button that replaces the chat's send button (see "Stopping an In-Progress Chat Request").
 
 ## 17. Generation Error Summary
 
@@ -770,7 +790,7 @@ The box reports results for the currently selected project. Switching projects h
 
 Aificient Studio lets you change individual parts of a project without starting from scratch. Some edits are manual, some can be AI-assisted, and some require regeneration because later assets depend on the edited part.
 
-This section covers editing a project after generation, from the canvas. To edit the concept before generation (its title, characters, scenes, and scripts), use the `Edit` button in the `New` modal's `Script` panel instead (see "Reviewing and Editing the Generated Concept").
+This section covers editing a project after generation, from the canvas. To edit the concept before generation (its title, characters, scenes, and scripts), continue from the creation chat to render settings and use the `Edit` button in the right-side `Script` panel instead (see "Reviewing and Editing the Generated Concept").
 
 In general:
 
@@ -1185,58 +1205,61 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | --- | --- |
 | `Ask AI`, help chat, or Support Assistant | Top-right window-actions area, next to the minimize/maximize/close controls. |
 | Window minimize, maximize, restore, or close | Top-right window controls. |
-| Projects | Upper left sidebar, below the `New` button and search box. |
-| Search projects | Search box in the upper left sidebar. |
-| Create a project or start a new idea | `New` button in the left sidebar. |
+| Projects | Left sidebar, in the `Recent projects` list below the primary navigation. |
+| Search projects | Magnifying-glass button in the left-sidebar header; it opens a search dialog with recent projects and filtered results. |
+| Create a project or start a new idea | `New project` in the left sidebar; the creation home screen replaces the canvas while the sidebar stays visible. |
+| Reopen or delete a creation chat | Creation home screen, `History` at the top-right. |
+| Open the reusable-character library | `Character list` in the left sidebar. |
 | Rename project | Right-click the project in the left sidebar project list, then choose `Rename`. |
 | Delete project | Right-click the project in the left sidebar project list, then choose `Delete`. |
 | Sign out | User/profile area at the bottom of the left sidebar. |
 | Global Settings | User/profile area at the bottom of the left sidebar, then `Settings`. |
-| GPU/runtime manager or Generation Assets | Lower part of the left sidebar. |
-| Local runtime controls | Lower left sidebar GPU/runtime manager, then open the local GPU detail view. |
-| Rented GPU instance controls | Lower left sidebar GPU/runtime manager, then open the instance detail view. |
-| Runtime logs | Open the local runtime or rented instance detail view from the lower left sidebar. |
-| Rent GPU or add cloud GPU | Add/rent GPU action in the lower left GPU/runtime manager. |
+| GPU/runtime manager or Generation Assets | `Generation assets` in the left sidebar; it opens a flyout beside the sidebar. |
+| Local runtime controls | Left sidebar > `Generation assets` > local GPU. |
+| Rented GPU instance controls | Left sidebar > `Generation assets` > rented instance. |
+| Runtime logs | Open the local GPU or rented-instance detail view from the `Generation assets` flyout. |
+| Rent GPU or add cloud GPU | Left sidebar > `Generation assets` > `Create instance`. If a Vast.ai key is missing, use `Add Vast.ai key` first. |
 | Download quality indicator / colored status dot on offers | GPU rental modal offers table, in the `Download` column next to each offer's speed and cost. |
 
-### Creation Modal Locations
+### Creation Home Screen Locations
 
 | User asks for | Where to find it |
 | --- | --- |
-| Concept mode | Click `New` in the left sidebar, then choose `Concept`. |
-| Brainstorm mode | Click `New` in the left sidebar, then choose `Brainstorm`. |
-| Character mode | Click `New` in the left sidebar, then choose `Character`. |
-| Idea prompt or chat prompt | `New` modal, in `Concept` or `Brainstorm` mode. |
-| Character prompt | `New` modal, in `Character` mode. |
-| Visual style | `New` modal, in the creation controls before render settings. |
-| Duration | `New` modal, in the creation controls before render settings. |
-| Language | `New` modal, in the creation controls before render settings. |
-| Pinned characters | `New` modal, in `Concept` or `Brainstorm` mode. |
-| Character library | `New` modal, in the character picker/library area. |
-| Character search, filters, previews, and delete | All-characters/library view opened from the `New` modal. |
-| Reference image for a character | `New` modal, `Character` mode. |
-| Character voice | `New` modal, `Character` mode. |
-| Generate button for a concept | `New` modal, after a concept is ready. |
-| Stop or cancel a brainstorm, concept, or character chat request | `New` modal chat — while a request is generating, the send button becomes a stop (filled square) button; click it to cancel. |
-| Edit the generated concept (title, characters, scenes, scripts) | Two ways: ask the AI in the `Concept`/`Brainstorm` chat, or click `Edit` in the `Script` preview panel on the generate/render settings screen. |
-| Edit the script by asking the AI / with a prompt | `New` modal `Concept` or `Brainstorm` chat — type the change you want and the assistant rewrites the concept. |
-| `Edit` button for the script | Right-side `Script` preview panel on the generate/render settings screen (after continuing from the concept), not on the chat screen. |
-| Edit a scene title, description, or script before generating | Generate screen `Script` preview panel in `Edit` mode, in the scene's card. |
-| Change which characters appear in a scene | Generate screen `Script` preview panel in `Edit` mode, under `Characters in scene`. |
-| Edit the narrator voice profile | Generate screen `Script` preview panel in `Edit` mode, in the `Narrator` section. |
-| Render settings before first generation | `New` modal, after continuing from a generated or selected concept. |
+| Concept mode | Left sidebar > `New project`, then choose `Concept` in the segmented control above the home-screen composer. |
+| Brainstorm mode | Left sidebar > `New project`, then choose `Brainstorm` above the composer. |
+| Character mode | Left sidebar > `New project`, then choose `Character` above the composer. |
+| Idea prompt or chat prompt | Creation home screen, `Concept` or `Brainstorm` mode, in the bottom composer. |
+| Character prompt | Creation home screen, `Character` mode, in the bottom composer. |
+| Visual style | Creation home screen, style pill below the prompt. |
+| Duration | Creation home screen, duration pill below the prompt in Concept or Brainstorm mode. |
+| Language | Creation home screen, language control below the prompt in Concept or Brainstorm mode. |
+| Pinned characters | Creation home screen, `Characters` pill below the prompt in Concept or Brainstorm mode. |
+| Character library | `Character list` in the left sidebar, or the `Characters` picker in a Concept/Brainstorm composer. |
+| Character search, filters, previews, rename, create, and delete | Left sidebar > `Character list`. |
+| Reference image for a character | Creation home screen, `Character` mode, `Image`/`Reference` control below the prompt. |
+| Character voice | Creation home screen, `Character` mode, `Voice` pill below the prompt. |
+| Generate button for a concept | Creation home-screen chat, on the generated concept. |
+| Stop or cancel a brainstorm, concept, or character chat request | Creation home-screen chat — while a request is generating, the send button becomes a stop (filled square) button; click it to cancel. |
+| Edit the generated concept (title, characters, scenes, scripts) | Two ways: ask the AI in the `Concept`/`Brainstorm` chat, or click `Edit` in the `Script` preview panel on the render-settings screen. |
+| Edit the script by asking the AI / with a prompt | Creation home-screen `Concept` or `Brainstorm` chat — type the change you want and the assistant rewrites the concept. |
+| `Edit` button for the script | Right-side `Script` preview panel on the render-settings screen (after continuing from the concept), not on the chat screen. |
+| Edit a scene title, description, or script before generating | Render-settings `Script` preview panel in `Edit` mode, in the scene's card. |
+| Change which characters appear in a scene | Render-settings `Script` preview panel in `Edit` mode, under `Characters in scene`. |
+| Edit the narrator voice profile | Render-settings `Script` preview panel in `Edit` mode, in the `Narrator` section. |
+| Render settings before first generation | Continue from a generated concept on the creation home screen; render settings slide into the main workspace. |
 
 ### Render And Generation Locations
 
 | User asks for | Where to find it |
 | --- | --- |
-| Aspect ratio | Render settings in the `New` modal, or selected project > right sidebar > `Settings` tab. |
-| Resolution | Render settings in the `New` modal, or selected project > right sidebar > `Settings` tab. |
-| GPU choice for rendering | Render settings in the `New` modal, or `Resume Generation` menu on the right sidebar. |
-| Aificient Cloud rendering | Select a project with ready images/audio and missing scene videos, then open the right sidebar > `Resume Generation` and choose `Aificient Cloud`. |
-| Aificient Cloud queue and current-session history | Lower left GPU/runtime manager > `Aificient Cloud`; the row appears after cloud jobs have been submitted. |
-| Generate images and audio only | Render settings in the `New` modal, or `Resume Generation` menu when available. |
-| Quality (Lite or Pro) | Render settings in the `New` modal, selected project > right sidebar > `Settings`, or global `Settings > Model Config`. |
+| Aspect ratio | Initial render-settings screen, or selected project > right sidebar > `Settings` tab. |
+| Resolution | Initial render-settings screen, or selected project > right sidebar > `Settings` tab. |
+| GPU choice for rendering | Initial render-settings screen, or `Resume Generation` menu on the right sidebar. |
+| Aificient Cloud rendering | Choose `Aificient Cloud` on the initial render-settings screen when available, or select a project with ready images/audio and use right sidebar > `Resume Generation` > `Aificient Cloud`. |
+| Aificient Cloud queue and current-session history | Left sidebar > `Generation assets` > `Aificient Cloud`; the row appears after cloud jobs have been submitted. |
+| Aificient Cloud queue/render progress | Center-canvas generation progress bar and the status at the bottom of the right scene sidebar. Cancel queued clips from `Generation assets > Aificient Cloud`. |
+| Generate images and audio only | Initial render-settings screen, or `Resume Generation` menu when available. |
+| Quality (Lite or Pro) | Initial render-settings screen, selected project > right sidebar > `Settings`, or global `Settings > Model Config`. |
 | Negative prompt | Global `Settings > Model Config`. |
 | Video guidance (Video CFG) | Selected project > right sidebar > `Settings`, or global `Settings > Model Config`. |
 | Audio guidance (Audio CFG) | Selected project > right sidebar > `Settings`, or global `Settings > Model Config`. |
@@ -1254,7 +1277,7 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Re-burn captions after changing their style | Apply the project caption-style change, then select `Resume Generation`; saved word timings are reused. |
 | Build a missing final video when all required clips are ready | Bottom of the right sidebar > `Stitch Final Video`. Some restored projects may instead offer `Re-stitch with captions` / `Re-stitch without captions` on the Stitch node. |
 | Resume Generation | Right scene sidebar for the selected project, shown when assets are missing or invalidated. |
-| Stop or cancel video/asset generation | During active generation, in the visible generation/progress controls or right sidebar stop action. To cancel a brainstorm/concept/character chat request instead, use the stop button in the `New` modal chat. |
+| Stop or cancel video/asset generation | During active generation, in the visible generation/progress controls or right sidebar stop action. To cancel a brainstorm/concept/character chat request instead, use the stop button in the creation home-screen chat. Cloud queue cancellation is under `Generation assets > Aificient Cloud`. |
 | Generation error summary, error box, or list of failed tasks | Top-right corner of the center canvas, shown after a generation finishes with one or more errors. |
 | Publish | Bottom area of the right scene sidebar for the selected project. Opens the Publish dialog to post the final video to TikTok, Instagram Reels, or YouTube Shorts. Enabled once the project has a final video. |
 | Generate an AI caption | Publish dialog, compose step, the `Generate` (atom) button next to the caption section. |
@@ -1308,7 +1331,7 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Vast.ai key or API key | `Settings > API Keys`. |
 | Vast.ai balance | `Settings > API Keys`. |
 | GPU rental disk space, max price, or reliability filters | `Settings > GPU Config`. |
-| GPU family for a rental | Lower left GPU/runtime manager > `Create Instance`, then choose a GPU profile. |
+| GPU family for a rental | Left sidebar > `Generation assets` > `Create instance`, then choose a GPU profile. |
 | Default model quality, negative prompt, guidance, or prefetch | `Settings > Model Config`. |
 | Local runtime download folder | `Settings > Model Config`; stop the local runtime before changing it. |
 | Default speech pace, SFX volume, SFX cues, or default narrator voices | `Settings > Audio Config`. |
@@ -1374,19 +1397,20 @@ Check:
 - A rented instance is running and ready.
 - GPU search filters are not too strict.
 
-If your project's images and audio are already ready, you may also be able to use `Aificient Cloud` from `Resume Generation`. This requires an active plan, enough credits, and eligible scene inputs.
+You may also be able to select `Aificient Cloud` on the initial render-settings screen. For an existing project whose images and audio are ready, look under `Resume Generation`. Both paths require an active plan, enough credits, and eligible scene inputs.
 
 ### Aificient Cloud is unavailable
 
 Check:
 
-- The project has missing scene videos and its scene images and audio are ready.
+- On an initial project, check whether `Aificient Cloud` appears in the render-settings `Runtime` list.
+- On an existing project, confirm it has missing scene videos and its scene images and audio are ready, then check `Resume Generation`.
 - Your subscription is active and has enough credits for the displayed estimate.
 - The submission has no more than 32 missing scenes.
 - Each scene's audio plus voice delays is no longer than 13 seconds.
 - `Settings > Storage` is not over its allowance.
 
-If a queued or running cloud render fails, open the lower-sidebar `Aificient Cloud` window for its status. Failed and cancelled cloud jobs refund their reserved credits.
+If a queued or running cloud render fails, open `Generation assets > Aificient Cloud` for its status. Failed and cancelled cloud jobs refund their reserved credits.
 
 ### Storage limit reached
 
@@ -1462,7 +1486,7 @@ Use this when you want a final video immediately.
 
 1. Create or select a concept.
 2. Choose aspect ratio and resolution.
-3. Select one or more ready GPUs (pick several to split the render and finish faster).
+3. Select one or more ready GPUs (pick several to split the render and finish faster), or choose Aificient Cloud by itself when available.
 4. Choose `Lite` for speed/lower VRAM or `Pro` for best quality.
 5. Start generation.
 6. Monitor the canvas.
@@ -1504,7 +1528,7 @@ The per-GPU line of pending work. Each scene video is a job that waits its turn 
 
 ### Aificient Cloud
 
-The subscription-backed render service available from `Resume Generation` for eligible missing scene videos. It uses credits and has its own queue, separate from local and rented GPU queues.
+The subscription-backed render service available on initial render settings and from `Resume Generation` for eligible scene videos. It uses credits and has its own queue, separate from local and rented GPU queues.
 
 ### Scene Image
 
