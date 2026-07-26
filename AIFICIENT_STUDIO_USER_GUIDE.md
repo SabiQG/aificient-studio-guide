@@ -1,22 +1,32 @@
 # Aificient Studio User Guide
 
-Last reviewed: July 24, 2026.
+Last reviewed: July 26, 2026.
 
 This guide explains how to use Aificient Studio from the application interface. It focuses on visible screens, menus, controls, generation workflows, editing tools, GPU management, settings, and common troubleshooting.
 
 ## 1. What Aificient Studio Does
 
-Aificient Studio helps you create AI-generated videos from a written idea. You can:
+Aificient Studio helps you create AI-generated video from a written idea. You can:
 
 - Brainstorm video ideas.
 - Turn an idea into a structured concept.
 - Create reusable characters.
 - Generate scene images, narration, sound effects, video clips, and a final stitched video.
+- Animate a poster — one you already have, or one the app designs for you.
 - Review and edit individual scenes.
 - Regenerate only the parts that need changes.
-- Render scene videos with a local GPU runtime, rented GPU instances, or Aificient Cloud when that option is available.
+- Render video with a local GPU runtime, rented GPU instances, or Aificient Cloud when that option is available.
 
-Most projects follow this path:
+### Two Kinds of Project
+
+The app makes two kinds of project, and you choose which one you are making when you start the creation chat:
+
+- **History** — the original multi-scene flow. A concept becomes a script, characters, scene images, narration, sound effects, scene clips, and a final stitched video. Everything in this guide applies to it unless a section says otherwise.
+- **Poster** — a single poster brought to life as a short animated clip (5–15 seconds) with model-generated sound. There are no scenes, no narration, no captions, and no stitching. See "Poster Projects".
+
+Both kinds appear in the same project list, grouped by type, and both can render on your own GPU or on Aificient Cloud.
+
+Most History projects follow this path:
 
 1. Create or select a concept.
 2. Review the generated scenes and characters.
@@ -56,9 +66,9 @@ The code screen also lets you:
 After signing in, the left sidebar stays visible while the main area changes with what you are doing:
 
 - Left sidebar: primary navigation, recent projects, project search, generation assets, and the user/settings area.
-- Home/new-project screen: appears in the main area when no project is open. It contains the Concept, Brainstorm, and Character creation chats.
+- Home/new-project screen: appears in the main area when no project is open. It contains the Concept, Poster, Brainstorm, and Character creation chats.
 - Center canvas: appears when a project is open and shows its visual flow and generated assets.
-- Right scene sidebar: appears with an open project and contains the project outline, asset browser, project-specific settings, and resume actions.
+- Right project sidebar: appears with an open project and contains the project outline, asset browser, project-specific settings, and resume actions. Its tabs and outline follow the project type — `Schema` / `Assets` / `Settings` for a History project, `Plan` / `Assets` / `Settings` for a poster.
 
 The top-right window controls let you minimize, maximize/restore, or close the app. The same top-right area also has an `Ask AI` button that opens the Support Assistant, an in-app help chat (see "Support Assistant (Ask AI)").
 
@@ -74,11 +84,17 @@ The top of the sidebar contains:
 - `Character list`: opens the reusable-character library over the current screen.
 - `Generation assets`: opens a flyout beside the sidebar with Aificient Cloud jobs, the local GPU, rented GPU instances, and the create-instance action.
 
-The magnifying-glass button in the sidebar header opens project search. With an empty search it lists recent projects; type to filter by name. You can click a result or use the up/down arrow keys and `Enter`. Press `Esc` or click outside the dialog to close it.
+The magnifying-glass button in the sidebar header opens project search. With an empty search it lists recent projects; type to filter by name. Results are grouped by project type, and filter chips (`All`, `History`, `Posters`) let you narrow the search to one type — those chips exist only inside the search dialog and never filter the sidebar list. You can click a result or use the up/down arrow keys and `Enter`. Press `Esc` or click outside the dialog to close it.
 
 ### Recent Projects
 
-The `Recent projects` list shows projects stored in your workspace. Click a row to leave the home screen and open that project's canvas.
+The `Recent projects` list shows projects stored in your workspace, grouped by type under a `History` and a `Posters` heading. Click a row to leave the home screen and open that project's canvas.
+
+Each group:
+
+- Collapses and expands from its heading.
+- Shows the 25 most recent projects first, with `Show more` to reveal the next 25.
+- Is hidden entirely when it has no projects, so a workspace with no posters shows no `Posters` heading.
 
 A project row can show:
 
@@ -182,6 +198,8 @@ The Aificient Cloud option shows the project's `Lite` or `Pro` tier, resolution,
 
 Aificient Cloud is selected by itself; it cannot be combined with local or rented GPUs in the same submission. Once submitted, each scene appears as a separate cloud job. The app refreshes completed clips into the project automatically.
 
+Poster projects can also render on Aificient Cloud. A poster is a single clip, so the scene-count and scene-length limits above do not apply to it; it submits one job that carries the project's saved mode, resolution, and duration, and the delivered clip already includes its generated audio.
+
 When cloud jobs exist, open `Generation assets > Aificient Cloud` to view the current session's queue and history. The window shows queued, running, completed, failed, and cancelled jobs with progress and status messages. You can remove an individual queued job or use `Cancel queued` for all queued jobs in a project. Reserved credits are refunded when a cloud job fails or is cancelled.
 
 While cloud clips are queued or rendering, the center canvas keeps showing the project's overall generation progress and the bottom of the right scene sidebar shows the Aificient Cloud queue/rendering status. Cancel queued cloud clips from `Generation assets > Aificient Cloud`; the canvas progress bar does not include a cloud-cancel button.
@@ -227,13 +245,16 @@ If no offers appear, try adjusting GPU settings in `Settings > GPU Config`.
 
 Click `New project` in the sidebar to show the creation home screen in the main workspace. It is no longer a centered modal: the left sidebar stays visible, and the creation screen replaces the project canvas until you open or create a project. Clicking `New project` while a project is open deselects that project and begins a fresh creation chat when needed.
 
-The creation home screen has three modes in the segmented control at the top of the chat composer:
+The creation home screen has four modes in the segmented control at the top of the chat composer:
 
-- `Concept`.
-- `Brainstorm`.
-- `Character`.
+- `Concept`: draft one script concept and iterate on the same creative brief. Produces a History project.
+- `Poster`: animate a poster you already have, or design one from zero and animate it. Produces a poster project.
+- `Brainstorm`: generate five directions, refine them, then turn one into a concept.
+- `Character`: generate a reusable character (image + voice) for your library.
 
-The top-right `History` control opens previous Concept, Brainstorm, and Character chats. You can reopen a chat, refresh the history, or delete a saved chat. The active conversation title appears in the top bar after the conversation has started.
+Each mode has its own hero text, its own composer controls, and its own accent colour, so it is always clear which one is active.
+
+The top-right `History` control opens previous Concept, Poster, Brainstorm, and Character chats. You can reopen a chat, refresh the history, or delete a saved chat. The active conversation title appears in the top bar after the conversation has started.
 
 ### Concept Mode
 
@@ -258,6 +279,20 @@ The generated concept can include:
 - Scene descriptions.
 - Scene scripts.
 - Sound effect cues.
+
+#### Find Inspiration
+
+Below the empty Concept composer there is a `Find inspiration` button. It expands a small showcase of real generated videos — each card plays a short clip and shows its title and artistic style. Hover a card to see `Use this idea`; click it to drop a matching brief into the composer **and** select the artistic style that clip was rendered with. You can then edit the text before sending it. Click the button again to collapse the showcase.
+
+### Poster Mode
+
+Use Poster mode to turn a still poster into a few seconds of motion. It is described in full under "Poster Projects"; in short:
+
+1. Choose `I have a poster` (import finished artwork) or `From zero` (the app designs the poster first).
+2. Attach the poster image, or describe the poster you want plus any reference images and pinned characters.
+3. Set the clip duration, and — for `From zero` — the aspect ratio.
+4. Send the prompt and review the generated poster plan.
+5. Refine the plan in chat if needed, then `Create project`.
 
 ### Brainstorm Mode
 
@@ -322,7 +357,9 @@ Notes:
 
 ## 8. Creation Controls
 
-The creation controls sit in and directly below the chat composer at the bottom of the home screen. Switch modes along the composer's top edge; use the pills and segmented controls below the prompt for style, duration, language, pinned characters, and Character-mode options.
+The creation controls sit in and directly below the chat composer at the bottom of the home screen. Switch modes along the composer's top edge; use the pills and segmented controls below the prompt for style, duration, language, pinned characters, attachments, and Character-mode options.
+
+Only the controls that mean something for the active mode are shown. Poster mode, for example, has no visual-style preset (the look comes from your prompt or the imported artwork) and no language control, but it adds a pipeline toggle, an image-attachment pill, and an aspect-ratio pill.
 
 ### Visual Style
 
@@ -355,6 +392,8 @@ Available durations include:
 
 Longer videos usually mean more scenes, more assets, and more render time.
 
+In Poster mode the duration pill offers whole seconds from 5 to 15 instead (8 by default), because a poster is a single clip rather than a set of scenes.
+
 ### Language
 
 The app supports English and Spanish concept generation.
@@ -368,6 +407,8 @@ Language affects:
 ### Pinned Characters
 
 In Concept and Brainstorm modes, you can pin existing library characters. Pinned characters are included in the concept so the generated story uses them.
+
+Poster mode can pin characters too, but only in the `From zero` pipeline — a character has to be placed into a poster while it is being designed, and an imported poster is already finished. There you can pin up to 3 characters, and each one spends a slot from the poster's shared reference budget (see "Reference Images and Characters").
 
 ### Voice
 
@@ -412,6 +453,8 @@ Characters from the library are treated as global references. They cannot be edi
 ## 10. Render Settings
 
 Before starting generation, the app shows render settings.
+
+This section describes the History render-settings screen. A poster has its own, shorter version of the same screen — see "Creating a Poster Project".
 
 ### Format
 
@@ -484,6 +527,8 @@ Common node groups:
 - Final output.
 
 You can pan, zoom, and use the mini-map to navigate larger projects.
+
+Those node groups are the History flow. A poster project uses the same canvas with its own, much shorter chain — see "The Poster Canvas".
 
 ## 12. Canvas Nodes
 
@@ -628,11 +673,13 @@ If sharing is not available on your system, the app falls back to copying or ope
 
 The right sidebar appears when a project is selected.
 
-It has three tabs:
+For a History project it has three tabs:
 
 - `Schema`.
 - `Assets`.
 - `Settings`.
+
+A poster project uses the same column with a `Plan` tab in place of `Schema` and a much smaller `Settings` form — see "The Poster Sidebar".
 
 ### Schema Tab
 
@@ -720,6 +767,8 @@ The resume menu lets you:
 - Generate images and audio only.
 
 The app reuses existing completed assets where possible and only regenerates missing or affected parts.
+
+On a poster project the same menu offers a single runtime choice plus `Images only` — see "Rendering and Resuming a Poster".
 
 When all raw scene clips are already ready, no GPU choice is needed. The same sidebar action runs the remaining caption burns and final stitch locally. If only the final stitch remains, its label changes to `Stitch Final Video`.
 
@@ -908,7 +957,149 @@ Common settings:
 
 Project settings can override global defaults for that project.
 
-## 20. Global Settings
+## 20. Poster Projects
+
+A poster project turns a single poster into a short animated clip. It is a different kind of project from the multi-scene History flow: there are no scenes, no narration or SFX tracks, no captions, and no final stitch. The animation the app produces **is** the final video, and its soundtrack is generated by the video model itself.
+
+Everything else you already know still applies: posters live in the same project list, render on the same GPUs or on Aificient Cloud, use the same credits, and use the same canvas and right-sidebar layout.
+
+### The Two Poster Pipelines
+
+Poster mode has a segmented toggle in the composer:
+
+- **`I have a poster`** — you attach finished artwork and describe how it should move. The app derives an opening frame from your poster and animates towards it. The aspect ratio comes from the image itself, and reference images and characters are not used.
+- **`From zero`** — you describe the poster you want. The app designs the poster first, then derives the opening frame from it, then animates it. Here you can attach reference images, pin library characters, and choose the aspect ratio.
+
+Once a plan exists in the conversation, the toggle locks for that chat: switching pipelines means starting a new poster chat.
+
+### Writing the Poster Prompt
+
+The composer controls for Poster mode are:
+
+- **Pipeline toggle** — `I have a poster` / `From zero`.
+- **`Poster image`** (`I have a poster` only) — pick the JPG or PNG to animate. The file is uploaded to your assets folder before the prompt is sent.
+- **`Reference assets`** (`From zero` only) — attach JPG/PNG images that guide the design. The pill shows a `used/5` badge.
+- **`Characters`** (`From zero` only) — pin up to 3 library characters to be placed into the poster.
+- **Aspect ratio** (`From zero` only) — `9:16`, `3:4` (default), `1:1`, `4:3`, or `16:9`.
+- **Duration** — whole seconds from 5 to 15, 8 by default.
+
+The prompt itself is required for `From zero`; for `I have a poster` the image is what is required, and the text describes the motion.
+
+#### Reference Images and Characters
+
+Reference images and pinned characters share **one budget of 5**. Each character counts exactly as much as an image, and characters have their own extra limit of 3:
+
+- 3 characters leave room for 2 reference images.
+- 5 reference images leave room for no characters.
+
+The composer shows one combined counter on the `Reference assets` pill and disables whichever side has run out of room. If a plan created before this shared limit holds more than 5 references, the app blocks `Create project` and tells you so — send any correction in chat and the plan comes back trimmed and ready to create.
+
+### The Poster Plan
+
+The reply in the chat is a **poster plan** card showing:
+
+- Its title and a badge for the pipeline used.
+- The imported poster, or thumbnails of the reference images and pinned characters.
+- Three collapsible prompts — `Poster prompt` (only when designing from zero), `First frame prompt`, and `Video prompt`.
+- Duration and aspect-ratio chips.
+- The `Create project` action.
+
+Keep typing in the chat to refine it — "snappier reveal", "different typography", "add light jazz music" — and the plan is rewritten. You can attach new images with a correction; they are merged into the plan, and if that pushes past the 5-reference budget the oldest ones are dropped. The plan that comes back is always the accurate record of what survived, so read the card rather than what you attached. The composer clears its attachments after every turn for exactly this reason.
+
+Writing a poster plan is a metered charge: reference images are read by the prompt-writing model, so more of them makes the plan cost more (and take longer to produce).
+
+### Creating a Poster Project
+
+`Create project` opens the poster render-settings screen, with the plan preview attached beside it. It contains:
+
+- **Aspect ratio** — read-only. It is stamped from the poster itself.
+- **Resolution** — `1080p` or `720p`.
+- **Mode** — `Lite` (faster, smaller GPUs) or `Pro` (best quality).
+- **Video duration** — the length of the animation.
+- **Images only** — stop after the poster images and skip the animation. You can render it later from the project.
+- **Runtime** — where the animation renders. A poster is a single clip, so this is a **single choice**: one GPU (local or rented) *or* Aificient Cloud. The Aificient Cloud row shows the tier, resolution, duration, and estimated credit cost of the current settings.
+
+Creating the project also **starts its generation immediately** — the button reads `Start generation`, or `Start images` when `Images only` is on. If no runtime is available you can still create the project with images only and render the animation later.
+
+### The Poster Canvas
+
+The canvas shows the poster's own chain, left to right:
+
+```
+project → assets → poster prompt → poster image → first frame prompt → first frame → video prompt → final video
+```
+
+Notes on the layout:
+
+- The references design the **poster**; the **first frame** is derived from the finished poster alone, not from the references or character faces. The animation then runs between the frame and the poster.
+- An imported poster has no `poster prompt` step, so that column is closed up and the artwork sits one step after the assets box.
+- The three prompt nodes are clickable and open the rewrite modal (see below).
+- The media nodes show the designed poster, the first frame, and the final animation, each with a progress state while it is being generated and a delete button.
+
+Poster previews are shown at their real proportions, so a `3:4` or `9:16` poster is not cropped to fit the node.
+
+### The Poster Sidebar
+
+The right sidebar of a poster project has three tabs: `Plan`, `Assets`, and `Settings`.
+
+**Plan** is the outline. Click any row to centre the canvas on that node:
+
+- `Project` and `Assets` (with a count of references).
+- The three prompts — `Poster prompt` (from zero only), `First frame prompt`, `Video prompt`.
+- The three generated items — `Poster image`, `First frame`, `Final video` — each showing `Not generated`, `Queued`, `Generating N%`, `Generated`, or `Failed`. For an imported poster, `Poster image` simply reads `Imported`.
+
+**Assets** lists the poster's reference images together with whatever the generation has produced, with download and focus actions.
+
+**Settings** is a poster's whole video configuration, and it is deliberately small:
+
+- `Aspect ratio` — read-only, set by the poster.
+- `Resolution` — `1080p` / `720p`.
+- `Mode` — `Lite` / `Pro`.
+- `Video duration`.
+
+Changes are staged until you select `Apply changes` (or discard them with the circular-arrow button). While there are unsaved changes the footer warns `Unsaved video settings` and the render action is blocked, because a render always uses the **saved** settings. None of the History settings — captions, guidance scales, speech pace, voice delays, transitions — exist for a poster.
+
+The sidebar footer holds the same actions as a History project: `Stop Generation` while a run is active, an `Aificient Cloud` status chip while the clip is in the cloud queue, and otherwise the `Resume Generation` menu.
+
+### Rendering and Resuming a Poster
+
+`Resume Generation` on a poster offers:
+
+- A **single** runtime choice — one GPU (local or rented) or Aificient Cloud, with its estimated credit cost — and `Add to render queue` to render the animation. Missing poster images are regenerated first automatically, so this is the "finish the poster" action.
+- `Images only`, which fills in the missing poster and first frame without rendering the animation. Those are cloud tasks and need no GPU.
+
+The action is disabled once everything has been generated.
+
+GPU renders join the same per-GPU queue as History scene videos, so a busy GPU is still a valid choice. Cloud renders appear in `Generation assets > Aificient Cloud` alongside History jobs. Either way the finished clip lands as the project's final video — there is nothing to burn or stitch afterwards, so the project simply completes when the clip is delivered.
+
+If you close the app while a poster render is in progress, reopening the project reattaches to it and the sidebar and canvas pick the progress back up.
+
+### Editing a Poster
+
+Click any of the three prompt nodes on the canvas to rewrite it, either by typing the replacement yourself or by describing the change and letting the AI rewrite it. This is the same modal used for scene text in a History project.
+
+Editing a prompt invalidates everything downstream of it, and the modal spells out exactly what will be deleted **for this project as it stands today**:
+
+- Rewriting the poster prompt deletes the poster image, the first frame, and the animation.
+- Rewriting the first-frame prompt deletes the first frame and the animation; the poster is kept.
+- Rewriting the video prompt deletes the animation; both images are kept.
+
+If nothing has been generated from that prompt yet, the modal says so and the edit only updates the plan. After a rewrite that removed images, `Regenerate images` in the modal refills them straight away; the animation is rendered from the sidebar's `Resume Generation` menu, where the runtime choice lives.
+
+The delete buttons on the media nodes cascade the same way — deleting the poster also removes the first frame and the animation, deleting the first frame also removes the animation, and deleting the animation leaves both images. Each button's tooltip states what it takes with it.
+
+### What Posters Do Not Have
+
+- **Captions.** There is no narration track to transcribe, so there is no caption step and no captioned-clip column.
+- **Stitching.** A poster is one clip; the render is the final video.
+- **Publishing.** The `Publish` dialog is available for History projects only.
+- **Scene tools.** No scene list, no SFX editor, no character node editing inside the project — a poster's characters come from your library at plan time.
+
+### A Note on Poster Reference Images
+
+Poster reference images stay in your **assets folder**; they are not copied into the project. That means the same image can back several posters, and deleting it from your assets breaks every poster that references it. If that happens, the app tells you the reference is no longer in your assets folder — attach it again in a chat correction to continue.
+
+## 21. Global Settings
 
 Open Settings from the user/profile area in the left sidebar.
 
@@ -1112,7 +1303,7 @@ setting.
 > you just replaced. The scene's captioned box goes back to empty, ready to be
 > generated again through `Resume Generation`.
 
-## 21. Publishing the Final Video
+## 22. Publishing the Final Video
 
 Once a project has a final video, you can post it straight to social media from inside the app. Open the **Publish** dialog with the `Publish` button at the bottom of the right scene sidebar (it becomes active only after the final video exists).
 
@@ -1167,7 +1358,7 @@ The **History** button (top-right of the dialog) lists past and prepared posts, 
 
 > Note: TikTok publishing automates the real TikTok Studio composer in the background so your video is uploaded with the caption, cover, and sound attached, and the post is grouped under the chosen sound. TikTok changes its site often, so if a step can't be completed automatically the upload stops and shows an error — just try again.
 
-## 22. Updates
+## 23. Updates
 
 The app can check whether a newer desktop version is available.
 
@@ -1181,7 +1372,7 @@ If an update is available:
 
 If the update fails, the update window shows an error.
 
-## 23. Downloads and Sharing
+## 24. Downloads and Sharing
 
 You can download final videos and many generated assets.
 
@@ -1193,7 +1384,7 @@ When downloading:
 
 The fullscreen viewer also includes a share action when supported by your system.
 
-## 24. Where To Find UI Options
+## 25. Where To Find UI Options
 
 Use this section when a user asks questions like "Where is X?", "How do I open X?", "Where can I change X?", "I cannot find X", or "Where is the button for X?".
 
@@ -1207,6 +1398,8 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Window minimize, maximize, restore, or close | Top-right window controls. |
 | Projects | Left sidebar, in the `Recent projects` list below the primary navigation. |
 | Search projects | Magnifying-glass button in the left-sidebar header; it opens a search dialog with recent projects and filtered results. |
+| Filter projects by type (History / Posters) | The `All` / `History` / `Posters` chips inside the project search dialog. The sidebar list itself is grouped by type instead of filtered. |
+| Older projects that are not in the list | Expand the project's group heading in the left sidebar, then use `Show more` (groups page 25 at a time). |
 | Create a project or start a new idea | `New project` in the left sidebar; the creation home screen replaces the canvas while the sidebar stays visible. |
 | Reopen or delete a creation chat | Creation home screen, `History` at the top-right. |
 | Open the reusable-character library | `Character list` in the left sidebar. |
@@ -1228,6 +1421,13 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Concept mode | Left sidebar > `New project`, then choose `Concept` in the segmented control above the home-screen composer. |
 | Brainstorm mode | Left sidebar > `New project`, then choose `Brainstorm` above the composer. |
 | Character mode | Left sidebar > `New project`, then choose `Character` above the composer. |
+| Poster mode | Left sidebar > `New project`, then choose `Poster` above the composer. |
+| Animate a poster I already have | Poster mode, then the `I have a poster` toggle below the prompt, then the `Poster image` pill. |
+| Design a poster from a description | Poster mode, then the `From zero` toggle below the prompt. |
+| Poster reference images | Poster mode > `From zero`, then the `Reference assets` pill below the prompt. |
+| Poster aspect ratio | Poster mode > `From zero`, aspect-ratio pill below the prompt. For an imported poster the ratio comes from the image and cannot be set. |
+| Poster clip length | Poster mode, duration pill below the prompt (5–15 seconds), or later in the project's right sidebar > `Settings` > `Video duration`. |
+| Find inspiration / example videos | Creation home screen in `Concept` mode, the `Find inspiration` button below the composer. |
 | Idea prompt or chat prompt | Creation home screen, `Concept` or `Brainstorm` mode, in the bottom composer. |
 | Character prompt | Creation home screen, `Character` mode, in the bottom composer. |
 | Visual style | Creation home screen, style pill below the prompt. |
@@ -1286,12 +1486,20 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Schedule a post for later | Publish dialog, review step, `When to publish` > `Schedule`. |
 | Cancel an in-progress upload | Publish dialog upload progress screen, the `Cancel` button. |
 | Publish history (past/queued posts) | Publish dialog, `History` button at the top-right. |
+| Poster render settings (mode, resolution, duration, runtime) | The settings screen after `Create project` on a poster plan, or later in the project's right sidebar > `Settings` tab. |
+| Where a poster animation renders | Poster render-settings screen > `Runtime` (one GPU or Aificient Cloud), or the project's right sidebar > `Resume Generation`. |
+| Render a poster animation later | Poster project > right sidebar > `Resume Generation` > pick a runtime > `Add to render queue`. |
+| Generate the poster images without the animation | Poster render-settings screen > `Images only`, or right sidebar > `Resume Generation` > `Images only`. |
+| Poster mode (Lite/Pro), resolution, or clip duration for an existing poster | Poster project > right sidebar > `Settings` tab, then `Apply changes`. |
 
 ### Project Review And Editing Locations
 
 | User asks for | Where to find it |
 | --- | --- |
-| Project outline | Select a project, then open the right scene sidebar > `Schema` tab. |
+| Project outline | Select a project, then open the right scene sidebar > `Schema` tab (`Plan` tab for a poster). |
+| Poster plan outline and generation status | Select the poster, then right sidebar > `Plan` tab. |
+| Poster prompt, first-frame prompt, or video prompt | Center canvas of the poster project; click the prompt node to open its rewrite modal. |
+| Delete a poster image, first frame, or animation | The matching media node on the poster canvas; the button states what the delete takes with it. |
 | Scene list | Select a project, then right scene sidebar > `Schema` tab. |
 | Asset browser | Select a project, then right scene sidebar > `Assets` tab. |
 | Project-specific settings | Select a project, then right scene sidebar > `Settings` tab. |
@@ -1337,7 +1545,7 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Default speech pace, SFX volume, SFX cues, or default narrator voices | `Settings > Audio Config`. |
 | Default voice timing, transition duration, or captions | `Settings > Video Config`. |
 
-## 25. Support Assistant (Ask AI)
+## 26. Support Assistant (Ask AI)
 
 The Support Assistant is an in-app help chat that answers questions about using Aificient Studio. Its answers are based on this user guide.
 
@@ -1376,7 +1584,7 @@ The assistant explains how to use the app. It does not change your project, star
 - If help chat is temporarily unavailable, wait a little while and try again.
 - If your session has expired, sign in again and reopen the chat.
 
-## 26. Troubleshooting
+## 27. Troubleshooting
 
 ### I cannot sign in
 
@@ -1450,6 +1658,30 @@ Try:
 
 Editing is blocked while generation is active. Stop generation or wait for it to finish, then edit.
 
+### I cannot add another poster reference image
+
+Reference images and pinned characters share one budget of 5, and characters have their own limit of 3. The `Reference assets` pill shows the combined count and its tooltip explains what is blocking you — unpin a character to free a slot, or remove an image.
+
+### A poster plan will not create
+
+- **"This poster has N references and the limit is now 5."** The plan was written before images and characters shared a budget. Send any correction in the chat; the oldest extras are dropped and the plan comes back ready to create.
+- **"One of the reference images is no longer in your assets folder."** Poster references live in your assets folder rather than inside the project. If one was deleted, attach it again in a chat correction.
+- **"A selected character is no longer in your library."** Unpin it and send the prompt again.
+- **Reference images must be JPG or PNG.** Convert the file and attach it again.
+- **The poster took too long to generate.** Reference images make plan generation slower — try again, or with fewer of them.
+
+### The poster render button is disabled
+
+Check, in order:
+
+- The `Settings` tab has no unsaved changes. A render always uses the saved video config, so the footer warns `Unsaved video settings` and blocks the submit until you `Apply changes`.
+- A runtime is selected in the `Resume Generation` menu (one GPU, or Aificient Cloud when it is available).
+- The animation is not already rendered — the button is disabled when there is nothing left to do.
+
+### My poster has no captions or Publish button
+
+Posters do not have either. There is no narration track to transcribe, so there is no caption step, and the `Publish` dialog is available for History projects only.
+
 ### Rename project fails
 
 Project rename is supported from the project list context menu. If it fails, check that the runtime or cloud API that owns the project is reachable, then try again.
@@ -1468,7 +1700,7 @@ For the full walkthrough of the Publish dialog (compose, review, scheduling, and
 
 Publishing runs entirely on your own machine through a private background browser session; nothing about your accounts or posts is sent to an Aificient server.
 
-## 27. Recommended Workflows
+## 28. Recommended Workflows
 
 ### Fast Preview Workflow
 
@@ -1512,7 +1744,29 @@ Use this when you want consistent characters across projects.
 4. Generate the project.
 5. Review scenes where the character appears.
 
-## 28. Glossary
+### Animate an Existing Poster
+
+Use this when you already have finished artwork.
+
+1. Open `Poster` mode and select `I have a poster`.
+2. Attach the poster image and describe how it should move.
+3. Pick a clip length, then send the prompt.
+4. Refine the plan in chat until the motion reads right.
+5. `Create project`, choose `Lite`/`Pro`, resolution, and one runtime, then `Start generation`.
+6. Download the animation from the final-video node.
+
+### Design and Animate a Poster From Zero
+
+Use this when there is no artwork yet.
+
+1. Open `Poster` mode and select `From zero`.
+2. Describe the poster, attach up to 5 references (each pinned character counts as one), and pick the aspect ratio and duration.
+3. Review the plan's three prompts and refine them in chat.
+4. `Create project` with `Images only` if you want to inspect the poster before spending render time.
+5. Check the designed poster and first frame on the canvas; rewrite a prompt and regenerate the images if needed.
+6. Use `Resume Generation` > pick a runtime > `Add to render queue` to render the animation.
+
+## 29. Glossary
 
 ### Asset
 
@@ -1529,6 +1783,26 @@ The per-GPU line of pending work. Each scene video is a job that waits its turn 
 ### Aificient Cloud
 
 The subscription-backed render service available on initial render settings and from `Resume Generation` for eligible scene videos. It uses credits and has its own queue, separate from local and rented GPU queues.
+
+### History Project
+
+The multi-scene kind of project: a concept becomes a script, scenes, images, narration, clips, and a stitched final video. It is what the `Concept` and `Brainstorm` chats produce.
+
+### Poster Project
+
+A project that animates one poster into a short clip (5–15 seconds) with model-generated sound. It has no scenes, captions, or stitch step — the rendered animation is the final video.
+
+### Poster Plan
+
+The output of a poster chat: a title, up to three prompts (poster, first frame, video), the attached references, and the clip's duration and aspect ratio. Creating a project from it is what starts generation.
+
+### First Frame
+
+The opening image of a poster animation, derived from the finished poster. The animation runs from the first frame back to the poster.
+
+### Reference Budget
+
+The five slots a poster's reference images and pinned characters share. Each character counts as one slot, and characters have their own limit of three.
 
 ### Scene Image
 
