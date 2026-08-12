@@ -194,7 +194,9 @@ The `Generation assets` flyout shows a small `N queued` count next to each local
 
 In addition to GPUs you manage yourself, eligible projects can use `Aificient Cloud` to render scene videos. It can appear as a runtime on the initial render-settings screen and later in the selected project's `Resume Generation` menu when source images and audio are ready.
 
-The Aificient Cloud option shows the project's `Lite` or `Pro` tier, resolution, and estimated credit cost before submission. It requires an active subscription, enough credits, and valid image/audio inputs. A submission can contain up to 32 missing scenes, and each scene's audio plus configured voice delays must fit within the 13-second cloud-render limit.
+The Aificient Cloud option shows the project's `Lite` or `Pro` tier, resolution, and estimated credit cost before submission. It requires an active subscription, enough credits, and each scene's image; scenes whose script has spoken text also need their narration generated first, because the narration decides the clip's length. A submission can contain up to 32 missing scenes, and a scene's narration can be at most 13 seconds long.
+
+How a cloud clip is made: the video model animates the scene image and composes the clip's own soundtrack — quiet ambience and sound effects implied by the visible action only, never speech or music. Your narration is **not** baked into the clip; it is mixed over it later, in the preview and in the final stitch. Each clip's length is derived automatically from its narration (voice delay + narration + a short tail, whole seconds between 4 and 15); a scene with no spoken text renders as a 5-second clip. Renders made on gift credits carry a small visible Aificient watermark; paid renders do not.
 
 Aificient Cloud is selected by itself; it cannot be combined with local or rented GPUs in the same submission. Once submitted, each scene appears as a separate cloud job. The app refreshes completed clips into the project automatically.
 
@@ -205,6 +207,8 @@ When cloud jobs exist, open `Generation assets > Aificient Cloud` to view the cu
 While cloud clips are queued or rendering, the center canvas keeps showing the project's overall generation progress and the bottom of the right scene sidebar shows the Aificient Cloud queue/rendering status. Cancel queued cloud clips from `Generation assets > Aificient Cloud`; the canvas progress bar does not include a cloud-cancel button.
 
 For account-wide cloud render history, including settled prices, use `Settings > Usage > Load latest generation jobs`.
+
+Cloud rendering currently outputs `720p`; the `1080p` option is shown disabled until the engine supports it again.
 
 ## 6. Renting a GPU
 
@@ -461,7 +465,7 @@ This section describes the History render-settings screen. A poster has its own,
 Choose:
 
 - Aspect ratio: `16:9` or `9:16`.
-- Resolution: `1080p` or `720p`.
+- Resolution: `720p`. The `1080p` option is temporarily disabled — cloud renders run at 720p, and any project still saved at 1080p renders (and is billed) at 720p.
 
 Use `9:16` for vertical/social video. Use `16:9` for widescreen video.
 
@@ -497,6 +501,8 @@ Suggested use:
 - Use `Lite` for previews, quick feedback, or when your GPU has less than 31 GB of VRAM (the app shows a `Recommended` badge on `Lite` in that case).
 - Use `Pro` for finished videos when the selected GPU has enough memory.
 - A100 runtimes require `Pro`; the app blocks the `Lite`/FP8 path on an A100 and asks you to switch.
+
+On Aificient Cloud the tier is a quality/price knob: `Lite` renders with fewer refinement steps, `Pro` with more (about a third more compute), and `Pro` is priced accordingly.
 
 ### Images and Audio Only
 
@@ -560,7 +566,7 @@ Shows:
 - Scene title.
 - Duration.
 
-### Description, Character Reference, Script, and SFX Nodes
+### Description, Character Reference, and Script Nodes
 
 These nodes show editable scene text.
 
@@ -600,7 +606,7 @@ Actions can include:
 - Retry loading.
 - Regenerate audio.
 
-Regenerating audio can affect later video stages because video timing depends on audio.
+Regenerating audio can affect later video stages because video timing depends on audio. For cloud-rendered scenes the rule is forgiving: if the new narration (plus the voice delay and tail) still fits inside the rendered clip, the clip is **kept** — the scene simply plays longer or shorter at the next stitch, with no re-render. Only when the new narration outgrows the clip is the clip deleted, with a warning, so the scene can be re-rendered at the right length. Captions' word timings and the final video are always refreshed after an audio change.
 
 ### Video Node
 
@@ -618,9 +624,11 @@ Actions can include:
 
 Deleting a scene video means the final video must be regenerated.
 
+For cloud-rendered scenes, pressing play previews the clip and its narration **together**: the voice enters after the configured voice delay, the clip's own soundtrack plays underneath at the project's `SFX volume`, and playback stops where the final video will cut the scene — so what you hear and where it ends is what the stitched video will keep.
+
 ### Stitch Node
 
-Shows final video stitching status. The stitch runs locally in the desktop app (no GPU needed) as soon as every scene clip is ready: the app downloads the clips, combines them with the configured transition, writes the provenance watermark, and uploads the final video to your project.
+Shows final video stitching status. The stitch runs locally in the desktop app (no GPU needed) as soon as every scene clip is ready: the app downloads the clips and, for cloud-rendered scenes, their narration tracks; mixes each narration over its clip's own soundtrack (the model's ambience dips under the voice, scaled by the project's `SFX volume`); trims each narrated scene to end a beat after its voice finishes (the rendered clip is an oversized canvas — the narration decides the scene's real length); combines the scenes with the configured transition; writes the provenance watermark; and uploads the final video to your project.
 
 Only one stitch runs at a time. If several projects finish rendering around the same time, their stitches queue up and run one after another — a waiting stitch shows `Queued` with a `Waiting for another stitch to finish` message until it is its turn. Cancelling a generation also removes its stitch from this queue.
 
@@ -740,7 +748,7 @@ You can change:
 - Guidance values (Video/Audio CFG).
 - Speech pace.
 - Voice timing.
-- Sound effect volume.
+- SFX volume — how loud the video model's own soundtrack (ambience and effects) plays under your narration, in the preview and in the final stitch. Default 20%.
 - Transition duration.
 - Whether captions are burned into this project's videos.
 - Caption position, font, size, and colors.
@@ -828,7 +836,7 @@ Cancelled steps are not listed as errors. If you stop a generation, the box stil
 
 Use the summary to decide what to fix or rerun:
 
-- For `API task` failures (images, audio, SFX, characters), review or rewrite the affected scene or character, then use `Resume Generation`.
+- For `API task` failures (images, audio, characters), review or rewrite the affected scene or character, then use `Resume Generation`.
 - For `Runtime task` failures (video, alignment), check that a GPU runtime is ready and review its logs, then use `Resume Generation`. Stitch failures happen locally — check your internet connection and disk space, then use `Resume Generation` to retry the stitch.
 
 If you encounter a **409 error**, this indicates the runtime is busy with a task, possibly due to a state mismatch between the runtime and the UI. Wait a few minutes and try again; if the issue persists, restart the runtime.
@@ -873,23 +881,6 @@ Examples:
 - Changing the script usually requires new narration and video.
 - Changing character references usually requires new visuals.
 
-### Rewrite SFX
-
-The SFX editor lets you:
-
-- Add cues.
-- Remove cues.
-- Change cue descriptions.
-- Change cue start times.
-- Change cue durations.
-- Ask AI to rewrite the sound design.
-
-Cue validation helps prevent invalid timings.
-
-Changing SFX can require regenerating generated audio, video clips, and final output.
-
-Manual SFX editing is best when you know the exact cue timing. AI SFX editing is best when you want to describe the overall sound direction, such as making the sound design softer, more cinematic, simpler, or more realistic.
-
 ### Edit Character
 
 For editable project characters, the character editor can change:
@@ -907,7 +898,7 @@ The `Voice` control appears only for the narrator. It uses the same voice picker
 
 What gets invalidated depends on what you change:
 
-- Changing a visual field (name, gender, type, humanized, description) or using AI rewrite deletes the character's reference image and the scene visuals where it appears. Narration, SFX, and other audio are preserved.
+- Changing a visual field (name, gender, type, humanized, description) or using AI rewrite deletes the character's reference image and the scene visuals where it appears. Narration and other audio are preserved.
 - Changing only the voice keeps the artwork (scene images and the reference image) but deletes the narration audio and rendered video for the affected scenes. Re-generate audio and video to apply the new voice.
 
 The editor's warning box updates to tell you which of these will happen before you confirm.
@@ -923,7 +914,7 @@ After deletion, use `Resume Generation` to regenerate what is missing.
 Typical effects:
 
 - Delete image: the scene image is removed, and video for that scene may need to be regenerated.
-- Regenerate audio: narration/SFX-related audio is recreated, and dependent video may need to be regenerated.
+- Regenerate audio: the narration is recreated; a cloud-rendered clip survives if the new narration still fits inside it, and is deleted with a warning when it does not.
 - Delete video: the scene clip is removed, and the final video must be regenerated.
 - Regenerate character visuals: character reference imagery and affected scene visuals may need to be regenerated.
 
@@ -948,7 +939,7 @@ Common settings:
 - Audio guidance (Audio CFG).
 - Speech pace.
 - Voice delays.
-- SFX volume.
+- SFX volume (the level of the video model's own soundtrack under the narration; default 20%).
 - Transition duration.
 - Burn-in captions on or off.
 - Caption position, font, size, and colors.
@@ -959,7 +950,7 @@ Project settings can override global defaults for that project.
 
 ## 20. Poster Projects
 
-A poster project turns a single poster into a short animated clip. It is a different kind of project from the multi-scene History flow: there are no scenes, no narration or SFX tracks, no captions, and no final stitch. The animation the app produces **is** the final video, and its soundtrack is generated by the video model itself.
+A poster project turns a single poster into a short animated clip. It is a different kind of project from the multi-scene History flow: there are no scenes, no narration track, no captions, and no final stitch. The animation the app produces **is** the final video, and its soundtrack is generated by the video model itself.
 
 Everything else you already know still applies: posters live in the same project list, render on the same GPUs or on Aificient Cloud, use the same credits, and use the same canvas and right-sidebar layout.
 
@@ -1013,7 +1004,7 @@ Writing a poster plan is a metered charge: reference images are read by the prom
 `Create project` opens the poster render-settings screen, with the plan preview attached beside it. It contains:
 
 - **Aspect ratio** — read-only. It is stamped from the poster itself.
-- **Resolution** — `1080p` or `720p`.
+- **Resolution** — `720p` (`1080p` is temporarily disabled).
 - **Mode** — `Lite` (faster, smaller GPUs) or `Pro` (best quality).
 - **Video duration** — the length of the animation.
 - **Images only** — stop after the poster images and skip the animation. You can render it later from the project.
@@ -1053,7 +1044,7 @@ The right sidebar of a poster project has three tabs: `Plan`, `Assets`, and `Set
 **Settings** is a poster's whole video configuration, and it is deliberately small:
 
 - `Aspect ratio` — read-only, set by the poster.
-- `Resolution` — `1080p` / `720p`.
+- `Resolution` — `720p` (`1080p` temporarily disabled).
 - `Mode` — `Lite` / `Pro`.
 - `Video duration`.
 
@@ -1093,7 +1084,7 @@ The delete buttons on the media nodes cascade the same way — deleting the post
 - **Captions.** There is no narration track to transcribe, so there is no caption step and no captioned-clip column.
 - **Stitching.** A poster is one clip; the render is the final video.
 - **Publishing.** The `Publish` dialog is available for History projects only.
-- **Scene tools.** No scene list, no SFX editor, no character node editing inside the project — a poster's characters come from your library at plan time.
+- **Scene tools.** No scene list, no character node editing inside the project — a poster's characters come from your library at plan time.
 
 ### A Note on Poster Reference Images
 
@@ -1139,7 +1130,7 @@ Each job can show:
 - Quality tier and resolution.
 - Requested and finished times.
 - Progress percentage plus the current stage or message while the job is queued or running.
-- The settled credit price for a completed job, shown with the credit icon (for example, `1.2 credits`).
+- The settled credit price for a completed job, shown with the credit icon (for example, `3.4 credits`).
 
 A price appears only when a completed render has been successfully settled by billing. Queued, running, failed, cancelled, and unknown jobs do not show a price. A completed job may also omit the price while billing is not settled.
 
@@ -1206,14 +1197,13 @@ Controls the default video-model settings used by new projects.
 Common options:
 
 - Quality (Lite or Pro).
-- Negative prompt.
-- Caption instructions.
+- Social media caption instructions.
 - Local runtime download folder.
 - Video guidance (Video CFG).
 - Audio guidance (Audio CFG).
 - Prefetch count.
 
-**Caption Instructions** is optional free-form guidance the AI follows when it drafts a publish caption (with the **Generate** button in the Publish dialog). Use it to set a tone, style, call-to-action, emoji use, or other constraints — for example, "casual and punchy, end with a question, no more than two emojis." It applies to every project, and you can leave it blank.
+**Social Media Caption Instructions** is optional free-form guidance the AI follows when it drafts a publish caption (with the **Generate** button in the Publish dialog). Use it to set a tone, style, call-to-action, emoji use, or other constraints — for example, "casual and punchy, end with a question, no more than two emojis." It applies to every project, and you can leave it blank.
 
 The runtime download folder can only be changed while the local runtime is stopped and is not downloading, setting up, or booting. Use `Default` to return to the app's standard data folder.
 
@@ -1222,8 +1212,7 @@ The runtime download folder can only be changed while the local runtime is stopp
 Controls:
 
 - Speech pace.
-- Sound effect volume.
-- Whether generated concepts should include SFX cues.
+- SFX volume — the default level of the video model's own soundtrack under the narration (a 0–100% slider; default 20%). New projects start from this value; each project can override it in its own `Settings` tab.
 - Default narrator voices.
 
 #### Default Narrator Voices
@@ -1258,10 +1247,13 @@ When captions are enabled, you can adjust:
 **How captions are made.** Captions are added *after* a scene's video is
 rendered, not during it. Each scene gets a second box on the board — **raw clip
 → captioned clip** — and the captioned one is produced in two steps: Aificient
-transcribes the finished clip to get word-by-word timings (a small paid step,
-billed like other generations), then your own machine burns those captions into
-a copy of the clip. That local render shares the same queue as the final
-stitch, so it never competes with video generation on the GPU.
+transcribes the scene's **narration audio** to get word-by-word timings aligned
+to where the voice sits in the final video (a small paid step, billed like
+other generations), then your own machine burns those captions into a copy of
+the clip. The app also self-checks stored timings before every burn — timings
+that do not match the narration, or that predate a timing change, are corrected
+or re-transcribed automatically. That local render shares the same queue as the
+final stitch, so it never competes with video generation on the GPU.
 
 After caption generation, both versions of each scene are saved to your
 project: the plain clip and the captioned one. You can therefore open the
@@ -1290,8 +1282,12 @@ Captions can be switched at any time from the selected project's right-sidebar
   no additional transcription charge and rebuild the final video. Until that
   finishes, an older final video may still be available.
 - **Turning captions off** hides the captioned-clip column and removes the old
-  captioned cuts and final video. The plain clips are kept. Select
-  `Stitch Final Video` to rebuild the final video from those plain clips.
+  captioned cuts, the saved word timings, and the final video. The plain clips
+  are kept. Select `Stitch Final Video` to rebuild the final video from those
+  plain clips. Because the word timings are deleted, turning captions back on
+  later re-transcribes each scene (the same small per-scene charge) — which
+  also makes an off-and-on round trip a clean reset if captions ever look
+  wrong.
 
 In some restored or older projects, the Stitch node can instead show a
 `Re-stitch with captions` or `Re-stitch without captions` shortcut when the
@@ -1460,13 +1456,11 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Aificient Cloud queue/render progress | Center-canvas generation progress bar and the status at the bottom of the right scene sidebar. Cancel queued clips from `Generation assets > Aificient Cloud`. |
 | Generate images and audio only | Initial render-settings screen, or `Resume Generation` menu when available. |
 | Quality (Lite or Pro) | Initial render-settings screen, selected project > right sidebar > `Settings`, or global `Settings > Model Config`. |
-| Negative prompt | Global `Settings > Model Config`. |
 | Video guidance (Video CFG) | Selected project > right sidebar > `Settings`, or global `Settings > Model Config`. |
 | Audio guidance (Audio CFG) | Selected project > right sidebar > `Settings`, or global `Settings > Model Config`. |
 | Prefetch count | Global `Settings > Model Config`. |
 | Speech pace | Selected project > right sidebar > `Settings`, or global `Settings > Audio Config`. |
-| SFX volume | Selected project > right sidebar > `Settings`, or global `Settings > Audio Config`. |
-| Generate SFX cues | Global `Settings > Audio Config`. |
+| SFX volume (video-model soundtrack level under the narration) | Selected project > right sidebar > `Settings`, or global `Settings > Audio Config`. |
 | Default narrator voices (male/female fallback) | Global `Settings > Audio Config`, in the `Default Narrator Voices` section. |
 | Start voice delay or end voice delay | Selected project > right sidebar > `Settings`, or global `Settings > Video Config`. |
 | Transition duration | Selected project > right sidebar > `Settings`, or global `Settings > Video Config`. |
@@ -1504,9 +1498,8 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Asset browser | Select a project, then right scene sidebar > `Assets` tab. |
 | Project-specific settings | Select a project, then right scene sidebar > `Settings` tab. |
 | Focus a scene or node | Click an item in right scene sidebar > `Schema`, or use a focus action in `Assets`. |
-| Scene description, character reference, script, or SFX text | Center canvas, in the scene's text/detail nodes. |
+| Scene description, character reference, or script text | Center canvas, in the scene's text/detail nodes. |
 | Rewrite scene text | Click the scene text node on the center canvas, then choose manual edit or AI rewrite. |
-| Rewrite SFX | Click the SFX/text detail node for the scene on the center canvas. |
 | Edit a project character | Click the character node on the center canvas when the character is editable. |
 | Change a narrator's voice | Click the narrator's character node on the center canvas, then use the `Voice` picker in the character editor (locked for library characters — change those in the library). |
 | Delete scene image | Scene image node on the center canvas. |
@@ -1535,14 +1528,14 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Connect or remove a social account (TikTok, etc.) | `Settings > Social Accounts`. |
 | Reconnect an account marked `Session expired` | `Settings > Social Accounts`, then select the amber refresh/reconnect icon on that account. |
 | Refresh account name, avatar, or follower count | `Settings > Social Accounts`, `Refresh metadata`. |
-| Caption instructions / guidance for AI captions | `Settings > Model Config`. |
+| Social media caption instructions / guidance for AI publish captions | `Settings > Model Config`. |
 | Vast.ai key or API key | `Settings > API Keys`. |
 | Vast.ai balance | `Settings > API Keys`. |
 | GPU rental disk space, max price, or reliability filters | `Settings > GPU Config`. |
 | GPU family for a rental | Left sidebar > `Generation assets` > `Create instance`, then choose a GPU profile. |
-| Default model quality, negative prompt, guidance, or prefetch | `Settings > Model Config`. |
+| Default model quality, guidance, or prefetch | `Settings > Model Config`. |
 | Local runtime download folder | `Settings > Model Config`; stop the local runtime before changing it. |
-| Default speech pace, SFX volume, SFX cues, or default narrator voices | `Settings > Audio Config`. |
+| Default speech pace, SFX volume, or default narrator voices | `Settings > Audio Config`. |
 | Default voice timing, transition duration, or captions | `Settings > Video Config`. |
 
 ## 26. Support Assistant (Ask AI)
@@ -1708,7 +1701,7 @@ Use this when you want to inspect assets before video rendering.
 
 1. Create a concept.
 2. Choose `Generate images and audio only`.
-3. Review images, narration, and SFX.
+3. Review images and narration.
 4. Rewrite weak scenes or characters.
 5. Resume generation later with a ready GPU.
 
@@ -1814,7 +1807,9 @@ The spoken audio generated from the scene script.
 
 ### SFX
 
-Sound effects generated or assigned to a scene.
+The sound effects and ambience the video model composes into each clip's own
+soundtrack. There are no separate SFX tracks or cues to edit; the `SFX volume`
+setting controls how loud this soundtrack plays under the narration.
 
 ### Raw Clip
 
@@ -1822,7 +1817,7 @@ A generated scene video before final stitching.
 
 ### Stitch
 
-The process of combining scene clips into the final video. It runs locally in the desktop app once every scene clip is ready. Only one stitch runs at a time; additional stitches wait in a local queue.
+The process of combining scene clips into the final video: each cloud scene's narration is mixed over its clip's soundtrack, each narrated scene is trimmed to end just after its voice, and the scenes are joined with the configured transition. It runs locally in the desktop app once every scene clip is ready. Only one stitch runs at a time; additional stitches wait in a local queue.
 
 ### Final Output
 
