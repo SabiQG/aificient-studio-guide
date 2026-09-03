@@ -208,7 +208,7 @@ While cloud clips are queued or rendering, the center canvas keeps showing the p
 
 For account-wide cloud render history, including settled prices, use `Settings > Usage > Load latest generation jobs`.
 
-Cloud rendering currently outputs `720p`; the `1080p` option is shown disabled until the engine supports it again.
+New projects render at `720p` by default: it is much cheaper than `1080p` with very similar quality. `1080p` stays available as an explicit choice and costs more per clip.
 
 ## 6. Renting a GPU
 
@@ -465,7 +465,7 @@ This section describes the History render-settings screen. A poster has its own,
 Choose:
 
 - Aspect ratio: `16:9` or `9:16`.
-- Resolution: `720p`. The `1080p` option is temporarily disabled — cloud renders run at 720p, and any project still saved at 1080p renders (and is billed) at 720p.
+- Resolution: `720p` (default) or `1080p`. `720p` is much cheaper to render with very similar quality; `1080p` costs more per clip.
 
 Use `9:16` for vertical/social video. Use `16:9` for widescreen video.
 
@@ -1004,7 +1004,7 @@ Writing a poster plan is a metered charge: reference images are read by the prom
 `Create project` opens the poster render-settings screen, with the plan preview attached beside it. It contains:
 
 - **Aspect ratio** — read-only. It is stamped from the poster itself.
-- **Resolution** — `720p` (`1080p` is temporarily disabled).
+- **Resolution** — `720p` (default, much cheaper) or `1080p`.
 - **Mode** — `Lite` (faster, smaller GPUs) or `Pro` (best quality).
 - **Video duration** — the length of the animation.
 - **Images only** — stop after the poster images and skip the animation. You can render it later from the project.
@@ -1044,7 +1044,7 @@ The right sidebar of a poster project has three tabs: `Plan`, `Assets`, and `Set
 **Settings** is a poster's whole video configuration, and it is deliberately small:
 
 - `Aspect ratio` — read-only, set by the poster.
-- `Resolution` — `720p` (`1080p` temporarily disabled).
+- `Resolution` — `720p` (default) / `1080p`.
 - `Mode` — `Lite` / `Pro`.
 - `Video duration`.
 
