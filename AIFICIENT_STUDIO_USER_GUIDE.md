@@ -9,7 +9,7 @@ This guide explains how to use Aificient Studio from the application interface. 
 Aificient Studio helps you create AI-generated video from a written idea. You can:
 
 - Brainstorm video ideas.
-- Turn an idea into a structured concept.
+- Turn an idea into a structured story script.
 - Create reusable characters.
 - Generate scene images, narration, sound effects, video clips, and a final stitched video.
 - Animate a poster — one you already have, or one the app designs for you.
@@ -66,7 +66,7 @@ The code screen also lets you:
 After signing in, the left sidebar stays visible while the main area changes with what you are doing:
 
 - Left sidebar: primary navigation, recent projects, project search, generation assets, and the user/settings area.
-- Home/new-project screen: appears in the main area when no project is open. It contains the Concept, Poster, Brainstorm, and Character creation chats.
+- Home/new-project screen: appears in the main area when no project is open. It contains the Story, Poster, and Character creation chats; brainstorming is a `Brainstorm` switch inside Story.
 - Center canvas: appears when a project is open and shows its visual flow and generated assets.
 - Right project sidebar: appears with an open project and contains the project outline, asset browser, project-specific settings, and resume actions. Its tabs and outline follow the project type — `Schema` / `Assets` / `Settings` for a History project, `Plan` / `Assets` / `Settings` for a poster.
 
@@ -249,31 +249,30 @@ If no offers appear, try adjusting GPU settings in `Settings > GPU Config`.
 
 Click `New project` in the sidebar to show the creation home screen in the main workspace. It is no longer a centered modal: the left sidebar stays visible, and the creation screen replaces the project canvas until you open or create a project. Clicking `New project` while a project is open deselects that project and begins a fresh creation chat when needed.
 
-The creation home screen has four modes in the segmented control at the top of the chat composer:
+The creation home screen has three modes in the segmented control at the top of the chat composer:
 
-- `Concept`: draft one script concept and iterate on the same creative brief. Produces a History project.
+- `Story`: write one video story from a clear brief and refine it in chat. Produces a History project. Its composer has a `Brainstorm` switch for exploring five directions before the story is written (see "Brainstorm" under "Story Mode").
 - `Poster`: animate a poster you already have, or design one from zero and animate it. Produces a poster project.
-- `Brainstorm`: generate five directions, refine them, then turn one into a concept.
 - `Character`: generate a reusable character (image + voice) for your library.
 
-Each mode has its own hero text, its own composer controls, and its own accent colour, so it is always clear which one is active.
+Each mode has its own hero text, its own composer controls, and its own accent colour, so it is always clear which one is active. Story turns amber while `Brainstorm` is on and sky blue while it is off.
 
-The top-right `History` control opens previous Concept, Poster, Brainstorm, and Character chats. You can reopen a chat, refresh the history, or delete a saved chat. The active conversation title appears in the top bar after the conversation has started.
+The top-right `History` control opens previous Story, Poster, and Character chats; the `Story` filter also lists brainstorm chats, which keep their own icon. You can reopen a chat, refresh the history, or delete a saved chat. The active conversation title appears in the top bar after the conversation has started.
 
-### Concept Mode
+### Story Mode
 
-Use Concept mode when you already have a video idea.
+Use Story mode when you already have a video idea. (Earlier versions called this mode `Concept` and had a separate `Brainstorm` mode; brainstorming is now a switch inside Story.)
 
 Typical workflow:
 
 1. Enter your idea.
 2. Choose style, duration, language, and optional characters.
 3. Send the prompt.
-4. Review the generated concept.
-5. Ask for corrections, or edit the concept directly with `Edit` (see "Reviewing and Editing the Generated Concept").
+4. Review the generated story script.
+5. Ask for corrections, or edit the script directly with `Edit` (see "Reviewing and Editing the Generated Concept").
 6. Continue to render settings.
 
-The generated concept can include:
+The generated story can include:
 
 - Title.
 - Artistic style.
@@ -286,7 +285,20 @@ The generated concept can include:
 
 #### Find Inspiration
 
-Below the empty Concept composer there is a `Find inspiration` button. It expands a small showcase of real generated videos — each card plays a short clip and shows its title and artistic style. Hover a card to see `Use this idea`; click it to drop a matching brief into the composer **and** select the artistic style that clip was rendered with. You can then edit the text before sending it. Click the button again to collapse the showcase.
+Below the empty Story composer (with `Brainstorm` off) there is a `Find inspiration` button. It expands a small showcase of real generated videos — each card plays a short clip and shows its title and artistic style. Hover a card to see `Use this idea`; click it to drop a matching brief into the composer **and** select the artistic style that clip was rendered with. You can then edit the text before sending it. Click the button again to collapse the showcase.
+
+#### Brainstorm
+
+Turn on the `Brainstorm` switch in the Story composer when you want help exploring ideas before committing to one. It is a small on/off switch below the prompt, after the language control, not a separate mode: the segmented control stays on `Story`, and the hero reads `Story · Brainstorm` while it is on.
+
+Typical workflow:
+
+1. Turn on `Brainstorm` and enter a topic or rough direction.
+2. Review the five generated directions.
+3. Ask for more options or corrections.
+4. Click `Write story` on the idea you like. The app opens a Story chat seeded with that idea and writes the full script; `Brainstorm` is off in that chat.
+
+Turning the switch off returns you to a Story chat without brainstorming; turning it back on reopens your brainstorm chat.
 
 ### Poster Mode
 
@@ -297,17 +309,6 @@ Use Poster mode to turn a still poster into a few seconds of motion. It is descr
 3. Set the clip duration, and — for `From zero` — the aspect ratio.
 4. Send the prompt and review the generated poster plan.
 5. Refine the plan in chat if needed, then `Create project`.
-
-### Brainstorm Mode
-
-Use Brainstorm mode when you want help exploring ideas.
-
-Typical workflow:
-
-1. Enter a topic or rough direction.
-2. Review the generated idea options.
-3. Ask for more options or corrections.
-4. Choose an idea to turn it into a full concept.
 
 ### Character Mode
 
@@ -325,7 +326,7 @@ Generated characters can later be pinned into video concepts.
 
 ### Stopping an In-Progress Chat Request
 
-While a brainstorm, concept, or character request is being generated, the chat's send button turns into a stop button (a filled square). Click it to cancel the request you just started.
+While a brainstorm, story, or character request is being generated, the chat's send button turns into a stop button (a filled square). Click it to cancel the request you just started.
 
 When you cancel:
 
@@ -334,13 +335,13 @@ When you cancel:
 - If the request had already finished on the server, its real result is shown instead of being discarded.
 - If the request is no longer available, the chat shows that it is no longer available.
 
-Canceling affects only the single in-progress chat request. It does not remove previous messages, ideas, concepts, or characters you already created. This stop button is separate from `Stop Generation` for video and asset rendering (see "Stop Generation").
+Canceling affects only the single in-progress chat request. It does not remove previous messages, ideas, stories, or characters you already created. This stop button is separate from `Stop Generation` for video and asset rendering (see "Stop Generation").
 
 ### Reviewing and Editing the Generated Concept
 
 Yes — you can change the script before you start generating. There are two ways to do it, on two different screens of the creation flow. You can use either one, or both.
 
-**1. Ask the AI in the chat (concept/brainstorm screen).** While you are still in the chat conversation, keep typing to request changes in natural language — for example, "make scene 2 funnier", "rename the main character to Mia", or "shorten the narration". The assistant rewrites the concept for you and the conversation updates with the result. This is best when you want the AI to rework wording, tone, or whole sections.
+**1. Ask the AI in the chat (Story chat, with or without Brainstorm).** While you are still in the chat conversation, keep typing to request changes in natural language — for example, "make scene 2 funnier", "rename the main character to Mia", or "shorten the narration". The assistant rewrites the concept for you and the conversation updates with the result. This is best when you want the AI to rework wording, tone, or whole sections.
 
 **2. Edit by hand on the render-settings screen.** When you continue from the concept, the render-settings screen slides into the main workspace and a `Script` preview panel appears on the right. Click `Edit` at the top-right of that panel to switch it into edit mode. The button changes to `Done`; click it again to apply your changes and leave edit mode. This is best for small, exact fixes, and it sits next to the render settings and the `Generate` button. Use the back arrow in the render-settings header to return to the chat.
 
@@ -410,7 +411,7 @@ Language affects:
 
 ### Pinned Characters
 
-In Concept and Brainstorm modes, you can pin existing library characters. Pinned characters are included in the concept so the generated story uses them.
+In Story mode (with or without `Brainstorm`), you can pin existing library characters. Pinned characters are included in the concept so the generated story uses them.
 
 Poster mode can pin characters too, but only in the `From zero` pipeline — a character has to be placed into a poster while it is being designed, and an imported poster is already finished. There you can pin up to 3 characters, and each one spends a slot from the poster's shared reference budget (see "Reference Images and Characters").
 
@@ -805,7 +806,7 @@ Stopping generation:
 
 You can usually continue later with `Resume Generation`.
 
-This stop action is for video and asset generation. To cancel a brainstorm, concept, or character request on the creation home screen, use the stop button that replaces the chat's send button (see "Stopping an In-Progress Chat Request").
+This stop action is for video and asset generation. To cancel a brainstorm, story, or character request on the creation home screen, use the stop button that replaces the chat's send button (see "Stopping an In-Progress Chat Request").
 
 ## 17. Generation Error Summary
 
@@ -1414,8 +1415,8 @@ When answering, give the shortest path from a stable area of the app, such as `l
 
 | User asks for | Where to find it |
 | --- | --- |
-| Concept mode | Left sidebar > `New project`, then choose `Concept` in the segmented control above the home-screen composer. |
-| Brainstorm mode | Left sidebar > `New project`, then choose `Brainstorm` above the composer. |
+| Story mode (formerly Concept) | Left sidebar > `New project`, then choose `Story` in the segmented control above the home-screen composer. |
+| Brainstorm | Left sidebar > `New project`, choose `Story`, then turn on the `Brainstorm` switch below the prompt, after the language control. |
 | Character mode | Left sidebar > `New project`, then choose `Character` above the composer. |
 | Poster mode | Left sidebar > `New project`, then choose `Poster` above the composer. |
 | Animate a poster I already have | Poster mode, then the `I have a poster` toggle below the prompt, then the `Poster image` pill. |
@@ -1423,21 +1424,21 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Poster reference images | Poster mode > `From zero`, then the `Reference assets` pill below the prompt. |
 | Poster aspect ratio | Poster mode > `From zero`, aspect-ratio pill below the prompt. For an imported poster the ratio comes from the image and cannot be set. |
 | Poster clip length | Poster mode, duration pill below the prompt (5–15 seconds), or later in the project's right sidebar > `Settings` > `Video duration`. |
-| Find inspiration / example videos | Creation home screen in `Concept` mode, the `Find inspiration` button below the composer. |
-| Idea prompt or chat prompt | Creation home screen, `Concept` or `Brainstorm` mode, in the bottom composer. |
+| Find inspiration / example videos | Creation home screen in `Story` mode with `Brainstorm` off, the `Find inspiration` button below the composer. |
+| Idea prompt or chat prompt | Creation home screen, `Story` mode (with or without `Brainstorm`), in the bottom composer. |
 | Character prompt | Creation home screen, `Character` mode, in the bottom composer. |
 | Visual style | Creation home screen, style pill below the prompt. |
-| Duration | Creation home screen, duration pill below the prompt in Concept or Brainstorm mode. |
-| Language | Creation home screen, language control below the prompt in Concept or Brainstorm mode. |
-| Pinned characters | Creation home screen, `Characters` pill below the prompt in Concept or Brainstorm mode. |
-| Character library | `Character list` in the left sidebar, or the `Characters` picker in a Concept/Brainstorm composer. |
+| Duration | Creation home screen, duration pill below the prompt in Story mode. |
+| Language | Creation home screen, language control below the prompt in Story mode. |
+| Pinned characters | Creation home screen, `Characters` pill below the prompt in Story mode. |
+| Character library | `Character list` in the left sidebar, or the `Characters` picker in a Story composer. |
 | Character search, filters, previews, rename, create, and delete | Left sidebar > `Character list`. |
 | Reference image for a character | Creation home screen, `Character` mode, `Image`/`Reference` control below the prompt. |
 | Character voice | Creation home screen, `Character` mode, `Voice` pill below the prompt. |
-| Generate button for a concept | Creation home-screen chat, on the generated concept. |
-| Stop or cancel a brainstorm, concept, or character chat request | Creation home-screen chat — while a request is generating, the send button becomes a stop (filled square) button; click it to cancel. |
-| Edit the generated concept (title, characters, scenes, scripts) | Two ways: ask the AI in the `Concept`/`Brainstorm` chat, or click `Edit` in the `Script` preview panel on the render-settings screen. |
-| Edit the script by asking the AI / with a prompt | Creation home-screen `Concept` or `Brainstorm` chat — type the change you want and the assistant rewrites the concept. |
+| Generate button for a story | Creation home-screen chat, on the generated story script. |
+| Stop or cancel a brainstorm, story, or character chat request | Creation home-screen chat — while a request is generating, the send button becomes a stop (filled square) button; click it to cancel. |
+| Edit the generated concept (title, characters, scenes, scripts) | Two ways: ask the AI in the `Story` chat, or click `Edit` in the `Script` preview panel on the render-settings screen. |
+| Edit the script by asking the AI / with a prompt | Creation home-screen `Story` chat — type the change you want and the assistant rewrites the script. |
 | `Edit` button for the script | Right-side `Script` preview panel on the render-settings screen (after continuing from the concept), not on the chat screen. |
 | Edit a scene title, description, or script before generating | Render-settings `Script` preview panel in `Edit` mode, in the scene's card. |
 | Change which characters appear in a scene | Render-settings `Script` preview panel in `Edit` mode, under `Characters in scene`. |
@@ -1471,7 +1472,7 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Re-burn captions after changing their style | Apply the project caption-style change, then select `Resume Generation`; saved word timings are reused. |
 | Build a missing final video when all required clips are ready | Bottom of the right sidebar > `Stitch Final Video`. Some restored projects may instead offer `Re-stitch with captions` / `Re-stitch without captions` on the Stitch node. |
 | Resume Generation | Right scene sidebar for the selected project, shown when assets are missing or invalidated. |
-| Stop or cancel video/asset generation | During active generation, in the visible generation/progress controls or right sidebar stop action. To cancel a brainstorm/concept/character chat request instead, use the stop button in the creation home-screen chat. Cloud queue cancellation is under `Generation assets > Aificient Cloud`. |
+| Stop or cancel video/asset generation | During active generation, in the visible generation/progress controls or right sidebar stop action. To cancel a brainstorm/story/character chat request instead, use the stop button in the creation home-screen chat. Cloud queue cancellation is under `Generation assets > Aificient Cloud`. |
 | Generation error summary, error box, or list of failed tasks | Top-right corner of the center canvas, shown after a generation finishes with one or more errors. |
 | Publish | Bottom area of the right scene sidebar for the selected project. Opens the Publish dialog to post the final video to TikTok, Instagram Reels, or YouTube Shorts. Enabled once the project has a final video. |
 | Generate an AI caption | Publish dialog, compose step, the `Generate` (atom) button next to the caption section. |
@@ -1779,7 +1780,7 @@ The subscription-backed render service available on initial render settings and 
 
 ### History Project
 
-The multi-scene kind of project: a concept becomes a script, scenes, images, narration, clips, and a stitched final video. It is what the `Concept` and `Brainstorm` chats produce.
+The multi-scene kind of project: a concept becomes a script, scenes, images, narration, clips, and a stitched final video. It is what the `Story` chat produces (with or without `Brainstorm`).
 
 ### Poster Project
 
