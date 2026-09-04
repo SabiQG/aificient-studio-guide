@@ -61,6 +61,12 @@ The code screen also lets you:
 - Use a different email.
 - See when the code expires.
 
+### Introduction Tour
+
+The first time a new account opens the app, a short guided tour walks through the home screen: the Story / Poster / Character picker, the prompt, the options row, the generate button and the sidebar. Each step spotlights the real control and can be skipped at any time (`Skip tour`, the close button, or `Esc`). The last step depends on your account: trial accounts see their free credits and a `Start creating` button, accounts without credits are invited to pick a plan, and subscribers see their plan's allotment.
+
+The tour shows once per account. Replay it any time from `Settings > General > Introduction tour > Replay`.
+
 ## 3. Main Workspace
 
 After signing in, the left sidebar stays visible while the main area changes with what you are doing:
@@ -194,7 +200,7 @@ The `Generation assets` flyout shows a small `N queued` count next to each local
 
 In addition to GPUs you manage yourself, eligible projects can use `Aificient Cloud` to render scene videos. It can appear as a runtime on the initial render-settings screen and later in the selected project's `Resume Generation` menu when source images and audio are ready.
 
-The Aificient Cloud option shows the project's `Lite` or `Pro` tier, resolution, and estimated credit cost before submission. It requires an active subscription, enough credits, and each scene's image; scenes whose script has spoken text also need their narration generated first, because the narration decides the clip's length. A submission can contain up to 32 missing scenes, and a scene's narration can be at most 13 seconds long.
+The Aificient Cloud option shows the project's `Lite` or `Pro` tier, resolution, and estimated credit cost before submission. It requires an active subscription, enough credits, and each scene's image; scenes whose script has spoken text also need their narration generated first, because the narration decides the clip's length. A submission can contain up to 32 missing scenes, and a scene's narration can be at most 13 seconds long. If your credits do not cover the whole submission, the app sends the scenes one at a time, in order, until the next one is refused for credits; the scenes it could pay for render, and the rest are listed in the generation report so you can render them from the scene panel once you have more credits.
 
 How a cloud clip is made: the video model animates the scene image and composes the clip's own soundtrack — quiet ambience and sound effects implied by the visible action only, never speech or music. Your narration is **not** baked into the clip; it is mixed over it later, in the preview and in the final stitch. Each clip's length is derived automatically from its narration (voice delay + narration + a short tail, whole seconds between 4 and 15); a scene with no spoken text renders as a 5-second clip. Renders made on gift credits carry a small visible Aificient watermark; paid renders do not.
 
@@ -496,6 +502,8 @@ Two tiers are shown as labelled buttons, each with an icon and a short blurb:
 
 - `Lite`: "Faster, lower VRAM" — renders faster and runs on smaller GPUs.
 - `Pro`: "Best quality" — takes longer but gives the best quality.
+
+The default depends on your account: trial accounts (welcome credits, no plan) start on `Lite`, and accounts on a paid plan start on `Pro`. You can switch either way before starting the generation.
 
 Suggested use:
 
@@ -1006,7 +1014,7 @@ Writing a poster plan is a metered charge: reference images are read by the prom
 
 - **Aspect ratio** — read-only. It is stamped from the poster itself.
 - **Resolution** — `720p` (default, much cheaper) or `1080p`.
-- **Mode** — `Lite` (faster, smaller GPUs) or `Pro` (best quality).
+- **Mode** — `Lite` (faster, smaller GPUs) or `Pro` (best quality). Trial accounts start on `Lite`; accounts on a paid plan start on `Pro`.
 - **Video duration** — the length of the animation.
 - **Images only** — stop after the poster images and skip the animation. You can render it later from the project.
 - **Runtime** — where the animation renders. A poster is a single clip, so this is a **single choice**: one GPU (local or rented) *or* Aificient Cloud. The Aificient Cloud row shows the tier, resolution, duration, and estimated credit cost of the current settings.
@@ -1607,7 +1615,7 @@ Check:
 
 - On an initial project, check whether `Aificient Cloud` appears in the render-settings `Runtime` list.
 - On an existing project, confirm it has missing scene videos and its scene images and audio are ready, then check `Resume Generation`.
-- Your subscription is active and has enough credits for the displayed estimate.
+- Your subscription is active and has enough credits for the displayed estimate. With fewer credits than the estimate, only the first scenes the balance covers are sent; the rest wait for more credits.
 - The submission has no more than 32 missing scenes.
 - Each scene's audio plus voice delays is no longer than 13 seconds.
 - `Settings > Storage` is not over its allowance.
