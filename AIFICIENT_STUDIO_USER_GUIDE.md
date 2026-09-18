@@ -1,6 +1,6 @@
 # Aificient Studio User Guide
 
-Last reviewed: July 26, 2026.
+Last reviewed: September 18, 2026 (app version 1.6.0).
 
 This guide explains how to use Aificient Studio from the application interface. It focuses on visible screens, menus, controls, generation workflows, editing tools, GPU management, settings, and common troubleshooting.
 
@@ -10,12 +10,14 @@ Aificient Studio helps you create AI-generated video from a written idea. You ca
 
 - Brainstorm video ideas.
 - Turn an idea into a structured story script.
-- Create reusable characters.
+- Create reusable characters, and add new ones to a story at any point.
+- Build a project **asset base** — products, wardrobe, locations, props — that the script weaves into scenes and that characters can wear, so a real brand, outfit, or place stays consistent across the whole video.
 - Generate scene images, narration, sound effects, video clips, and a final stitched video.
 - Animate a poster — one you already have, or one the app designs for you.
-- Review and edit individual scenes.
+- Review and edit individual scenes, recast them, and change which assets they show.
 - Regenerate only the parts that need changes.
 - Render video with a local GPU runtime, rented GPU instances, or Aificient Cloud when that option is available.
+- Claim free daily credits on a plan or trial, and try the app on a free trial before subscribing.
 
 ### Two Kinds of Project
 
@@ -28,13 +30,20 @@ Both kinds appear in the same project list, grouped by type, and both can render
 
 Most History projects follow this path:
 
-1. Create or select a concept.
-2. Review the generated scenes and characters.
+1. Create or select a concept, optionally attaching the products, wardrobe, or locations the video must feature.
+2. Review the generated scenes, characters, and planned assets.
 3. Choose render settings.
 4. Generate assets and video.
 5. Inspect the result in the canvas and scene sidebar.
-6. Edit or regenerate parts if needed.
+6. Edit or regenerate parts if needed — rewrite text, recast a scene, add a character, dress a character or a scene with assets.
 7. Download the final video.
+
+### Desktop, Web, and Phone
+
+The same app runs as a desktop application (Windows) and in the browser. Everything in this guide applies to both unless a note says otherwise; the differences that matter are:
+
+- **Web** has no local or rented GPUs: scene videos render on Aificient Cloud, GPU rentals are offered from the desktop app, and the `Publish` dialog is desktop-only.
+- **Phone** (a viewport narrower than 768 px) keeps every feature but rearranges it: the left sidebar becomes a drawer behind a menu button at the top-left, most composer pills fold into an `Options` sheet, dropdowns become bottom sheets you can swipe away, and the right project sidebar is reached through a floating `Details` pill. Tablets and larger screens behave like the desktop.
 
 ## 2. Signing In
 
@@ -63,9 +72,26 @@ The code screen also lets you:
 
 ### Introduction Tour
 
-The first time a new account opens the app, a short guided tour walks through the home screen: the Story / Poster / Character picker, the prompt, the options row, the generate button and the sidebar. Each step spotlights the real control and can be skipped at any time (`Skip tour`, the close button, or `Esc`). The last step depends on your account: trial accounts see their free credits and a `Start creating` button, accounts without credits are invited to pick a plan, and subscribers see their plan's allotment.
+The first time a new account reaches the home screen, a short guided tour walks through the workspace. It starts on its own when all of these are true: you are signed in, your plan and credits have loaded, no project is open, and the account is less than 14 days old. It dims the screen, spotlights the real control for each step, and shows a card with a `Step N of 7` counter and a progress bar.
 
-The tour shows once per account. Replay it any time from `Settings > General > Introduction tour > Replay`.
+The seven steps, in order:
+
+1. `Welcome to Aificient Studio` — a centered welcome card; its button reads `Show me around`.
+2. `Three ways to create` — spotlights the `Story` / `Poster` / `Character` picker above the composer.
+3. `Start with a sentence` — spotlights the prompt box.
+4. `Shape it before you render` — spotlights the row of pills under the prompt (style, duration, language, pinned characters, and the `Brainstorm` switch). On a phone the text points you to the `Options` sheet instead.
+5. `From script to video` — spotlights the send button and explains the stages (script, images, narration, scene videos, final cut) and the render choice (your GPU or Aificient Cloud; `Lite` fast and affordable, `Pro` for maximum quality).
+6. `Everything is saved` — spotlights the sidebar navigation (projects, character library, render queue). On a phone it spotlights the menu button that opens the sidebar drawer.
+7. A closing card that depends on your account:
+   - **Welcome credits available** — `You have N free credits`, with `Start creating` and `Compare plans`.
+   - **Free trial on offer** — `Try <Plan> free for N days`, with a `Start free trial` button (marked with a flag icon) that opens the trial checkout directly, and `See all plans`.
+   - **No plan, no credits, no trial** — `Choose a plan to start creating`, with `See plans` and `Not now`.
+   - **Subscribed** — `You're all set`, showing the plan's credits for the period, with `Start creating`.
+   - **Billing unavailable** — `You're ready`, pointing you to `Settings > Usage` for plan and credits.
+
+Navigation: `Next` (or `Show me around` on the first step), `Back` from step 2 onward, `Skip tour` at the bottom-left, and the close button at the top-right. Keyboard: `→` next, `←` back, `Esc` closes. `Enter` also advances, because the primary button has focus. `Skip tour` is not always an exit: if the account has welcome credits or a trial on offer, it jumps to the closing card so you still see that information. The spotlighted control cannot be clicked while the tour is open.
+
+The tour is remembered **per account, per device or browser** — the same new account on a second computer or in another browser sees it again while it is still within its first 14 days. Replay it at any time from `Settings > General > Introduction tour > Replay`; replay ignores the account-age rule, closes Settings, and returns you to the home screen.
 
 ## 3. Main Workspace
 
@@ -76,7 +102,7 @@ After signing in, the left sidebar stays visible while the main area changes wit
 - Center canvas: appears when a project is open and shows its visual flow and generated assets.
 - Right project sidebar: appears with an open project and contains the project outline, asset browser, project-specific settings, and resume actions. Its tabs and outline follow the project type — `Schema` / `Assets` / `Settings` for a History project, `Plan` / `Assets` / `Settings` for a poster.
 
-The top-right window controls let you minimize, maximize/restore, or close the app. The same top-right area also has an `Ask AI` button that opens the Support Assistant, an in-app help chat (see "Support Assistant (Ask AI)").
+The top-right window controls let you minimize, maximize/restore, or close the app (desktop only). The same top-right area also has an `Ask AI` button that opens the Support Assistant, an in-app help chat (see "Support Assistant (Ask AI)"). On a phone `Ask AI` is an icon-only pill, and a menu button at the top-left opens the sidebar drawer.
 
 If no project is selected, the main area shows the home/new-project screen instead of an empty canvas. The left sidebar remains available so you can open an existing project, search, manage characters, or inspect generation assets without closing the creation screen.
 
@@ -88,9 +114,19 @@ The top of the sidebar contains:
 
 - `New project`: leaves the currently open project, shows the home/new-project screen in the main area, and starts a fresh creation chat when needed.
 - `Character list`: opens the reusable-character library over the current screen.
-- `Generation assets`: opens a flyout beside the sidebar with Aificient Cloud jobs, the local GPU, rented GPU instances, and the create-instance action.
+- `Generation assets` (desktop): opens a flyout beside the sidebar with Aificient Cloud jobs, the local GPU, rented GPU instances, and the create-instance action. On the **web** this row is `Aificient Cloud` instead: there are no GPUs to manage, so it opens the cloud render queue directly and shows a rendering / queued / history count badge; the flyout's footer on the web offers `Download desktop app` for GPU rentals.
 
-The magnifying-glass button in the sidebar header opens project search. With an empty search it lists recent projects; type to filter by name. Results are grouped by project type, and filter chips (`All`, `History`, `Posters`) let you narrow the search to one type — those chips exist only inside the search dialog and never filter the sidebar list. You can click a result or use the up/down arrow keys and `Enter`. Press `Esc` or click outside the dialog to close it.
+The magnifying-glass button in the sidebar header opens project search. With an empty search it lists recent projects; type to filter by name. Results are grouped by project type, and filter chips (`All`, `History`, `Posters`) let you narrow the search to one type — those chips exist only inside the search dialog and never filter the sidebar list. You can click a result or use the up/down arrow keys and `Enter` (the footer shows the key hints). Press `Esc` or click outside the dialog to close it.
+
+### Promo Slot, Profile Row, and Sign Out
+
+Just above the profile row the sidebar has one slot that shows, in this priority:
+
+- `Daily credits ready` — the daily-credit claim card, when today's free credits are still unclaimed (see "Daily Credits").
+- `Try <Plan> free` — the free-trial card, when the account has no subscription and a trial is on offer (see "Free Trial").
+- `Download the desktop app` / `For the full experience` — on the web only, when neither of the above applies.
+
+The bottom row shows your avatar initial, your name, and your plan line (for example `Pro · Free trial`, or `Gift Trial` while you are on welcome credits). **Clicking anywhere on that row opens Settings.** The separate `Sign out` button sits beside it.
 
 ### Recent Projects
 
@@ -112,14 +148,14 @@ When you open a project, a progress overlay can move through `Loading project`, 
 
 ### Project Menu
 
-Right-click a project to open its menu.
+Right-click a project, or click the `…` (`Project options`) control on its row, to open its menu. The `…` control appears on hover on the desktop and is always visible on touch screens.
 
 Available actions:
 
 - `Rename`: opens a rename dialog for the selected project. Enter a new project name and select `Rename`, or press `Enter`, to save it.
 - `Delete`: removes the project.
 
-Deleting a project is permanent from the app's point of view, so use it carefully.
+There is no duplicate action. Deleting a project is permanent from the app's point of view, so use it carefully.
 
 ## 5. GPU and Runtime Manager
 
@@ -263,7 +299,7 @@ The creation home screen has three modes in the segmented control at the top of 
 
 Each mode has its own hero text, its own composer controls, and its own accent colour, so it is always clear which one is active. Story turns amber while `Brainstorm` is on and sky blue while it is off.
 
-The top-right `History` control opens previous Story, Poster, and Character chats; the `Story` filter also lists brainstorm chats, which keep their own icon. You can reopen a chat, refresh the history, or delete a saved chat. The active conversation title appears in the top bar after the conversation has started.
+The top-right `History` control (`Chat history`) opens your previous creation chats — this is chat history, not the project list, which lives in the left sidebar. The dropdown is headed `Recent chats` with a count and a refresh button, and has filter chips `All` / `Story` / `Poster` / `Character`; it opens pre-filtered to the composer's current mode, and the `Story` filter also lists brainstorm chats, which keep their own icon. Each row shows the chat's icon, title, a preview, and a relative time; hover a row for `Delete chat`. Empty states read `No saved chats yet` or `No chats in this mode` (switch the filter to `All`). On a phone the control is icon-only and the list opens as a bottom sheet. The active conversation title appears in the top bar after the conversation has started.
 
 ### Story Mode
 
@@ -273,10 +309,11 @@ Typical workflow:
 
 1. Enter your idea.
 2. Choose style, duration, language, and optional characters.
-3. Send the prompt.
-4. Review the generated story script.
-5. Ask for corrections, or edit the script directly with `Edit` (see "Reviewing and Editing the Generated Concept").
-6. Continue to render settings.
+3. Optionally attach the products, wardrobe, or locations the video must feature (see "Attaching Assets to a Story").
+4. Send the prompt.
+5. Review the generated story script.
+6. Ask for corrections, or edit the script directly with `Edit` (see "Reviewing and Editing the Generated Concept").
+7. Continue to render settings.
 
 The generated story can include:
 
@@ -284,14 +321,34 @@ The generated story can include:
 - Artistic style.
 - Narrator.
 - Characters.
+- Assets — the reference images you attached, plus any the script planned on its own.
 - Scene list.
 - Scene descriptions.
 - Scene scripts.
 - Sound effect cues.
 
+#### Attaching Assets to a Story
+
+A story can be built around real things: a product you sell, an outfit a character must wear, a location that has to look a certain way, a prop. Attach their images before you send the prompt and the script weaves them into the scenes; later, on the canvas, they form the project's **asset base** (see "Project Assets Node (Asset Base)").
+
+The Story composer has an `Assets` pill (image-plus icon) with an `n/8` badge — its tooltip reads `Attach products, wardrobe or locations the video must feature. The script weaves them into the scenes.` It opens an `Assets (n/8)` panel with:
+
+- An `Add` button and a dashed drop target: `Drop PNG / JPG anywhere, or click to browse`, with `N more · up to 20MB each` underneath. When the panel is full it reads `No room left — remove one to add another`, and `Uploading…` while a file is in flight.
+- A list of the staged files with a thumbnail (click for a full-screen preview), a humanized name (`lata-cocacola_final.jpg` becomes `lata cocacola final`), and a remove `×`.
+
+You can also drag images anywhere onto the home screen: an overlay reads `Attach to the story` with `Products, wardrobe or locations the video must feature · N more fit.` A refused drop shakes and says `Only PNG or JPG images`. There is no clipboard paste.
+
+Rules and messages:
+
+- PNG or JPG only, up to 20 MB each; at most **8 assets per story request** (`At most 8 assets can be attached to one story.`, `Only N more asset(s) fit — the extras were skipped.`).
+- Assets attach on the first prompt **and** on corrections — files you stage while refining ride the correction turn and join the plan's catalogue.
+- The sent message keeps thumbnails of what you attached; reopening a saved chat rebuilds them from the plan. A file that is no longer in your storage keeps its slot as a placeholder with the tooltip `<name> — no longer in your assets`.
+
+The plan card the assistant replies with has an `Assets` block listing every asset: thumbnail, name, kind tag, a violet `AI planned` tag for ones the script invented on its own, and an amber `generated later` tag for ones that have no image yet (the app renders those at the start of the first generation run). Each scene row in the plan also shows the asset chips it uses next to its character chips, so you can see where a product or outfit lands before rendering anything.
+
 #### Find Inspiration
 
-Below the empty Story composer (with `Brainstorm` off) there is a `Find inspiration` button. It expands a small showcase of real generated videos — each card plays a short clip and shows its title and artistic style. Hover a card to see `Use this idea`; click it to drop a matching brief into the composer **and** select the artistic style that clip was rendered with. You can then edit the text before sending it. Click the button again to collapse the showcase.
+Below the empty Story composer (with `Brainstorm` off) there is a `Find inspiration` button. It expands a small showcase of four real generated videos — `Countryside promo` and `Samurai at dawn` (Cinematic), `Golden retriever` and `Weird science` (3D Disney). Each card shows a poster still, plays a short muted loop, and names its artistic style. Hover a card to see `Use this idea`; click it to drop a matching brief into the composer **and** select the artistic style that clip was rendered with. You can then edit the text before sending it. Click the button again to collapse the showcase. With `Brainstorm` on, the showcase is replaced by four topic chips you can click to seed a brainstorm.
 
 #### Brainstorm
 
@@ -318,17 +375,16 @@ Use Poster mode to turn a still poster into a few seconds of motion. It is descr
 
 ### Character Mode
 
-Use Character mode to create reusable characters for your library.
+Use Character mode to create reusable characters for your library. Its hero reads `Design a character once. Reuse it across every video.`, and under it the home screen shows `Your cast · N` — up to six of your library characters as tiles, with a `See all` tile that opens the library.
 
-You can set:
+The composer placeholder is `Describe a character: 'A brave young woman detective with a red jacket'...`. Its controls are:
 
-- Character prompt.
-- Gender.
-- Reference image.
-- Voice.
-- Visual style.
+- The visual-style pill.
+- A `Female` / `Male` segmented toggle.
+- An `Image` pill for a reference image (`Add reference image`); once set it reads `Reference` with a thumbnail and a clear `×`. You can also drop an image anywhere on the screen — the overlay reads `Use as the reference image` / `The character keeps this face, hair and build.` — or paste an image URL in the pill's popover.
+- A `Voice` pill that opens the voice picker (see "Voice").
 
-Generated characters can later be pinned into video concepts.
+The first message creates the character; every later message in the same chat is a correction that rewrites it, so you refine conversationally ("older", "add a scar", "different jacket"). Each character gets **one reference image** (there is no turnaround or model sheet). When it is done the assistant replies `Created <name>. Available in your library.`, and from then on the character can be pinned in a Story or Poster composer or added to an existing story from the `Add character` modal's `Library` tab.
 
 ### Stopping an In-Progress Chat Request
 
@@ -370,7 +426,21 @@ Notes:
 
 The creation controls sit in and directly below the chat composer at the bottom of the home screen. Switch modes along the composer's top edge; use the pills and segmented controls below the prompt for style, duration, language, pinned characters, attachments, and Character-mode options.
 
-Only the controls that mean something for the active mode are shown. Poster mode, for example, has no visual-style preset (the look comes from your prompt or the imported artwork) and no language control, but it adds a pipeline toggle, an image-attachment pill, and an aspect-ratio pill.
+Only the controls that mean something for the active mode are shown. Poster mode, for example, has no visual-style preset (the look comes from your prompt or the imported artwork) and no language control, but it adds a pipeline toggle, an image-attachment pill, and an aspect-ratio pill. The full pill row, left to right, is: `Options` (phone only), style, `Assets` (Story), the poster pipeline toggle and `Poster image` / `Reference assets` (Poster), aspect ratio (Poster from zero), duration, language, the `Brainstorm` switch (Story), `Characters`, the `Female` / `Male` toggle, `Image`, and `Voice` (Character), then a credit chip and the send button.
+
+Once a plan exists in the conversation, the aspect-ratio, duration, and language controls lock for that chat.
+
+### Credit Chip
+
+When the price of the current mode is known, a small `N cr` chip sits next to the send button. Its tooltip reads `N credits per generation, corrections included. Creating the project is free.` — the chat turns that write or rewrite a script are what is metered, not the `Create project` step.
+
+### Options Sheet (Phone)
+
+On a phone the style, poster pipeline, aspect ratio, language, gender, and duration controls fold into an `Options` pill that opens a bottom sheet with a row per control (`Visual style` opens the style picker). The `Assets`, `Characters`, and `Brainstorm` controls stay in the pill row, and their popovers open as bottom sheets.
+
+### Assets (Story)
+
+The `Assets` pill attaches up to 8 PNG/JPG reference images — products, wardrobe, locations, props — that the script must feature. It is described under "Attaching Assets to a Story".
 
 ### Visual Style
 
@@ -386,7 +456,7 @@ The style picker includes presets such as:
 - Low poly.
 - Isometric animation.
 
-The style affects concept writing and visual generation.
+The style affects concept writing and visual generation. The style pill opens a `Visual style` picker of nine tiles, each with a one-line tagline, with `Cinematic` and `3D Disney` first.
 
 You can also change the style while refining a concept in the chat. If you pick a different style and then send a correction, the new style is applied to the refined concept. If you change it more than once during refinement, the most recent selection wins.
 
@@ -417,7 +487,7 @@ Language affects:
 
 ### Pinned Characters
 
-In Story mode (with or without `Brainstorm`), you can pin existing library characters. Pinned characters are included in the concept so the generated story uses them.
+In Story mode (with or without `Brainstorm`), you can pin existing library characters. The `Characters` pill (its badge counts the pinned ones) opens a `Pin characters` popover listing your library, with a `Create` shortcut that jumps to Character mode; the empty state reads `No characters yet.` Pinned characters are included in the concept so the generated story uses them. Story mode has no limit on how many you pin.
 
 Poster mode can pin characters too, but only in the `From zero` pipeline — a character has to be placed into a poster while it is being designed, and an imported poster is already finished. There you can pin up to 3 characters, and each one spends a slot from the poster's shared reference budget (see "Reference Images and Characters").
 
@@ -445,21 +515,33 @@ A character can include:
 - Visual image.
 - Style information.
 
-The all-characters view lets you:
+The all-characters view (headed `Characters` with a count) lets you:
 
 - Create a new character with `New character` (this closes the library and opens Character mode on the home screen).
-- Search characters.
+- Search characters (`Search characters…`).
 - Filter by type.
 - Filter by gender.
 - Filter by voice.
 - Open details.
 - Rename characters from their detail view.
-- Preview images.
-- Delete characters.
+- Preview images (`View image` on a card).
+- Delete characters (`Delete character` on a card). The confirmation reads `Delete character?` — `This permanently removes the character and its generated reference image from your library. This cannot be undone.`
 
 When Character mode is open on an empty creation chat, the home screen also shows up to six characters from your cast; use `See all` when more are available.
 
-Characters from the library are treated as global references. They cannot be edited directly from a project canvas node.
+There are three ways to get a character into the library:
+
+- Create it in Character mode on the home screen.
+- Save a project character from its canvas card with the `Library` button — it copies the character **including its reference image** into the library under a new id, and the project copy is untouched. The button reads `Saved` for a moment afterwards and is disabled until the character has an image (`Generate the character image first`).
+- (Indirectly) a character created in a story stays a project character until you save it this way.
+
+And three ways to use a library character:
+
+- Pin it in the Story or Poster composer before the script is written.
+- Add it to an existing story from the `Add character` modal's `Library` tab (see "Add a Character to a Project").
+- It arrives in the project as a **global** character.
+
+Characters from the library are treated as global references. On the canvas they show a `global` badge and cannot be edited, deleted, or dressed with project assets from the project; their card offers `Project variant` instead, which gives the project its own editable copy (see "Project Variant of a Library Character").
 
 ## 10. Render Settings
 
@@ -471,10 +553,12 @@ This section describes the History render-settings screen. A poster has its own,
 
 Choose:
 
-- Aspect ratio: `16:9` or `9:16`.
+- Aspect ratio: `Portrait (9:16)` (default) — "TikTok, Reels and Shorts" — or `Landscape (16:9)` — "YouTube and desktop".
 - Resolution: `720p` (default) or `1080p`. `720p` is much cheaper to render with very similar quality; `1080p` costs more per clip.
 
 Use `9:16` for vertical/social video. Use `16:9` for widescreen video.
+
+The action button at the bottom reads `Start generation`, `Start images and audio` when `Images and audio only` is on, or `Queue on N GPUs` when several GPUs are selected, with a summary line of the chosen aspect, resolution, tier, and target. If no runtime is ready the screen says so (`No GPU is ready right now. Start your local runtime or spin up a rented instance before generating.` or `Aificient Cloud is unavailable right now. Try again in a moment.`).
 
 ### Runtime
 
@@ -528,10 +612,11 @@ Video rendering and final stitching are skipped. This is useful for reviewing as
 
 The canvas shows the project as a connected visual flow.
 
-Common node groups:
+Common node groups, left to right:
 
 - Project info.
-- Character references.
+- Project assets (the asset base card, right after the project card).
+- Character references (the cast column, with `Add character` under the last card).
 - Script.
 - Scenes.
 - Scene text/details.
@@ -574,6 +659,9 @@ Shows:
 - Scene number.
 - Scene title.
 - Duration.
+- Three step chips (image, audio, video) whose tooltips read `ready`, `generating`, `failed`, `skipped`, or `pending`.
+- A `Cast` strip — one chip per character in the scene (narrator chips are marked `· narrator`), ending in an `Add cast` / `Edit cast` button that opens the cast picker (see "Change a Scene's Cast").
+- An `Assets` strip — one chip per project asset assigned to the scene, ending in an `Add assets` / `Edit assets` button that opens the asset picker (see "Dress a Scene or a Character with Assets"). This strip appears once the project has an asset base. Assets that have no image yet show as muted chips with the tooltip `<name> · pending generation`.
 
 ### Description, Character Reference, and Script Nodes
 
@@ -581,16 +669,55 @@ These nodes show editable scene text.
 
 Click them to open rewrite tools when generation is not active.
 
+### Project Assets Node (Asset Base)
+
+The `Assets` card sits in its own column right after the project card and holds the project's **asset base**: reusable reference images — a branded product, a wardrobe item, a location, a prop — that scenes and characters reference by id. When a scene image or a character image is rendered, the assigned assets are attached to the image model as visual references, so the same bottle, jacket, or storefront appears the same way in every shot. The asset base exists in History (story) projects only.
+
+The header shows the asset count and two buttons:
+
+- `Upload an image` — a file picker for PNG/JPG images (several at a time; they upload one after another). Uploaded assets are ground truth: they are never regenerated.
+- `Create from a prompt` (atom icon) — opens `New asset from a prompt` (`The image model renders it in the project's artistic style`), with `Name`, a `Kind` chip row (`Product`, `Wardrobe`, `Location`, `Prop`), and `What it looks like` (`A complete visual brief: shape, colors, materials, branding…`). `Create & generate` creates the entry and renders its image right away.
+
+The empty state reads `Products, wardrobe, locations…` / `Upload an image or create one with AI.`
+
+Each asset is a tile with a thumbnail and its name (hover for the description):
+
+- A dashed tile with an atom glyph is an asset that has no image yet (`pending`) — typically one the script planned. It is rendered at the start of the next generation run, before characters and scenes.
+- A small `AI` corner badge marks assets the script planned on its own.
+- A spinner covers a tile while that asset is being generated or updated.
+
+Click a tile to open its detail modal, titled with the asset's name and subtitled `Planned by the script` or `Your asset`:
+
+- The image (click, or `View full screen`, to open the viewer) and tags: `AI planned` / `User`, the kind, and `pending` or `uploaded`.
+- `Used in` — for example `Scenes 2, 4 · worn by Maya`, or `Nowhere yet — pick it from a scene card, or place it with AI below.`
+- `Generate image` / `Regenerate image` — for generated assets only; uploaded assets have no regenerate button.
+- `Details` — name, kind, and description (`What the models read about this asset. Editing these regenerates nothing.`); a `Save` button appears once something changed.
+- `Place with AI` — describe where the asset belongs (`e.g. "show it wherever the chemist is drinking"`); the model picks the scenes (and the character, for wardrobe) and those scenes regenerate. The result line reads `Now in scenes 2, 3.` or `Not placed in any scene.`, and when something changed the generation run starts automatically.
+- `Delete from project` — asks first. If the asset is assigned anywhere, the confirmation spells out what goes with it: the generated image and video of every scene that uses it, and everything featuring any character that wears it (including that character's image); narration and caption timings are kept. An unassigned asset is simply removed. `Keep it` / `Delete asset`.
+
+Notes:
+
+- There is no fixed cap on the asset base itself. The caps are 8 attachments per story request in the composer, 5 assets per scene, and 3 per character. Those two limits are fixed by the service and are not project settings.
+- Asset changes are blocked while a task runs (`Cannot update assets while a task is in progress`).
+- Finished project assets also appear in the right sidebar's `Assets` tab under `Project asset`.
+
+**Creative uses:** product placement for a brand video (upload the packshot, let the script place it, then keep it in every scene where it matters); a character's signature wardrobe (a jacket or uniform assigned as their outfit so it survives every regeneration); a real location or set (a shop front, a kitchen, a stage) that several scenes share; a prop that must look identical each time it appears. Because uploads are never regenerated, what you upload is exactly what the image model is shown.
+
 ### Character Node
 
-Shows a character reference image and metadata.
+Each cast card shows the character's reference image (click it to open the full-screen viewer, subtitled `Character reference`), its name, badges — `narrator`, `global` for a library character, and the type (`person` / `animal` / `object`) — and its description. A card whose reference image is being generated shows an active state; a new character with no image yet shows the card without artwork until its first generation run.
 
-For project-local characters, actions may include:
+For project characters, under the description there is an `Outfit` strip: one chip per project asset the character wears, ending in an `Add outfit` / `Edit outfit` button (see "Dress a Scene or a Character with Assets"). It appears once the project has an asset base.
 
-- Edit character.
-- Regenerate visuals.
+The action row (hidden while the project is generating) has three buttons for a project character:
 
-Global/library characters are protected from direct project editing.
+- `Edit` — opens the character editor (see "Edit Character").
+- `Library` — saves a copy, image included, to your character library; reads `Saved` briefly afterwards. Disabled until the character has an image (`Generate the character image first`).
+- Delete — `Deletes character reference visuals and affected scene videos. Use Resume Generation when you want to rebuild them.`
+
+A **global** (library) character shows a single `Project variant` button instead: `Give this project its own editable copy of the character. The library entry stays as it is.` (see "Project Variant of a Library Character").
+
+Under the last card of the cast column hangs a dashed `Add character` button (`Add a character to the script`); when the script has no characters yet it is a card of its own. It is disabled while a task runs (`Wait for the running task to finish`). See "Add a Character to a Project".
 
 ### Image Node
 
@@ -600,7 +727,7 @@ Actions can include:
 
 - Preview fullscreen.
 - Retry loading.
-- Delete image.
+- `Delete image` — `Deletes the scene image, raw clip, and final video. Use Resume Generation when you want to rebuild them.`
 
 Deleting a scene image means dependent video assets must be regenerated.
 
@@ -613,7 +740,7 @@ Actions can include:
 - Play/pause.
 - Seek.
 - Retry loading.
-- Regenerate audio.
+- `Delete narration` / `Delete audio` — `Deletes narration, generated audio, raw clip, and final video. The scene image is kept. Use Resume Generation when you want to rebuild them.`
 
 Regenerating audio can affect later video stages because video timing depends on audio. For cloud-rendered scenes the rule is forgiving: if the new narration (plus the voice delay and tail) still fits inside the rendered clip, the clip is **kept** — the scene simply plays longer or shorter at the next stitch, with no re-render. Only when the new narration outgrows the clip is the clip deleted, with a warning, so the scene can be re-rendered at the right length. Captions' word timings and the final video are always refreshed after an audio change.
 
@@ -628,8 +755,12 @@ Actions can include:
 - Play/pause.
 - Seek.
 - Fullscreen preview.
-- Delete video.
+- A narration mute toggle (`Narration on — click to mute` / `Narration off — click to unmute`) so you can hear the clip's own soundtrack alone.
+- `Delete video` (raw clips only) — `Deletes scene video clips and final video.`
+- `Cancel` on a captioned clip while its caption burn is running.
 - Rate the clip with thumbs up or thumbs down. A dislike can include an optional preset reason or custom comment; select the active rating again to clear it.
+
+Each scene has two video boxes when captions are on: `raw clip` and `captioned clip`.
 
 Deleting a scene video means the final video must be regenerated.
 
@@ -731,6 +862,7 @@ Common groups:
 - Generated audio.
 - Raw clips.
 - Final video.
+- Project assets (each labelled `Project asset`).
 - Metadata.
 
 Actions can include:
@@ -751,39 +883,45 @@ Sections:
 
 You can change:
 
-- Aspect ratio.
-- Resolution.
+- Aspect ratio (`Vertical 9:16` / `Widescreen 16:9`).
+- Resolution (`720p` / `1080p`).
 - Quality (Lite or Pro).
 - Guidance values (Video/Audio CFG).
 - Speech pace.
-- Voice timing.
+- Voice delay and scene tail.
 - SFX volume — how loud the video model's own soundtrack (ambience and effects) plays under your narration, in the preview and in the final stitch. Default 20%.
 - Transition duration.
-- Whether captions are burned into this project's videos.
-- Caption position, font, size, and colors.
+- Whether captions are burned into this project's videos (`Burn-in captions`).
+- Caption position, font (`Bangers`, `Luckiest Guy`, `Anton`, `Poppins`, `Inter`), size, and colors, with a live `Preview` and a `Reset` that returns the style to your preset.
 
-If settings are changed, apply them before rendering video. The app may block video generation while project settings have unsaved changes.
+The sticky footer has a `Discard changes` button and a primary button that reads `No changes to apply`, `Apply changes`, `Applying`, then `Applied`. If settings are changed, apply them before rendering video: while there are unsaved changes the `Resume Generation` menu shows `Generation changes pending to be saved!` and its render action is blocked.
 
 ## 15. Resume Generation
 
-`Resume Generation` appears when a project has missing or invalidated assets.
+`Resume Generation` is the button at the bottom of the right sidebar. It lights up amber when a project has missing or invalidated assets, and is disabled (`Project generation is complete`) when there is nothing left to do.
 
 Use it after:
 
 - Stopping generation.
 - Deleting an image, audio, or video.
 - Rewriting scene text.
-- Editing character visuals.
+- Editing character visuals, changing a scene's cast, or changing an outfit or a scene's assets.
+- Adding a character or an asset — including a new character that is **not in any scene yet**: its reference image counts as missing, so the button stays active even on a project whose final video is already finished, and `Images + Audio only` renders it for preview without touching the video.
 - A generation failure.
 - Running images/audio first and rendering video later.
 
-The resume menu lets you:
+Clicking the button opens the `Generate video on` menu:
 
-- Choose one or more ready GPUs for video (selecting several splits the render across them).
-- Choose `Aificient Cloud` by itself to render eligible missing scene videos for the displayed credit estimate.
-- Generate images and audio only.
+- A warning `Generation changes pending to be saved!` when the `Settings` tab has unapplied changes; the render action stays blocked until you apply or discard them.
+- A runtime list — `Aificient Cloud` (with tier, resolution, and estimated credits) and each ready local or rented GPU (with its queue depth). Tick one or more GPUs to split the missing videos across them, or Aificient Cloud by itself. When nothing is available the list reads `No GPU available — start a runtime to render video.`
+- `Add to render queue` (or `Queue on N GPUs`) — renders the missing scene videos on the selected runtime(s). Missing images and audio are generated first automatically.
+- `Images + Audio only` / `Skip video rendering` — generates missing images, character references, project assets, and audio without rendering video. Its tooltip reads `Generate missing images, character references, and audio without rendering video`, or `Images, character references, and audio are already ready` when there is nothing of that kind to do.
 
 The app reuses existing completed assets where possible and only regenerates missing or affected parts.
+
+When every raw clip is ready and only caption burns or the final stitch remain, the button acts directly instead of opening the menu (no GPU is needed for that local work), and it is labelled `Stitch Final Video` when only the stitch is left. Its tooltip tells you why it is lit: `All scene clips are ready — stitch the final video`, `N captioned clips are missing — resume local generation`, or `Some generated assets are missing`.
+
+On a phone the button is a floating `Resume` / `Stitch` pill beside the `Details` pill, and the menu opens as a bottom sheet.
 
 On a poster project the same menu offers a single runtime choice plus `Images only` — see "Rendering and Resuming a Poster".
 
@@ -890,29 +1028,56 @@ Examples:
 - Changing the script usually requires new narration and video.
 - Changing character references usually requires new visuals.
 
+### Add a Character to a Project
+
+You can add a character to a story at any point after it exists — a rival who appears halfway through, a mascot, a narrator's sidekick. Click `Add character` under the last cast card (or the `Add character` card when the script has no cast yet). The modal, titled `Add character` with the project name, has three tabs:
+
+- **`Manual`** — `Name`, `Gender` (None / Female / Male), `Type` (Person / Animal / Object), a `Humanized` checkbox, and a `Description` (`A stable visual identity the image model can repeat: age, build, face, hair, wardrobe and colors, distinguishing marks`). Below it, `Reference images (optional, up to 3)` — PNG or JPEG photos of the character or of what they wear; `They join the project's assets and the character is drawn from them.` Button: `Add character`.
+- **`AI`** — a single `Prompt` (`Who should join the story? e.g. a rival chemist in her fifties: sharp grey suit, silver bob, rimless glasses`) plus the same reference-image strip; the model reads the whole script for context and writes the character. With references attached: `The AI writes the character from these images; the prompt adds what they cannot show.` Button: `Write & add`.
+- **`Library`** — `Your library`: pick one of your library characters (ones already in the script are hidden). It arrives as a **global** character with its library image. Empty states: `Every library character is already in this script.` or `Your library is empty. Create characters from the home screen in Character mode.`
+
+There is no voice field here: voice is only editable later, and only for the narrator.
+
+The modal states the rule plainly: `Nothing regenerates now. The new character is in no scene until you cast them from a scene card; their reference image renders on the next generation run.` After saving it confirms `<Name> joined the script` / `Not in any scene yet: cast them from a scene card. Their reference image renders on the next generation run, or right away with Regenerate.`, with a summary card and two buttons: `Close` and `Regenerate images + audio`.
+
+To see the new character before deciding where they go, render their reference image first: use `Regenerate images + audio` in that confirmation, or later `Resume Generation > Images + Audio only` — the sidebar button stays active for an uncast character with no image even when the project's final video is already done, and the card shows the generation progress. Then cast them from the `Cast` strip of the scenes they belong in; each recast scene regenerates its image and video on the next run.
+
+Reference photos you attach are uploaded to the project asset base first and become the character's outfit references.
+
+### Change a Scene's Cast
+
+Every scene card has a `Cast` strip. `Add cast` / `Edit cast` opens the `Scene N cast` picker — a checklist of `Characters in this project (N in scene)` with avatar, name, and `narrator` / `library character` labels. There is no per-scene limit. As soon as the selection changes the picker warns `This scene regenerates with the new cast` — `Saving deletes this scene's image and videos so the next generation draws exactly these characters. Narration and caption timings are kept.` — and `Save cast` applies it. The scene's `Character Reference` text is kept in step with the new cast. Empty catalogue: `This script has no characters yet — add one from the board first.`
+
+### Dress a Scene or a Character with Assets
+
+Both scene cards and character cards can carry project assets (see "Project Assets Node (Asset Base)"), through the same picker: a checklist headed `Assets in this project (n/max selected)` with thumbnails, each asset's description or kind, or `Pending generation` for one with no image yet. Entries are disabled once the cap is reached. Buttons: `Cancel` / `Save assets`. If the project has no asset base: `This project has no assets yet — add one from the Assets card first.`
+
+- **Scene assets** — `Add assets` / `Edit assets` on the scene card opens `Scene N assets`. Up to 5 are attached to the image model when the scene image is rendered. Warning: `This scene regenerates with the new set` — `Saving deletes this scene's image and videos so the next generation uses the new references. Narration and caption timings are kept.`
+- **Character outfit** — `Add outfit` / `Edit outfit` on the character card opens `<Name> · wardrobe` (`Assets applied to this character's appearance`). Up to 3 are attached when the character's reference image is rendered, and travel with the character into every scene they appear in. Warning: `The character regenerates with the new wardrobe` — `Saving deletes this character's image and the media of every scene they appear in, so the next generation applies the new wardrobe everywhere. Narration is kept.` Library (global) characters cannot wear project assets — make a `Project variant` first.
+
+After saving, use `Resume Generation` (or `Images + Audio only`) to rebuild the affected images.
+
+Alternatively, open an asset's detail modal from the `Assets` card and use `Place with AI` to let the model decide which scenes (and which character, for wardrobe) should carry it.
+
+### Project Variant of a Library Character
+
+A library character on the canvas is **global**: it cannot be edited, deleted, or dressed inside the project, so that every project using it stays consistent. Its card offers `Project variant` instead. The modal explains: `This project gets its own copy of <name>: same look, same scenes, but editable here and able to wear project assets.` and `Your library character stays untouched, and so does every other project using it. Nothing regenerates now — the scenes keep their images until you change something about the variant.` `Create variant` swaps the library reference for a project character that starts from the library image; if the library entry had no image, the next run renders one.
+
 ### Edit Character
 
-For editable project characters, the character editor can change:
+For editable project characters, `Edit` on the card opens the `Edit character` editor with two tabs, `Manual` and `AI`:
 
-- Name.
-- Gender.
-- Type.
-- Humanized setting.
-- Description.
-- Voice (narrator characters only).
+- **`Manual`** — the portrait beside `Name`, `Gender`, `Type`, and `Humanized` (`A non-person that behaves like a person`). A `Look` section (`What the image model draws: a stable visual identity, plus the project assets the character wears.`) holds the `Description` and the `Outfit` chips; changing the outfit is saved on its own and regenerates the character and the scenes they appear in. A `Voice` section appears **only if this character is the narrator** (`This character narrates. A new voice re-records the narration and re-renders the videos; artwork stays.`), using the voice picker with previews described under "Voice". Only the fields you actually change are applied, so a voice-only change leaves the rest untouched.
+- **`AI`** — an `Instruction` (`The model rewrites this character from your note, keeping the identity details image generation relies on.`, e.g. `make her older, silver hair, add a leather jacket`) and a `Keep the current look as reference` toggle: `The current image is saved as a project asset and shown to the image model, so the rewritten character stays recognizable.` That reference uses one outfit slot; when the outfit is full the toggle explains `Outfit is full (n/max): remove an asset to keep the current look as a reference.`, and with no image yet `No reference image yet: the new look is drawn from the description alone.`
 
-You can edit manually or ask AI to rewrite the character. In manual mode, only the fields you actually change are applied, so a voice-only change leaves the rest untouched.
+What gets invalidated depends on what you change, and the editor's warning box says so before you confirm:
 
-The `Voice` control appears only for the narrator. It uses the same voice picker with previews described under "Voice", so you can listen before choosing. For library (global) characters the voice is locked and shown read-only — change it in the character library instead.
+- A visual change (name, gender, type, humanized, description, outfit) or an AI rewrite — `Visuals will be regenerated`: the character's reference image and the visuals of every scene it appears in are deleted; narration and generated audio are kept.
+- A voice-only change — `Audio and video will be regenerated`: narration audio and rendered video for the affected scenes are deleted; scene images and the reference image are kept.
 
-What gets invalidated depends on what you change:
+Saving is a two-step commit: `Rewrite character`, then `Confirm rewrite` on the `Confirm the rewrite` panel (`The affected visuals are deleted now and rebuilt on the next generation run.`). On success the editor reads `Character updated` and offers `Regenerate images + audio`.
 
-- Changing a visual field (name, gender, type, humanized, description) or using AI rewrite deletes the character's reference image and the scene visuals where it appears. Narration and other audio are preserved.
-- Changing only the voice keeps the artwork (scene images and the reference image) but deletes the narration audio and rendered video for the affected scenes. Re-generate audio and video to apply the new voice.
-
-The editor's warning box updates to tell you which of these will happen before you confirm.
-
-Manual character editing is best for exact name/type/description/voice changes. AI character editing is best when you want to preserve the character idea but change the style, personality, appearance, or level of detail.
+Manual character editing is best for exact name/type/description/voice changes. AI character editing is best when you want to preserve the character idea but change the style, personality, appearance, or level of detail. Library (global) characters cannot be edited from the canvas (`Global characters cannot be edited from the jamboard`) — change them in the character library, or make a `Project variant`.
 
 ### Delete Assets
 
@@ -925,6 +1090,8 @@ Typical effects:
 - Delete image: the scene image is removed, and video for that scene may need to be regenerated.
 - Regenerate audio: the narration is recreated; a cloud-rendered clip survives if the new narration still fits inside it, and is deleted with a warning when it does not.
 - Delete video: the scene clip is removed, and the final video must be regenerated.
+- Delete character: the character's reference image and the videos of the scenes it appears in are removed.
+- Delete a project asset: the asset is removed together with the generated image and video of every scene that uses it and everything featuring any character that wears it (including that character's image); narration and caption timings are kept. An unassigned asset is simply removed.
 - Regenerate character visuals: character reference imagery and affected scene visuals may need to be regenerated.
 
 ### Regenerate vs Resume Generation
@@ -947,7 +1114,7 @@ Common settings:
 - Video guidance (Video CFG).
 - Audio guidance (Audio CFG).
 - Speech pace.
-- Voice delays.
+- Voice delays and scene tail.
 - SFX volume (the level of the video model's own soundtrack under the narration; default 20%).
 - Transition duration.
 - Burn-in captions on or off.
@@ -1120,15 +1287,16 @@ Sections:
 
 Shows:
 
-- App version.
-- User account information.
-- Current subscription and an upgrade action.
-- Update check.
+- App version (a `v1.6.0`-style chip on the app card).
+- `Updates` — the status line (`You are on the latest version`, `Latest N available`, or `Manual update check`) and a `Check` button that becomes `Update to latest` when a newer version exists.
+- `Introduction tour` / `A short walk through the workspace.` — a `Replay` button that closes Settings and restarts the guided tour on the home screen (see "Introduction Tour").
+- Current subscription and an upgrade action; a violet `Free trial · bills <date>` badge while you are on a free trial.
+- User account information (name and email).
 - Help/contact link.
 
 ### Usage
 
-This section shows the credits included with your plan, credits used and remaining, renewal or cancellation information, and usage over time. Depending on the subscription source, it can also provide plan-management, upgrade, or pending-change actions.
+This section shows the credits included with your plan, credits used and remaining, renewal or cancellation information, and usage over time. Depending on the subscription source, it can also provide plan-management, upgrade, or pending-change actions. While you are on welcome credits it shows a `Gift Trial` plan card with `Complimentary access`, its expiry, and `Client since`. Free daily credits and the free trial are described under "Credits, Plans, Free Trial, and Daily Credits".
 
 At the bottom, click **Load latest generation jobs** to open your account-wide Aificient Cloud video render history. This history includes jobs from all projects and lists the newest jobs first.
 
@@ -1308,7 +1476,51 @@ setting.
 > you just replaced. The scene's captioned box goes back to empty, ready to be
 > generated again through `Resume Generation`.
 
-## 22. Publishing the Final Video
+## 22. Credits, Plans, Free Trial, and Daily Credits
+
+Generation and cloud rendering run on **credits**. Your balance, plan, and renewal date live in `Settings > Usage`; the plan line under your name in the left sidebar shows the plan at a glance (for example `Pro · Free trial`, or `Gift Trial` while you are on welcome credits). Credit amounts are shown with up to one decimal (for example `2.5 credits`).
+
+### Welcome Credits
+
+A new account starts with a small welcome gift of credits (`Gift Trial`). It is sized for one or two Lite 720p cloud clips, not a whole video — enough to try the pipeline. While you are on welcome credits with no plan, new stories and posters default to the `Lite` tier, and renders made on gift credits carry a small visible Aificient watermark.
+
+### Free Trial
+
+When a free trial is on offer for your account, it applies to **one plan** (normally the cheapest): you save a card, receive the trial's credits immediately, nothing is charged for the trial's days, and the plan starts billing when the trial ends unless you cancel. Everywhere in the app a `Start free trial` action is marked with a **flag icon**.
+
+Where you meet it:
+
+- The **closing step of the introduction tour** — `Try <Plan> free for N days`, with `Start free trial` and `See all plans`.
+- The **sidebar card** above your profile row — `Try <Plan> free` / `N days free · N credits`; one click opens the checkout. It shows only while the account has no subscription and disappears the moment a plan or trial starts.
+- The **chat**, when a story/poster/character turn is refused for lack of credits (see "Running Out of Credits").
+- The **out-of-credits card** inside a project — `Keep creating — N days on us`.
+- The **plans modal** (`Compare plans` / `See plans` anywhere, or `Settings > Usage`) — the trial plan's card shows `0 / N days`, `then <price> / <interval>`, the trial credits, and a gold `Start free trial` button. Clicking it shows `Opening secure checkout in your browser. Your trial credits are granted as soon as your card is saved — nothing is charged today.`
+
+Checkout always opens **outside the app**: your default browser on the desktop, a new tab on the web. When you return, a result card reads `Your free trial has started` with `N credits are ready to use.` and the date the plan bills, or `That card can't start a trial` with the reason (prepaid and disposable cards cannot start a trial; a card that already started a free trial on another account cannot start a second one) and a `Try another card` button.
+
+During the trial the plans modal shows `You're on a free trial of <Plan> until <date>, when it becomes a paid plan. You can switch plans after that, or start the plan now to get its full credits today.` Other plans read `Available after trial`. `Start plan now` opens a confirmation (`Ends your <Plan> trial today. Your card is billed right away and the plan's full credits unlock immediately.`) with `Due now`, `Credits unlocked`, and `Then` rows. If you use up the trial's credits early, the out-of-credits card says `You've used your trial credits` and offers `Start my plan now`.
+
+Once a subscription is active — including a free trial — new stories and posters default to the `Pro` tier.
+
+### Daily Credits
+
+Accounts on an active plan or free trial can claim a free top-up of credits **once per calendar day**. The amount comes with your plan (plan cards in the plans modal show `+N credits every day`, and the trial offer says `Plus N credits to claim free every day of the trial.`). The day resets at **midnight in Europe/Madrid** (`00:00 CET` or `00:00 CEST`), the same moment for everyone — not 24 hours after your last claim. Accounts with no subscription have nothing to claim.
+
+Claiming always takes a click; nothing is credited automatically. Three places offer it:
+
+- **A popup, once per day** — `Your daily credits are ready` / `A fresh top-up lands on <Plan> every single day — today's is waiting.` with a `Claim N credits` button. It opens the first time the app sees an open claim that day on that device, and stays out of the way while the plans modal, an out-of-credits card, a billing result, or the tour is open. After claiming it reads `+N credits added` / `They're in your balance now — N credits to spend.` with `Back to creating`, plus a small confetti payoff. Closing it with `×`, `Esc`, or the backdrop leaves the claim on the sidebar card.
+- **The sidebar card** above your profile row — `Daily credits ready` / `Claim N credits`; its tooltip reads `Claim today's N credits — free with your plan, every day at 00:00 CET.` One tap claims. It then reads `+N credits added` / `Back tomorrow at 00:00 CET`, fades out, and reappears on its own after the next reset even in a session left open overnight. This card takes priority over the free-trial card and the desktop-app link.
+- **The out-of-credits card** inside a project, when you hit zero on a plan or trial: `Today's free credits are still unclaimed.` and the primary button becomes `Claim N credits free`. After claiming, the gauge climbs back and the card closes by itself so you can retry the generation.
+
+From the second consecutive day the card and popup show a streak (`3-day streak · keep it going`). Once today's credits are claimed the controls disappear; the out-of-credits card instead shows a countdown chip such as `Free credits in 6 hours` (tooltip `Resets at 00:00 CEST (Europe/Madrid)`). If a claim is refused because it was already made on another device, the app simply re-syncs your balance; any other failure shows `Unable to claim your daily credits.` There is no separate toast — the card or popup state is the confirmation.
+
+### Running Out of Credits
+
+- **In the creation chat**, a refused turn gets a plain reply instead of an error bar — `You've used up all the credits on your current plan. Upgrade to keep generating — you'll get more credits instantly.`, `You've used up your welcome credits. Start your free trial to keep generating — you'll get N credits right away.`, or `This account doesn't have any credits yet. …` — followed by a card: `Try <Plan> free for N days` with `Start free trial` and `See all plans` when a trial is on offer, otherwise `Out of credits` / `Upgrade plan` or `No credits yet` / `See plans`.
+- **Inside a project** (a generation run or a cloud render submission), an out-of-credits card takes over with an animated gauge counting down to `0 credits left` and one of: `Keep creating — N days on us` (`Start free trial`), `You've used your trial credits` (`Start my plan now`), `You're out of credits` on a paid plan (`Upgrade plan` — `Move up a tier and the extra credits land instantly — you only pay the difference for the days left.`), or `You're out of credits` with `Choose a plan`. On a plan or trial the daily-claim lifeline described above appears here too. `Not now` closes it.
+- **Cloud renders** that cannot be fully paid for are sent scene by scene until the balance runs out; the rest are listed in the generation report (`Not enough credits to render this scene. Render it from the scene panel once you have more credits.`).
+
+## 23. Publishing the Final Video
 
 Once a project has a final video, you can post it straight to social media from inside the app. Open the **Publish** dialog with the `Publish` button at the bottom of the right scene sidebar (it becomes active only after the final video exists).
 
@@ -1363,7 +1575,7 @@ The **History** button (top-right of the dialog) lists past and prepared posts, 
 
 > Note: TikTok publishing automates the real TikTok Studio composer in the background so your video is uploaded with the caption, cover, and sound attached, and the post is grouped under the chosen sound. TikTok changes its site often, so if a step can't be completed automatically the upload stops and shows an error — just try again.
 
-## 23. Updates
+## 24. Updates
 
 The app can check whether a newer desktop version is available.
 
@@ -1377,7 +1589,7 @@ If an update is available:
 
 If the update fails, the update window shows an error.
 
-## 24. Downloads and Sharing
+## 25. Downloads and Sharing
 
 You can download final videos and many generated assets.
 
@@ -1389,7 +1601,7 @@ When downloading:
 
 The fullscreen viewer also includes a share action when supported by your system.
 
-## 25. Where To Find UI Options
+## 26. Where To Find UI Options
 
 Use this section when a user asks questions like "Where is X?", "How do I open X?", "Where can I change X?", "I cannot find X", or "Where is the button for X?".
 
@@ -1418,6 +1630,13 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Runtime logs | Open the local GPU or rented-instance detail view from the `Generation assets` flyout. |
 | Rent GPU or add cloud GPU | Left sidebar > `Generation assets` > `Create instance`. If a Vast.ai key is missing, use `Add Vast.ai key` first. |
 | Download quality indicator / colored status dot on offers | GPU rental modal offers table, in the `Download` column next to each offer's speed and cost. |
+| Introduction tour / guided tour / replay the tour | It runs by itself for a new account on the home screen. To replay: `Settings > General > Introduction tour > Replay`. |
+| Claim daily credits / free daily credits | The `Daily credits ready` card above the profile row in the left sidebar, the once-a-day popup, or the `Claim N credits free` button on the out-of-credits card inside a project. Requires an active plan or trial; resets at 00:00 Europe/Madrid. |
+| Start the free trial | The `Try <Plan> free` card above the profile row in the left sidebar, the tour's closing step, the out-of-credits card, the chat card after a refused turn, or the plans modal — all marked with a flag icon. |
+| Plans / compare plans / upgrade | `Settings > Usage`, the profile row in the left sidebar (opens Settings), or any `See plans` / `Compare plans` / `Upgrade plan` link. |
+| Credit balance | `Settings > Usage`; the plan line under your name in the left sidebar shows the plan. |
+| Menu on a phone / where did the sidebar go | The menu button at the top-left opens the sidebar as a drawer (phones only). |
+| Aificient Cloud queue on the web | `Aificient Cloud` in the left sidebar (the web replaces `Generation assets` with it). |
 
 ### Creation Home Screen Locations
 
@@ -1452,6 +1671,11 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Change which characters appear in a scene | Render-settings `Script` preview panel in `Edit` mode, under `Characters in scene`. |
 | Edit the narrator voice profile | Render-settings `Script` preview panel in `Edit` mode, in the `Narrator` section. |
 | Render settings before first generation | Continue from a generated concept on the creation home screen; render settings slide into the main workspace. |
+| Attach a product, outfit, location, or prop image to a story | Creation home screen, `Story` mode, the `Assets` pill below the prompt (up to 8 PNG/JPG, 20 MB each), or drag the images anywhere onto the home screen. |
+| Assets attached to a story / what the script planned | The `Assets` block on the plan card in the chat (`AI planned` and `generated later` tags), and the asset chips on each scene row of the plan. |
+| Composer options on a phone (style, aspect, language, duration) | The `Options` pill below the prompt opens a bottom sheet with those controls. |
+| Price of a chat generation | The `N cr` chip next to the send button; corrections are included and creating the project is free. |
+| Chat history / reopen a brainstorm, story, poster, or character chat | `History` at the top-right of the creation home screen (`Recent chats`, filter `All` / `Story` / `Poster` / `Character`). |
 
 ### Render And Generation Locations
 
@@ -1494,6 +1718,10 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Render a poster animation later | Poster project > right sidebar > `Resume Generation` > pick a runtime > `Add to render queue`. |
 | Generate the poster images without the animation | Poster render-settings screen > `Images only`, or right sidebar > `Resume Generation` > `Images only`. |
 | Poster mode (Lite/Pro), resolution, or clip duration for an existing poster | Poster project > right sidebar > `Settings` tab, then `Apply changes`. |
+| Render the reference image of a new character that is not in any scene | Right sidebar > `Resume Generation` > `Images + Audio only` (the button stays active for an uncast character with no image, even when the final video exists), or `Regenerate images + audio` right after adding the character. |
+| Generate the images of pending project assets | They render automatically at the start of the next run; use `Resume Generation` > `Images + Audio only`, or `Generate image` in the asset's detail modal. |
+| Assets per scene / assets per character limits | Fixed by the service (5 per scene, 3 per character); there is no setting for them. The scene and outfit pickers stop at those numbers. |
+| Resume Generation on a phone | The floating `Resume` / `Stitch` pill beside `Details` at the bottom of the screen. |
 
 ### Project Review And Editing Locations
 
@@ -1520,6 +1748,19 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Download an asset | Right scene sidebar > `Assets`, a canvas media node, the Output node, or the fullscreen media viewer. |
 | Download final video | Output node on the center canvas, right scene sidebar > `Assets` > final video, or fullscreen media viewer. |
 | Share media | Fullscreen media viewer, when sharing is supported by the system. |
+| Add a character to an existing story | `Add character` under the last cast card on the center canvas (or the `Add character` card when there is no cast); tabs `Manual`, `AI`, `Library`. |
+| Put a character into a scene / change a scene's cast | The `Cast` strip on the scene card (`Add cast` / `Edit cast`), then `Save cast`. |
+| Project assets / asset base | The `Assets` card right after the project card on the center canvas; also listed as `Project asset` in right sidebar > `Assets`. |
+| Upload an image as a project asset | `Upload an image` on the `Assets` card (PNG/JPG). |
+| Create a project asset with AI | `Create from a prompt` (atom icon) on the `Assets` card. |
+| Edit, regenerate, place, or delete a project asset | Click its tile on the `Assets` card: `Details`, `Generate` / `Regenerate image`, `Place with AI`, `Delete from project`. |
+| Give a character an outfit / wardrobe | The `Outfit` strip on the character card (`Add outfit` / `Edit outfit`), or the `Look` section of the character editor. |
+| Assign assets to a scene | The `Assets` strip on the scene card (`Add assets` / `Edit assets`). |
+| Save a project character to the library | The `Library` button on the character card (needs a generated image). |
+| Edit a library (global) character inside a project | Not possible directly: click `Project variant` on its card to get an editable project copy, or edit it in `Character list`. |
+| Keep a character recognizable while rewriting it with AI | Character editor > `AI` tab > `Keep the current look as reference`. |
+| Delete a character from a project | The trash button on the character card (project characters only). |
+| Mute the narration while previewing a clip | The narration toggle on the video node. |
 
 ### Global Settings Locations
 
@@ -1546,8 +1787,11 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Local runtime download folder | `Settings > Model Config`; stop the local runtime before changing it. |
 | Default speech pace, SFX volume, or default narrator voices | `Settings > Audio Config`. |
 | Default voice timing, transition duration, or captions | `Settings > Video Config`. |
+| Replay the introduction tour | `Settings > General`, the `Introduction tour` row, `Replay`. |
+| Free-trial status or billing date | `Settings > General` (the `Free trial · bills <date>` badge) or `Settings > Usage`. |
+| Daily credits amount for a plan | The `+N credits every day` row on each plan card in the plans modal. |
 
-## 26. Support Assistant (Ask AI)
+## 27. Support Assistant (Ask AI)
 
 The Support Assistant is an in-app help chat that answers questions about using Aificient Studio. Its answers are based on this user guide.
 
@@ -1586,7 +1830,7 @@ The assistant explains how to use the app. It does not change your project, star
 - If help chat is temporarily unavailable, wait a little while and try again.
 - If your session has expired, sign in again and reopen the chat.
 
-## 27. Troubleshooting
+## 28. Troubleshooting
 
 ### I cannot sign in
 
@@ -1684,6 +1928,40 @@ Check, in order:
 
 Posters do not have either. There is no narration track to transcribe, so there is no caption step, and the `Publish` dialog is available for History projects only.
 
+### I added a character but cannot generate its image
+
+A new character is in no scene until you cast them, and nothing regenerates when you add them. To render the reference image for preview, use `Regenerate images + audio` in the confirmation right after adding, or right sidebar > `Resume Generation` > `Images + Audio only`. The button stays active for an uncast character with no image even when the project's final video already exists; the character card shows the progress and the image lands when the run finishes. To put the character in the video, use the `Cast` strip on the scenes they belong in.
+
+### I cannot edit, delete, or dress a character
+
+A card with a `global` badge is a library character: it cannot be changed from inside a project (`Global characters cannot be edited from the jamboard`). Click `Project variant` on its card to get an editable copy for this project, or edit the original in `Character list`. Every card's actions are also hidden while the project is generating; wait for the run to finish or stop it.
+
+### I cannot attach more assets to a story
+
+The composer accepts at most 8 assets per story request, PNG or JPG, up to 20 MB each (`At most 8 assets can be attached to one story.`, `Only N more asset(s) fit — the extras were skipped.`, `Only PNG or JPG images are accepted.`, `Image exceeds the 20MB limit.`). Remove one from the `Assets` panel to add another. Inside a project the asset base itself has no cap, but a scene can carry at most 5 assets and a character at most 3. Those limits are fixed by the service and cannot be changed; unselect one asset in the picker to make room for another.
+
+### "Cannot update assets while a task is in progress"
+
+Asset, outfit, and cast changes are blocked while a generation task runs. Wait for it to finish, or stop the generation, then try again.
+
+### An asset tile is dashed / a chip says "pending generation"
+
+That asset has no image yet — usually one the script planned. It renders automatically at the start of the next generation run (before characters and scenes). To render it now, open its tile and click `Generate image`, or use `Resume Generation` > `Images + Audio only`. A failed asset never fails the run; the scene simply generates without that reference.
+
+### I cannot claim my daily credits
+
+- Daily credits need an active plan or free trial; an account with no subscription has nothing to claim.
+- They can be claimed once per calendar day and reset at 00:00 Europe/Madrid (`CET` / `CEST`), not 24 hours after the last claim. Once claimed, the card and popup disappear and the out-of-credits card shows `Free credits in N hours` instead.
+- If you claimed on another device, the app re-syncs silently. Any other failure shows `Unable to claim your daily credits.` — check your connection and try again from the sidebar card.
+
+### The free trial checkout refused my card
+
+Prepaid and disposable cards cannot start a trial, and a card that already started a free trial on another account cannot start a second one. The result card offers `Try another card`; the trial stays available.
+
+### The introduction tour did not appear
+
+It starts on its own only for an account less than 14 days old, on the home screen, once billing has loaded, and only once per device or browser. Replay it any time from `Settings > General > Introduction tour > Replay`.
+
 ### Rename project fails
 
 Project rename is supported from the project list context menu. If it fails, check that the runtime or cloud API that owns the project is reachable, then try again.
@@ -1702,7 +1980,7 @@ For the full walkthrough of the Publish dialog (compose, review, scheduling, and
 
 Publishing runs entirely on your own machine through a private background browser session; nothing about your accounts or posts is sent to an Aificient server.
 
-## 28. Recommended Workflows
+## 29. Recommended Workflows
 
 ### Fast Preview Workflow
 
@@ -1740,11 +2018,41 @@ Use this when only one scene needs changes.
 
 Use this when you want consistent characters across projects.
 
-1. Create a character in Character mode.
-2. Save it to the library.
-3. Pin it when creating a new concept.
-4. Generate the project.
-5. Review scenes where the character appears.
+1. Create a character in Character mode (it lands in the library), or save a project character from its card with `Library`.
+2. Pin it when creating a new concept, or add it to an existing story from `Add character > Library`.
+3. Generate the project.
+4. Review scenes where the character appears.
+5. If the character needs a project-only change (a different outfit, a scar, an older look), click `Project variant` on its card and edit the copy.
+
+### Add a Character Mid-Project Workflow
+
+Use this when a story needs someone who was not in the original script.
+
+1. Click `Add character` under the cast column and describe them (`Manual`), let the AI write them from a prompt or reference photos (`AI`), or pick one from `Library`.
+2. Click `Regenerate images + audio` in the confirmation (or `Resume Generation > Images + Audio only`) to render the reference image and check the look. Nothing else regenerates yet.
+3. Adjust with `Edit` if needed — `Keep the current look as reference` keeps the face while you change details.
+4. Open the `Cast` strip on each scene the character belongs in and `Save cast`; those scenes regenerate their image and video on the next run.
+5. `Resume Generation` to rebuild the affected scenes and the final video.
+
+### Brand or Product Placement Workflow
+
+Use this when a real product, logo, or location must appear consistently.
+
+1. In the Story composer, attach the packshots and location photos with the `Assets` pill (up to 8), then describe the video.
+2. Read the plan card's `Assets` block and the asset chips on each scene row; ask for corrections in chat if the product should appear elsewhere.
+3. Generate. Uploaded assets are never regenerated — what you uploaded is what the image model is shown.
+4. On the canvas, fine-tune: `Edit assets` on a scene to add or remove the product, or open the asset's tile and use `Place with AI` (`show it wherever the chemist is drinking`).
+5. Missing something? `Upload an image` or `Create from a prompt` on the `Assets` card adds new assets at any time.
+6. `Resume Generation` to rebuild only the scenes you changed.
+
+### Consistent Wardrobe Workflow
+
+Use this when a character must wear the same outfit in every scene.
+
+1. Add the outfit to the asset base (upload a photo of the garment, or `Create from a prompt` with kind `Wardrobe`), or attach a reference photo when adding the character.
+2. On the character card, `Add outfit` and select the asset (up to 3 per character). Saving regenerates the character's image and the scenes they appear in.
+3. `Resume Generation > Images + Audio only` to review the new look before spending render time.
+4. `Resume Generation` with a runtime to re-render the affected clips and the final video.
 
 ### Animate an Existing Poster
 
@@ -1768,11 +2076,47 @@ Use this when there is no artwork yet.
 5. Check the designed poster and first frame on the canvas; rewrite a prompt and regenerate the images if needed.
 6. Use `Resume Generation` > pick a runtime > `Add to render queue` to render the animation.
 
-## 29. Glossary
+## 30. Glossary
 
 ### Asset
 
-A generated file such as an image, audio clip, scene video, or final video.
+A generated file such as an image, audio clip, scene video, or final video. Not to be confused with a project asset (below).
+
+### Project Asset / Asset Base
+
+A reusable reference image in a story project — a product, a wardrobe item, a location, a prop — that scenes and characters reference by id. The asset base is the `Assets` card on the canvas that holds them. Assets come from the composer's `Assets` pill, from the script planner (`AI planned`), from `Upload an image`, or from `Create from a prompt`. Uploaded assets are ground truth and are never regenerated; generated ones can be re-rolled. A `pending` asset has no image yet and renders at the start of the next run.
+
+### Outfit (Wardrobe)
+
+The project assets a character wears, shown as chips on the character card. They are attached to the image model when the character's reference image is rendered, so the look follows the character into every scene. Capped at 3 per character by the service.
+
+### Cast
+
+The characters that appear in a scene, shown as chips on the scene card and edited with `Edit cast`. Changing a scene's cast regenerates its image and video; narration is kept.
+
+### Global (Library) Character
+
+A character that lives in your library and is referenced by a project rather than owned by it. It shows a `global` badge on the canvas and cannot be edited, deleted, or dressed from inside a project.
+
+### Project Variant
+
+An editable project-only copy of a library character, created with the `Project variant` button. The library entry and every other project using it stay untouched.
+
+### Welcome Credits (Gift Trial)
+
+The small credit gift a new account starts with — enough for one or two Lite 720p cloud clips. Renders made on gift credits carry a small Aificient watermark, and new projects default to `Lite`.
+
+### Free Trial
+
+A time-limited trial of one plan: save a card, receive the trial's credits at once, pay nothing until the trial ends. Marked everywhere with a flag icon.
+
+### Daily Credits
+
+A free top-up that accounts on a plan or trial can claim once per calendar day (reset at 00:00 Europe/Madrid) from the sidebar card, the daily popup, or the out-of-credits card. It always takes a click.
+
+### Introduction Tour
+
+The seven-step guided walk through the home screen that starts for new accounts and can be replayed from `Settings > General`.
 
 ### Runtime
 
