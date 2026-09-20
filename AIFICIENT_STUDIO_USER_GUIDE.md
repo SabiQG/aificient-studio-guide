@@ -1,6 +1,6 @@
 # Aificient Studio User Guide
 
-Last reviewed: September 18, 2026 (app version 1.6.0).
+Last reviewed: September 20, 2026 (app version 1.6.2).
 
 This guide explains how to use Aificient Studio from the application interface. It focuses on visible screens, menus, controls, generation workflows, editing tools, GPU management, settings, and common troubleshooting.
 
@@ -13,6 +13,8 @@ Aificient Studio helps you create AI-generated video from a written idea. You ca
 - Create reusable characters, and add new ones to a story at any point.
 - Build a project **asset base** — products, wardrobe, locations, props — that the script weaves into scenes and that characters can wear, so a real brand, outfit, or place stays consistent across the whole video.
 - Generate scene images, narration, sound effects, video clips, and a final stitched video.
+- Narrate in any of fifteen languages — picked by hand, or read from what you wrote.
+- Clone your own voice from a few recordings and narrate with it.
 - Animate a poster — one you already have, or one the app designs for you.
 - Review and edit individual scenes, recast them, and change which assets they show.
 - Regenerate only the parts that need changes.
@@ -380,7 +382,7 @@ Use Character mode to create reusable characters for your library. Its hero read
 The composer placeholder is `Describe a character: 'A brave young woman detective with a red jacket'...`. Its controls are:
 
 - The visual-style pill.
-- A `Female` / `Male` segmented toggle.
+- A gender control offering `Auto`, `Female`, and `Male`. `Auto` (the default) lets the app read the gender from your description and the reference image. Selecting a voice fixes the gender to that voice's, and the control is disabled while one is selected (`Set by the selected voice — clear the voice to choose.`).
 - An `Image` pill for a reference image (`Add reference image`); once set it reads `Reference` with a thumbnail and a clear `×`. You can also drop an image anywhere on the screen — the overlay reads `Use as the reference image` / `The character keeps this face, hair and build.` — or paste an image URL in the pill's popover.
 - A `Voice` pill that opens the voice picker (see "Voice").
 
@@ -426,7 +428,7 @@ Notes:
 
 The creation controls sit in and directly below the chat composer at the bottom of the home screen. Switch modes along the composer's top edge; use the pills and segmented controls below the prompt for style, duration, language, pinned characters, attachments, and Character-mode options.
 
-Only the controls that mean something for the active mode are shown. Poster mode, for example, has no visual-style preset (the look comes from your prompt or the imported artwork) and no language control, but it adds a pipeline toggle, an image-attachment pill, and an aspect-ratio pill. The full pill row, left to right, is: `Options` (phone only), style, `Assets` (Story), the poster pipeline toggle and `Poster image` / `Reference assets` (Poster), aspect ratio (Poster from zero), duration, language, the `Brainstorm` switch (Story), `Characters`, the `Female` / `Male` toggle, `Image`, and `Voice` (Character), then a credit chip and the send button.
+Only the controls that mean something for the active mode are shown. Poster mode, for example, has no visual-style preset (the look comes from your prompt or the imported artwork) and no language control, but it adds a pipeline toggle, an image-attachment pill, and an aspect-ratio pill. The full pill row, left to right, is: `Options` (phone only), style, `Assets` (Story), the poster pipeline toggle and `Poster image` / `Reference assets` (Poster), aspect ratio (Poster from zero), duration, language, the `Brainstorm` switch (Story), `Characters`, the gender control (`Auto` / `Female` / `Male`), `Image`, and `Voice` (Character), then a credit chip and the send button.
 
 Once a plan exists in the conversation, the aspect-ratio, duration, and language controls lock for that chat.
 
@@ -477,29 +479,41 @@ In Poster mode the duration pill offers whole seconds from 5 to 15 instead (8 by
 
 ### Language
 
-The app supports English and Spanish concept generation.
+The language pill sets the narration language. It opens a `Narration language` list with `Auto` at the top, kept apart from the rest because it is a different kind of answer, followed by the catalogue — each row with its flag and its native name:
+
+English, Spanish, Arabic, Dutch, French, German, Hindi, Indonesian, Italian, Japanese, Korean, Polish, Portuguese, Russian, and Turkish.
+
+`Auto` is the default: the app reads the language from your brief. An explicit request wins ("write it in Japanese"), then the language you wrote the prompt in, and English when neither says anything. The pill wears the chosen flag, or the `Auto` glyph while it is set to detect.
 
 Language affects:
 
 - Script text.
 - Narration.
 - Scene wording.
+- Captions and their word timings.
+
+The pill locks once a plan exists in that chat. From then on the plan card in the chat shows the script's language as a code chip (`EN`, `ES`, `JA`, …).
 
 ### Pinned Characters
 
-In Story mode (with or without `Brainstorm`), you can pin existing library characters. The `Characters` pill (its badge counts the pinned ones) opens a `Pin characters` popover listing your library, with a `Create` shortcut that jumps to Character mode; the empty state reads `No characters yet.` Pinned characters are included in the concept so the generated story uses them. Story mode has no limit on how many you pin.
+In Story mode (with or without `Brainstorm`), you can pin existing library characters. The `Characters` pill (its badge counts the pinned ones) opens the `Pin characters` panel: a header with the pinned count (`2/3` where a limit applies) and a `Create` shortcut that jumps to Character mode, a `Search characters` box, and your library as a list of rows — thumbnail, name, and either the character's description or its type and gender. Pinned rows carry a check and always stay in view; the rest load ten at a time behind a `Load more · N left` button at the foot of the list. The empty state reads `No characters yet` / `Design one once and pin it into any story.` with a `Create a character` button, and a search with no hits reads `No characters match`.
 
-Poster mode can pin characters too, but only in the `From zero` pipeline — a character has to be placed into a poster while it is being designed, and an imported poster is already finished. There you can pin up to 3 characters, and each one spends a slot from the poster's shared reference budget (see "Reference Images and Characters").
+Pinned characters are included in the concept so the generated story uses them. Story mode has no limit on how many you pin.
+
+Poster mode can pin characters too, but only in the `From zero` pipeline — a character has to be placed into a poster while it is being designed, and an imported poster is already finished. There you can pin up to 3 characters, and each one spends a slot from the poster's shared reference budget (see "Reference Images and Characters"). The panel spells that out above the list — `Each character uses one reference-image slot · N left.`, or `Characters share the reference-image budget, and it is full — remove a reference image to pin one.` — and greys out the rows you cannot pin.
 
 ### Voice
 
-When you assign a voice (in `Character` mode, the character editor, or Settings), the app opens a voice picker. It lists a set of named voices, each shown with:
+When you assign a voice (in `Character` mode, the character editor, or Settings), the app opens the voice picker, headed `Narrator voice`. It has two tabs:
 
-- A `Male` or `Female` tag.
-- The voice name.
-- A short description of how it sounds (for example, "Warm, inviting voice" or "Firm, confident delivery").
+- **`Library`** — the app's fixed narration voices. Each row shows the voice name, a male/female mark, and a short description of how it sounds (for example, "Warm, inviting voice" or "Firm, confident delivery").
+- **`My voices`** — the voices you cloned yourself in `Settings > Voices`, described as `Cloned from your recordings` with their language code, and counted on the tab. The tab only exists when voice cloning is available for your account, and the picker opens on it when the voice currently selected is one of yours. A voice whose model is being rebuilt carries a `Rebuilding` tag; it stays selectable and is rebuilt automatically the next time it narrates.
 
-Each row has a play button. Click it to hear a short preview of that voice, and click again (or the square) to stop. Voices that match the relevant gender are listed first. When a voice is required, the picker hides the `Clear` option; otherwise you can clear the selection to fall back to a default.
+Above the list sit a search box (`Filter voices`, or `Filter your voices`), an `All` / `Female` / `Male` filter, and a language filter (`Any language`). The gender filter starts on the gender of whoever the voice is for, and in fields where that gender is fixed it is not offered at all. A voice carrying no language tag is never hidden by the language filter, and the voice you have selected stays visible whatever the filters say.
+
+Each row has a play button. Click it to hear a short preview of that voice, and click again (or the square) to stop. When a voice is required, the picker hides the `Clear` option; otherwise you can clear the selection to fall back to a default.
+
+`My voices` also carries a `New voice` link — and, while you have none, `No voices of your own yet` with a `Create a voice` button. Either one closes the picker and opens `Settings > Voices`.
 
 ## 9. Character Library
 
@@ -713,7 +727,7 @@ The action row (hidden while the project is generating) has three buttons for a 
 
 - `Edit` — opens the character editor (see "Edit Character").
 - `Library` — saves a copy, image included, to your character library; reads `Saved` briefly afterwards. Disabled until the character has an image (`Generate the character image first`).
-- Delete — `Deletes character reference visuals and affected scene videos. Use Resume Generation when you want to rebuild them.`
+- Delete — removes the character from the project after a confirmation (`Remove character`). It leaves the script and the cast of every scene it was in; its reference image and the generated image and video of those scenes are deleted, because they were drawn with it. Narration and caption timings are kept. The confirmation names the affected scenes. The narrator cannot be removed this way, and a library character leaves only this project.
 
 A **global** (library) character shows a single `Project variant` button instead: `Give this project its own editable copy of the character. The library entry stays as it is.` (see "Project Variant of a Library Character").
 
@@ -1077,6 +1091,8 @@ What gets invalidated depends on what you change, and the editor's warning box s
 
 Saving is a two-step commit: `Rewrite character`, then `Confirm rewrite` on the `Confirm the rewrite` panel (`The affected visuals are deleted now and rebuilt on the next generation run.`). On success the editor reads `Character updated` and offers `Regenerate images + audio`.
 
+The footer also has a `Regenerate image` button for when the character is right but the picture is not. It changes nothing about the character: it deletes the reference image and the visuals of the scenes the character appears in, starts an images-and-audio-only run, and closes the editor; the card shows the progress and the new image lands when the run finishes.
+
 Manual character editing is best for exact name/type/description/voice changes. AI character editing is best when you want to preserve the character idea but change the style, personality, appearance, or level of detail. Library (global) characters cannot be edited from the canvas (`Global characters cannot be edited from the jamboard`) — change them in the character library, or make a `Project variant`.
 
 ### Delete Assets
@@ -1090,7 +1106,8 @@ Typical effects:
 - Delete image: the scene image is removed, and video for that scene may need to be regenerated.
 - Regenerate audio: the narration is recreated; a cloud-rendered clip survives if the new narration still fits inside it, and is deleted with a warning when it does not.
 - Delete video: the scene clip is removed, and the final video must be regenerated.
-- Delete character: the character's reference image and the videos of the scenes it appears in are removed.
+- Delete character: the character leaves the project and every scene's cast; its reference image and the images and videos of the scenes it was in are removed. Narration is kept.
+- Regenerate a character's image (`Edit` > `Regenerate image`): the reference image and the visuals of the scenes it appears in are removed and rendered again immediately, images and audio only.
 - Delete a project asset: the asset is removed together with the generated image and video of every scene that uses it and everything featuring any character that wears it (including that character's image); narration and caption timings are kept. An unassigned asset is simply removed.
 - Regenerate character visuals: character reference imagery and affected scene visuals may need to be regenerated.
 
@@ -1281,13 +1298,14 @@ Sections:
 - GPU Config.
 - Model Config.
 - Audio Config.
+- Voices.
 - Video Config.
 
 ### General
 
 Shows:
 
-- App version (a `v1.6.0`-style chip on the app card).
+- App version (a `v1.6.2`-style chip on the app card).
 - `Updates` — the status line (`You are on the latest version`, `Latest N available`, or `Manual update check`) and a `Check` button that becomes `Update to latest` when a newer version exists.
 - `Introduction tour` / `A short walk through the workspace.` — a `Replay` button that closes Settings and restarts the guided tour on the home screen (see "Introduction Tour").
 - Current subscription and an upgrade action; a violet `Free trial · bills <date>` badge while you are on a free trial.
@@ -1390,11 +1408,30 @@ Controls:
 
 - Speech pace.
 - SFX volume — the default level of the video model's own soundtrack under the narration (a 0–100% slider; default 20%). New projects start from this value; each project can override it in its own `Settings` tab.
+- Spanish accent — which Spanish the narration speaks (`Castellano (España)`, `Andaluz`, `Canario`, `Latino neutro`, `Mexicano`, `Colombiano`, `Argentino (rioplatense)`, `Chileno`, `Caribeño`, `Peruano`).
 - Default narrator voices.
 
 #### Default Narrator Voices
 
 This section sets a fallback `Male` and `Female` voice, each chosen with the voice picker (including previews). When a narrator has no voice assigned, the app picks one of these defaults based on the narrator's gender. Assigning a voice to a specific narrator in the character editor overrides the default for that narrator.
+
+### Voices
+
+`Settings > Voices` holds the narrator voices you cloned yourself: `Your own narrator voices, cloned from your recordings. Pick them from any voice field; every scene that names one is narrated with it.` The heading carries an `N/M` badge — how many you keep against the number your plan allows (Standard 5, Pro 10, Max 20).
+
+Each voice is a row with a preview button, a male/female mark, its name, and `Clone · <language>` underneath. The pencil renames it; the bin deletes it and asks once first (the button becomes `Delete?` and gives up after a few seconds). A voice the service has to rebuild reads `Rebuilt on next use`, and nothing is required from you.
+
+Under the list is the create tile — `Clone your first voice` while you have none, `New voice` afterwards. At the cap it turns into `Upgrade to keep more voices` and opens the plans modal instead; on the top plan it simply tells you to delete one to add another. While the server narrates with a different service, the section notes that your voices are not available on it right now.
+
+#### Cloning a Voice
+
+`New voice` opens `Clone your own voice from a few recordings. It joins your voice library with a preview.`:
+
+- `Name`.
+- `Language` and `Gender` — a clone always has a gender, because that is what the voice picker filters on.
+- `Recordings (1–2 minutes of clean speech)` — up to 5 audio files, 20 MB in total, in mp3, wav, m4a, aac, ogg, webm, or flac. The guidance in the modal: one speaker, no music or echo, at a natural narrating pace, read in the language you will narrate in (the clone keeps your accent), and only clone a voice you have the right to use.
+
+The confirm button reads `Create voice · N credits`, so the one-off cost is visible before you commit your recordings. When it finishes, the modal says `"<name>" is ready` and the voice can be picked from any voice field.
 
 ### Video Config
 
@@ -1577,6 +1614,8 @@ The **History** button (top-right of the dialog) lists past and prepared posts, 
 
 ## 24. Updates
 
+### App Updates
+
 The app can check whether a newer desktop version is available.
 
 If an update is available:
@@ -1588,6 +1627,14 @@ If an update is available:
 5. The app closes so the installer can continue.
 
 If the update fails, the update window shows an error.
+
+### What's New Cards
+
+New features announce themselves with a **What's new** card. It opens by itself shortly after sign-in, last of the startup surfaces — after the introduction tour has decided whether it runs and after the daily-credit popup has had its turn — and never on top of another dialog; if something else is open, it waits for a quiet moment.
+
+The card shows a picture, the `What's new` label, a title, a short description, and a few highlights. One button closes it: `Got it`, or, when the announcement points somewhere, a button that takes you there — a Settings section, a composer mode on the home screen, or a link opened in your browser. The corner `×`, `Esc`, and a click outside close it too.
+
+Each card is shown **once per account**. It is marked as seen the moment it appears, so it does not come back — on this device or any other — and there is no way to reopen one you have dismissed.
 
 ## 25. Downloads and Sharing
 
@@ -1631,6 +1678,7 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Rent GPU or add cloud GPU | Left sidebar > `Generation assets` > `Create instance`. If a Vast.ai key is missing, use `Add Vast.ai key` first. |
 | Download quality indicator / colored status dot on offers | GPU rental modal offers table, in the `Download` column next to each offer's speed and cost. |
 | Introduction tour / guided tour / replay the tour | It runs by itself for a new account on the home screen. To replay: `Settings > General > Introduction tour > Replay`. |
+| The `What's new` card | It opens by itself after sign-in when there is an unseen announcement, once per account. It cannot be reopened afterwards. |
 | Claim daily credits / free daily credits | The `Daily credits ready` card above the profile row in the left sidebar, the once-a-day popup, or the `Claim N credits free` button on the out-of-credits card inside a project. Requires an active plan or trial; resets at 00:00 Europe/Madrid. |
 | Start the free trial | The `Try <Plan> free` card above the profile row in the left sidebar, the tour's closing step, the out-of-credits card, the chat card after a refused turn, or the plans modal — all marked with a flag icon. |
 | Plans / compare plans / upgrade | `Settings > Usage`, the profile row in the left sidebar (opens Settings), or any `See plans` / `Compare plans` / `Upgrade plan` link. |
@@ -1656,12 +1704,13 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Character prompt | Creation home screen, `Character` mode, in the bottom composer. |
 | Visual style | Creation home screen, style pill below the prompt. |
 | Duration | Creation home screen, duration pill below the prompt in Story mode. |
-| Language | Creation home screen, language control below the prompt in Story mode. |
-| Pinned characters | Creation home screen, `Characters` pill below the prompt in Story mode. |
+| Language | Creation home screen, language pill below the prompt in Story mode. `Auto` by default — the app reads the language from your prompt — or pick one of the fifteen in the list. |
+| Character gender | Creation home screen, `Character` mode, the gender pill below the prompt (`Auto` / `Female` / `Male`). It is fixed by the voice while one is selected. |
+| Pinned characters | Creation home screen, `Characters` pill below the prompt in Story mode; the panel has its own search and pages the library ten rows at a time. |
 | Character library | `Character list` in the left sidebar, or the `Characters` picker in a Story composer. |
 | Character search, filters, previews, rename, create, and delete | Left sidebar > `Character list`. |
 | Reference image for a character | Creation home screen, `Character` mode, `Image`/`Reference` control below the prompt. |
-| Character voice | Creation home screen, `Character` mode, `Voice` pill below the prompt. |
+| Character voice | Creation home screen, `Character` mode, `Voice` pill below the prompt (`Library` and `My voices` tabs). |
 | Generate button for a story | Creation home-screen chat, on the generated story script. |
 | Stop or cancel a brainstorm, story, or character chat request | Creation home-screen chat — while a request is generating, the send button becomes a stop (filled square) button; click it to cancel. |
 | Edit the generated concept (title, characters, scenes, scripts) | Two ways: ask the AI in the `Story` chat, or click `Edit` in the `Script` preview panel on the render-settings screen. |
@@ -1759,7 +1808,8 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Save a project character to the library | The `Library` button on the character card (needs a generated image). |
 | Edit a library (global) character inside a project | Not possible directly: click `Project variant` on its card to get an editable project copy, or edit it in `Character list`. |
 | Keep a character recognizable while rewriting it with AI | Character editor > `AI` tab > `Keep the current look as reference`. |
-| Delete a character from a project | The trash button on the character card (project characters only). |
+| Delete or remove a character from a project | `Delete` on the character card (project characters only), then `Remove character` in the confirmation. The character leaves the script and its scenes; those scenes' visuals are deleted. The narrator cannot be removed. |
+| Regenerate a character's reference image | Character card > `Edit` > `Regenerate image`; or right after adding it, `Regenerate images + audio`. |
 | Mute the narration while previewing a clip | The narration toggle on the video node. |
 
 ### Global Settings Locations
@@ -1785,7 +1835,9 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | GPU family for a rental | Left sidebar > `Generation assets` > `Create instance`, then choose a GPU profile. |
 | Default model quality, guidance, or prefetch | `Settings > Model Config`. |
 | Local runtime download folder | `Settings > Model Config`; stop the local runtime before changing it. |
-| Default speech pace, SFX volume, or default narrator voices | `Settings > Audio Config`. |
+| Default speech pace, SFX volume, Spanish accent, or default narrator voices | `Settings > Audio Config`. |
+| Clone my own voice / rename or delete my voices | `Settings > Voices`, or the `My voices` tab of any voice picker, then `New voice`. |
+| How many voices my plan keeps | `Settings > Voices` — the `N/M` badge beside the heading (Standard 5, Pro 10, Max 20). |
 | Default voice timing, transition duration, or captions | `Settings > Video Config`. |
 | Replay the introduction tour | `Settings > General`, the `Introduction tour` row, `Replay`. |
 | Free-trial status or billing date | `Settings > General` (the `Free trial · bills <date>` badge) or `Settings > Usage`. |
@@ -1930,7 +1982,7 @@ Posters do not have either. There is no narration track to transcribe, so there 
 
 ### I added a character but cannot generate its image
 
-A new character is in no scene until you cast them, and nothing regenerates when you add them. To render the reference image for preview, use `Regenerate images + audio` in the confirmation right after adding, or right sidebar > `Resume Generation` > `Images + Audio only`. The button stays active for an uncast character with no image even when the project's final video already exists; the character card shows the progress and the image lands when the run finishes. To put the character in the video, use the `Cast` strip on the scenes they belong in.
+A new character is in no scene until you cast them, and nothing regenerates when you add them. To render the reference image for preview, use `Regenerate images + audio` in the confirmation right after adding, `Edit` > `Regenerate image` on the card, or right sidebar > `Resume Generation` > `Images + Audio only`. The button stays active for an uncast character with no image even when the project's final video already exists; the character card shows the progress and the image lands when the run finishes. To put the character in the video, use the `Cast` strip on the scenes they belong in.
 
 ### I cannot edit, delete, or dress a character
 
@@ -1947,6 +1999,18 @@ Asset, outfit, and cast changes are blocked while a generation task runs. Wait f
 ### An asset tile is dashed / a chip says "pending generation"
 
 That asset has no image yet — usually one the script planned. It renders automatically at the start of the next generation run (before characters and scenes). To render it now, open its tile and click `Generate image`, or use `Resume Generation` > `Images + Audio only`. A failed asset never fails the run; the scene simply generates without that reference.
+
+### I cannot create another voice
+
+`Settings > Voices` shows `N/M` beside the heading, where M is what your plan keeps (Standard 5, Pro 10, Max 20). At the cap the create tile becomes `Upgrade to keep more voices` and opens the plans modal; on the top plan, delete a voice to make room for another. A tile disabled with `Voice creation is not available on this server` means cloning is not configured there.
+
+### My cloned voice says "Rebuilding" or "Rebuilt on next use"
+
+The voice service dropped the model; nothing of yours is lost. It is rebuilt automatically the next time the voice narrates, and the voice stays selectable meanwhile.
+
+### The what's new card did not come back
+
+Each card is shown once per account and is marked as seen the moment it appears, so it cannot be reopened — on this device or any other.
 
 ### I cannot claim my daily credits
 
@@ -2179,6 +2243,14 @@ The completed video shown in the Output node.
 ### Guidance (CFG)
 
 Classifier-Free Guidance. A setting that controls how strictly the AI follows your prompt. Video guidance (Video CFG) applies to visual generation, and Audio guidance (Audio CFG) applies to sound generation. Higher values mean stricter adherence, while lower values allow more creative freedom.
+
+### Cloned Voice
+
+A narrator voice created from your own recordings in `Settings > Voices`. It appears in the `My voices` tab of every voice picker, and any scene whose narrator names it is narrated with it. How many you can keep depends on your plan.
+
+### What's New Card
+
+The once-per-account announcement shown at startup when a feature ships. See "Updates".
 
 ### Support Assistant
 
