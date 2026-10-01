@@ -1,6 +1,6 @@
 # Aificient Studio User Guide
 
-Last reviewed: September 20, 2026 (app version 1.6.2).
+Last reviewed: October 1, 2026 (app version 1.6.4).
 
 This guide explains how to use Aificient Studio from the application interface. It focuses on visible screens, menus, controls, generation workflows, editing tools, GPU management, settings, and common troubleshooting.
 
@@ -13,10 +13,10 @@ Aificient Studio helps you create AI-generated video from a written idea. You ca
 - Create reusable characters, and add new ones to a story at any point.
 - Build a project **asset base** — products, wardrobe, locations, props — that the script weaves into scenes and that characters can wear, so a real brand, outfit, or place stays consistent across the whole video.
 - Generate scene images, narration, sound effects, video clips, and a final stitched video.
-- Narrate in any of fifteen languages — picked by hand, or read from what you wrote.
+- Narrate in any of fifteen languages — picked by hand, or read from what you wrote — with a narrator voice from the app's library, one of thousands more in the `Voice library`, or your own clone; and change the narrator's voice from the canvas at any time.
 - Clone your own voice from a few recordings and narrate with it.
 - Animate a poster — one you already have, or one the app designs for you.
-- Review and edit individual scenes, recast them, and change which assets they show.
+- Review and edit individual scenes, recast them, change which assets they show, and have the AI write a newly cast character or asset into the scene's text.
 - Regenerate only the parts that need changes.
 - Render video with a local GPU runtime, rented GPU instances, or Aificient Cloud when that option is available.
 - Claim free daily credits on a plan or trial, and try the app on a free trial before subscribing.
@@ -44,7 +44,7 @@ Most History projects follow this path:
 
 The same app runs as a desktop application (Windows) and in the browser. Everything in this guide applies to both unless a note says otherwise; the differences that matter are:
 
-- **Web** has no local or rented GPUs: scene videos render on Aificient Cloud, GPU rentals are offered from the desktop app, and the `Publish` dialog is desktop-only.
+- **Web** has no local or rented GPUs: scene videos render on Aificient Cloud, the final stitch runs on Aificient Cloud too (the desktop stitches locally), GPU rentals are offered from the desktop app, and the `Publish` dialog is desktop-only.
 - **Phone** (a viewport narrower than 768 px) keeps every feature but rearranges it: the left sidebar becomes a drawer behind a menu button at the top-left, most composer pills fold into an `Options` sheet, dropdowns become bottom sheets you can swipe away, and the right project sidebar is reached through a floating `Details` pill. Tablets and larger screens behave like the desktop.
 
 ## 2. Signing In
@@ -72,6 +72,14 @@ The code screen also lets you:
 - Use a different email.
 - See when the code expires.
 
+### Staying Signed In and Sign-in Messages
+
+On the desktop app a sign-in is always remembered: the app renews its session in the background while it is open and when it starts, so a window left open overnight is still signed in the next morning, and an app update no longer signs you out — the stored session is reissued for the new version (the web app does the same). `Sign out` ends the session at the server as well, so it stops working everywhere. If a session cannot be renewed the app signs out with `Your session expired. Sign in again.`
+
+A failed sign-in now explains itself: `Sign-in took too long or was already used. Sign in again.`, `That sign-in was not started from this app. Sign in again from here.`, `Sign-in did not complete. Sign in again.`, `Couldn't reach the server to finish signing in. Check your connection and try again.`, or `Sign-in isn't available right now. Try again in a moment.` On the web a sign-in has to finish in the browser tab that started it. An app that starts offline signs you in by itself once the connection returns.
+
+An account that was closed shows `This account is closed and set to be deleted on <date>. To keep it, sign in to the Aificient iPhone app if that is where you asked for it, or write to info@aificient.io.` — on the sign-in screens and, if it happens mid-session, as a toast before the app signs out.
+
 ### Introduction Tour
 
 The first time a new account reaches the home screen, a short guided tour walks through the workspace. It starts on its own when all of these are true: you are signed in, your plan and credits have loaded, no project is open, and the account is less than 14 days old. It dims the screen, spotlights the real control for each step, and shows a card with a `Step N of 7` counter and a progress bar.
@@ -80,18 +88,18 @@ The seven steps, in order:
 
 1. `Welcome to Aificient Studio` — a centered welcome card; its button reads `Show me around`.
 2. `Three ways to create` — spotlights the `Story` / `Poster` / `Character` picker above the composer.
-3. `Start with a sentence` — spotlights the prompt box.
-4. `Shape it before you render` — spotlights the row of pills under the prompt (style, duration, language, pinned characters, and the `Brainstorm` switch). On a phone the text points you to the `Options` sheet instead.
+3. `Start with a sentence` — spotlights the prompt box; the card ends with `Not sure yet? Ask for ideas and it brainstorms five directions first.`
+4. `Shape it before you render` — spotlights the row of pills under the prompt: `Visual style, duration, language and your pinned characters live in this row.` On a phone it reads `Visual style, duration and language sit behind Options; your pinned characters have their own pill.`
 5. `From script to video` — spotlights the send button and explains the stages (script, images, narration, scene videos, final cut) and the render choice (your GPU or Aificient Cloud; `Lite` fast and affordable, `Pro` for maximum quality).
 6. `Everything is saved` — spotlights the sidebar navigation (projects, character library, render queue). On a phone it spotlights the menu button that opens the sidebar drawer.
 7. A closing card that depends on your account:
    - **Welcome credits available** — `You have N free credits`, with `Start creating` and `Compare plans`.
-   - **Free trial on offer** — `Try <Plan> free for N days`, with a `Start free trial` button (marked with a flag icon) that opens the trial checkout directly, and `See all plans`.
+   - **Free trial on offer** — `Try <Plan> free for N days`, with a `Start free trial` button (marked with a gift-box glyph) that opens the trial checkout directly, and `See all plans`.
    - **No plan, no credits, no trial** — `Choose a plan to start creating`, with `See plans` and `Not now`.
    - **Subscribed** — `You're all set`, showing the plan's credits for the period, with `Start creating`.
    - **Billing unavailable** — `You're ready`, pointing you to `Settings > Usage` for plan and credits.
 
-Navigation: `Next` (or `Show me around` on the first step), `Back` from step 2 onward, `Skip tour` at the bottom-left, and the close button at the top-right. Keyboard: `→` next, `←` back, `Esc` closes. `Enter` also advances, because the primary button has focus. `Skip tour` is not always an exit: if the account has welcome credits or a trial on offer, it jumps to the closing card so you still see that information. The spotlighted control cannot be clicked while the tour is open.
+Navigation: `Next` (or `Show me around` on the first step; both drawn as the app's steel button), `Back` from step 2 onward, `Skip tour` at the bottom-left, and the close button at the top-right. Keyboard: `→` next, `←` back, `Esc` closes. `Enter` also advances, because the primary button has focus. `Skip tour` is not always an exit: if the account has welcome credits or a trial on offer, it jumps to the closing card so you still see that information. The spotlighted control cannot be clicked while the tour is open.
 
 The tour is remembered **per account, per device or browser** — the same new account on a second computer or in another browser sees it again while it is still within its first 14 days. Replay it at any time from `Settings > General > Introduction tour > Replay`; replay ignores the account-age rule, closes Settings, and returns you to the home screen.
 
@@ -100,7 +108,7 @@ The tour is remembered **per account, per device or browser** — the same new a
 After signing in, the left sidebar stays visible while the main area changes with what you are doing:
 
 - Left sidebar: primary navigation, recent projects, project search, generation assets, and the user/settings area.
-- Home/new-project screen: appears in the main area when no project is open. It contains the Story, Poster, and Character creation chats; brainstorming is a `Brainstorm` switch inside Story.
+- Home/new-project screen: appears in the main area when no project is open. It contains the Story, Poster, and Character creation chats; brainstorming happens inside Story — ask for ideas and the assistant brainstorms before writing the script.
 - Center canvas: appears when a project is open and shows its visual flow and generated assets.
 - Right project sidebar: appears with an open project and contains the project outline, asset browser, project-specific settings, and resume actions. Its tabs and outline follow the project type — `Schema` / `Assets` / `Settings` for a History project, `Plan` / `Assets` / `Settings` for a poster.
 
@@ -143,7 +151,7 @@ Each group:
 A project row can show:
 
 - Active selection.
-- Running/generation indicator.
+- Running/generation indicator (a blinking dot) — shown while the project renders here, on Aificient Cloud, or on another device (another computer, the web, or the iPhone app).
 - Final video completed indicator.
 
 When you open a project, a progress overlay can move through `Loading project`, `Checking for active renders`, `Building canvas`, and `Preparing scenes` before the canvas becomes ready. Media previews are loaded in a controlled queue during this process so large projects do not try to decode every image and video at once.
@@ -154,8 +162,8 @@ Right-click a project, or click the `…` (`Project options`) control on its row
 
 Available actions:
 
-- `Rename`: opens a rename dialog for the selected project. Enter a new project name and select `Rename`, or press `Enter`, to save it.
-- `Delete`: removes the project.
+- `Rename`: opens the `Rename project` dialog (subtitled with the current name) with a `New name` field (`Project name`, hint `Enter to save`). Select `Rename`, or press `Enter`, to save it; `Cancel` closes it.
+- `Delete`: opens `Delete project?` — `The project and everything generated for it — images, narration, clips and final videos — are removed from your library.`, with a red `This cannot be undone.` line and `Cancel` / `Delete project` buttons.
 
 There is no duplicate action. Deleting a project is permanent from the app's point of view, so use it carefully.
 
@@ -181,22 +189,26 @@ The manager groups resources by status:
 
 ### Local Runtime
 
-The local runtime lets you render videos with your own GPU.
+The local runtime lets you render videos with your own GPU. It runs the same MiniMax-H3 engine that Aificient Cloud uses, so the picture you get for a given seed is the same; what changes is the time per clip (minutes rather than seconds) and the hardware it asks for.
 
-Useful notes:
+Requirements:
 
-- It is intended for Windows in the current app.
-- It requires a GPU with enough VRAM.
-- The UI shows if your GPU is unsupported or below the requirement.
-- Setup may require significant disk space.
+- The Windows desktop app. The web app and macOS show `Download the desktop app to generate locally` / `Generation not available on macOS` instead.
+- A GPU with at least **24 GB of VRAM** (the check accepts 23 GB, because a 24 GB card reports about 23.6). The sidebar row reads `Needs 24 GB VRAM` and the detail view shows `insufficient VRAM` with `The local runtime needs at least 24 GB of VRAM to render MiniMax-H3. This GPU has N GB.` when the card is below it; `Install Drivers` and `Start` are disabled.
+- At least **24 GB of system RAM** — not for the GPU, but because the model's weights stream through it. This is checked when you click `Install Drivers` or `Start`: `This machine has N GB of system RAM. The local runtime needs at least 24 GB — not for the GPU (<GPU> is fine), but because the model's weights stream through it. Use Cloud Render, or rent a GPU from the Vast.ai tab.` ("the Vast.ai tab" means the rented-GPU tools: `Create instance` in `Generation assets`, and the `Vast.ai` key under `Settings > API Keys`). The VRAM check at that point reads `<GPU> has N GB VRAM. The local runtime needs at least 24 GB to render MiniMax-H3 — use Cloud Render, or rent a 24 GB+ GPU from the Vast.ai tab.` Either message lands in the detail view's red `Error` block (with a `Copy logs` button) and the sidebar row says `Setup failed. View details`.
+- Disk space: the installer asks for at least 40 GB free, and the first start downloads the MiniMax-H3 model files (around 76 GB), so leave generous room. The download folder is set in `Settings > Model Config`.
+
+On a 24 GB card the model does not fit entirely on the GPU, so the engine streams parts of it over PCIe every step: a 5-second clip takes about 4.5 minutes on an RTX 4090 at 720p, and 1080p roughly doubles that (see "The 1080p Warning" under "Resume Generation"). From about 40 GB of VRAM upward the whole model sits on the card.
 
 From the local runtime detail view, you can:
 
-- Install or prepare the runtime.
-- Start it.
+- Install or prepare the runtime (`Install Drivers`).
+- Start it (`Start`).
 - Stop it.
-- Watch setup progress.
-- View logs if something fails.
+- Watch setup progress and the live log.
+- View logs if something fails (`Error — last 12 lines`, with `Copy logs`).
+
+Local and rented renders now make clips the same way Aificient Cloud does: each scene clip is animated from its image with a length derived from the narration (whole seconds between 4 and 15), and the narration is not baked into the clip — it is mixed over it at stitch time.
 
 ### Rented GPU Instances
 
@@ -205,7 +217,7 @@ Rented GPU instances are managed from the sidebar and the create-instance modal.
 From an instance detail view, depending on state, you may be able to:
 
 - View setup progress.
-- View logs.
+- View logs — the `Instance logs` panel shows each line's final state (a download progress bar is one line, not every redraw) with colour codes stripped, and `Copy logs` copies that same text (`Copied` once it worked).
 - Start.
 - Stop.
 - Reboot.
@@ -242,7 +254,7 @@ The Aificient Cloud option shows the project's `Lite` or `Pro` tier, resolution,
 
 How a cloud clip is made: the video model animates the scene image and composes the clip's own soundtrack — quiet ambience and sound effects implied by the visible action only, never speech or music. Your narration is **not** baked into the clip; it is mixed over it later, in the preview and in the final stitch. Each clip's length is derived automatically from its narration (voice delay + narration + a short tail, whole seconds between 4 and 15); a scene with no spoken text renders as a 5-second clip. Renders made on gift credits carry a small visible Aificient watermark; paid renders do not.
 
-Aificient Cloud is selected by itself; it cannot be combined with local or rented GPUs in the same submission. Once submitted, each scene appears as a separate cloud job. The app refreshes completed clips into the project automatically.
+Aificient Cloud is selected by itself; it cannot be combined with local or rented GPUs in the same submission. Once submitted, each scene appears as a separate cloud job. The app refreshes completed clips into the project automatically. If the service answers that some of the scenes are already rendering elsewhere (on your own GPU, or on another device), the submission is retried once without them and nothing is charged for those scenes. A single queued scene can be taken out of the queue from its video node (`Remove from queue`, which refunds it) and rendered again later with `Resume Generation`, even while the rest of the queue is still running.
 
 Poster projects can also render on Aificient Cloud. A poster is a single clip, so the scene-count and scene-length limits above do not apply to it; it submits one job that carries the project's saved mode, resolution, and duration, and the delivered clip already includes its generated audio.
 
@@ -256,16 +268,24 @@ New projects render at `720p` by default: it is much cheaper than `1080p` with v
 
 ## 6. Renting a GPU
 
-Open `Generation assets` and click `Create instance` to open the GPU rental modal. If no Vast.ai key is configured, the flyout shows `Add Vast.ai key` instead.
+Open `Generation assets` and click `Create instance` to open the `Available Instances` modal (desktop only — the web offers `Download desktop app`, `GPU rentals run from the desktop app`). If no Vast.ai key is configured, the flyout shows `Add Vast.ai key` instead.
 
-The modal lets you choose a GPU profile and shows available offers.
+The modal header shows the selected tier, its disk, and your price ceiling (for example `RTX 5090 · 140 GB disk · up to $3/hr`) with a `Refresh` button. Above the offers table sit the GPU tier cards. Four are shown at first — `RTX 4090`, `RTX 5090`, `RTX PRO 6000`, and `H100 series` — and a bare chevron on the rule beneath them (`Show 4 more GPUs` / `Show fewer GPUs`) reveals the other four; the list opens expanded when your saved tier is one of the hidden ones. `RTX 5090` is the default tier.
 
-Common profiles:
+Each card shows the tier name, its memory, the best live price (`$X.XX /hr`) or a price hint while offers load, and three small bars — `Price` (`Higher means lower expected rental cost.`), `Speed` (`Higher means faster expected generation throughput.`), and `Headroom` (`Higher means more of the model stays on the card instead of streaming.`). Hover a card for a note on what that card does with the MiniMax-H3 model. Every tier renders the same picture; they differ in time and price.
 
-- RTX 4090: budget option.
-- RTX 5090: balanced option.
-- A100: professional option.
-- H100: premium option.
+| Tier | Memory | Price hint | What to expect |
+| --- | --- | --- | --- |
+| `RTX 3090` | 24 GB GDDR6X | Cheapest | Clears the floor, but the model streams and the card has no hardware fp8, so every step is slower. Best for overnight batches. |
+| `RTX 4090` | 24 GB GDDR6X | Budget | The value pick, measured at about 4.5 min for a 5-second clip (about 13 min at 15 s). The model still streams; VRAM peaks near 23.3 GB, so nothing else can use the card. |
+| `RTX 5090` | 32 GB GDDR7 | Balanced | Bigger blocks and fewer round trips per step; comfortable 1080p headroom. |
+| `L40S / A6000` | 45–48 GB | Value | The first tier where the whole model sits on the card and stops streaming — usually the cheapest row per GB. |
+| `A100 series` | 40–80 GB HBM2e | Pro | Fully resident with room for long clips; no hardware fp8, so not automatically faster than an L40S. Pick it for 15-second clips and large batches. |
+| `RTX PRO 6000` | 96 GB GDDR7 | Pro | Holds everything at once, nothing streams or is re-read between clips; 15-second clips and the 1080p pass are routine. |
+| `H100 series` | 80–94 GB HBM3 | Premium | What Aificient Cloud runs on: a 5 s 720p clip measured 37 s. Rent it when the wait matters more than the bill. |
+| `H200` | 141 GB HBM3e | Premium | An H100 with more memory bandwidth; worth it for 15-second clips and back-to-back batches. |
+
+The search only returns offers with at least 23 GB of GPU memory, an Ampere or newer card, at least 100 GB of disk, and at least 32 GB of host RAM, under your `Settings > GPU Config` price and reliability limits.
 
 The offers table can include:
 
@@ -287,7 +307,7 @@ The `Download` column shows a small colored status dot next to the speed and cos
 
 Hover the dot to see a short text label. Greener dots generally mean faster instance setup and cheaper data transfer; red dots can mean slower setup or higher costs.
 
-If no offers appear, try adjusting GPU settings in `Settings > GPU Config`.
+If no offers match, the list reads `No <tier> offers under $X/hr right now` with `Try again` and `Change settings`. `Change settings` opens `Settings > GPU Config` on top of the modal; the offers refresh when you close Settings.
 
 ## 7. Creating a New Project
 
@@ -295,17 +315,17 @@ Click `New project` in the sidebar to show the creation home screen in the main 
 
 The creation home screen has three modes in the segmented control at the top of the chat composer:
 
-- `Story`: write one video story from a clear brief and refine it in chat. Produces a History project. Its composer has a `Brainstorm` switch for exploring five directions before the story is written (see "Brainstorm" under "Story Mode").
+- `Story`: write one video story from a clear brief and refine it in chat. Produces a History project. Its description reads `Write one video story from a clear brief and refine it in chat. Not sure yet? Ask for ideas and it brainstorms five directions first.` (see "Brainstorm" under "Story Mode").
 - `Poster`: animate a poster you already have, or design one from zero and animate it. Produces a poster project.
 - `Character`: generate a reusable character (image + voice) for your library.
 
-Each mode has its own hero text, its own composer controls, and its own accent colour, so it is always clear which one is active. Story turns amber while `Brainstorm` is on and sky blue while it is off.
+Each mode has its own hero text, its own composer controls, and its own accent colour, so it is always clear which one is active. Story is sky blue; a Story thread that turned into a brainstorm shows `Story · Brainstorm` in its eyebrow and turns amber.
 
 The top-right `History` control (`Chat history`) opens your previous creation chats — this is chat history, not the project list, which lives in the left sidebar. The dropdown is headed `Recent chats` with a count and a refresh button, and has filter chips `All` / `Story` / `Poster` / `Character`; it opens pre-filtered to the composer's current mode, and the `Story` filter also lists brainstorm chats, which keep their own icon. Each row shows the chat's icon, title, a preview, and a relative time; hover a row for `Delete chat`. Empty states read `No saved chats yet` or `No chats in this mode` (switch the filter to `All`). On a phone the control is icon-only and the list opens as a bottom sheet. The active conversation title appears in the top bar after the conversation has started.
 
 ### Story Mode
 
-Use Story mode when you already have a video idea. (Earlier versions called this mode `Concept` and had a separate `Brainstorm` mode; brainstorming is now a switch inside Story.)
+Use Story mode when you have a video idea — or only a topic: the hero reads `Describe your video and I'll draft the full script — scenes, narration and characters — ready to refine in chat and generate. Not sure yet? Ask for ideas and I'll brainstorm first.`, and the composer placeholder is `Describe your video — or ask for ideas and I'll brainstorm first.` (Earlier versions called this mode `Concept`, then had a `Brainstorm` switch; now the first brief decides on its own, see "Brainstorm".)
 
 Typical workflow:
 
@@ -345,25 +365,28 @@ Rules and messages:
 - PNG or JPG only, up to 20 MB each; at most **8 assets per story request** (`At most 8 assets can be attached to one story.`, `Only N more asset(s) fit — the extras were skipped.`).
 - Assets attach on the first prompt **and** on corrections — files you stage while refining ride the correction turn and join the plan's catalogue.
 - The sent message keeps thumbnails of what you attached; reopening a saved chat rebuilds them from the plan. A file that is no longer in your storage keeps its slot as a placeholder with the tooltip `<name> — no longer in your assets`.
+- When the service refuses an attachment, the assistant answers with a plain sentence instead of an error code — for example `The AI couldn't make out that image. Try a clearer picture, or try again in a moment.`, `A project can hold at most 20 assets. Delete one to add another.`, `Only JPG and PNG images can be added.`, `That image is over 20 MB.`, `That file is empty.`, or `That took too long. Try again in a moment.` The same sentences appear if `Create project` fails for one of those reasons.
 
 The plan card the assistant replies with has an `Assets` block listing every asset: thumbnail, name, kind tag, a violet `AI planned` tag for ones the script invented on its own, and an amber `generated later` tag for ones that have no image yet (the app renders those at the start of the first generation run). Each scene row in the plan also shows the asset chips it uses next to its character chips, so you can see where a product or outfit lands before rendering anything.
 
 #### Find Inspiration
 
-Below the empty Story composer (with `Brainstorm` off) there is a `Find inspiration` button. It expands a small showcase of four real generated videos — `Countryside promo` and `Samurai at dawn` (Cinematic), `Golden retriever` and `Weird science` (3D Disney). Each card shows a poster still, plays a short muted loop, and names its artistic style. Hover a card to see `Use this idea`; click it to drop a matching brief into the composer **and** select the artistic style that clip was rendered with. You can then edit the text before sending it. Click the button again to collapse the showcase. With `Brainstorm` on, the showcase is replaced by four topic chips you can click to seed a brainstorm.
+Below the empty Story composer there is a `Find inspiration` button. It expands a small showcase of four real generated videos — `Countryside promo` and `Samurai at dawn` (Cinematic), `Golden retriever` and `Weird science` (3D Disney). Each card shows a poster still, plays a short muted loop, and names its artistic style. Hover a card to see `Use this idea`; click it to drop a matching brief into the composer **and** select the artistic style that clip was rendered with. You can then edit the text before sending it. Click the button again to collapse the showcase. (A blank brainstorm thread — reached only from a `What's new` link — shows four topic chips you can click to seed a brainstorm instead.)
 
 #### Brainstorm
 
-Turn on the `Brainstorm` switch in the Story composer when you want help exploring ideas before committing to one. It is a small on/off switch below the prompt, after the language control, not a separate mode: the segmented control stays on `Story`, and the hero reads `Story · Brainstorm` while it is on.
+There is no longer a `Brainstorm` switch. The **first brief of a new Story chat** decides by itself: describe a video and the assistant writes the script; ask for ideas, or send a topic or a rough direction, and it brainstorms five directions first. Only that first message is routed this way — corrections never are, and a chat seeded from a picked idea always writes the story.
+
+When the assistant answers with ideas, the Story chat becomes a brainstorm chat: the eyebrow reads `Story · Brainstorm`, the accent turns amber, and the reply says `Here are five directions. Pick Write story to develop one into a script, or reply with a correction to rewrite the batch.`
 
 Typical workflow:
 
-1. Turn on `Brainstorm` and enter a topic or rough direction.
+1. Enter a topic or rough direction (for example "ideas for a coffee brand launch").
 2. Review the five generated directions.
-3. Ask for more options or corrections.
-4. Click `Write story` on the idea you like. The app opens a Story chat seeded with that idea and writes the full script; `Brainstorm` is off in that chat.
+3. Ask for more options or corrections — the reply reads `Updated. These are the revised directions based on your latest correction.`
+4. Click `Write story` on the idea you like. The app opens a Story chat seeded with that idea and writes the full script.
 
-Turning the switch off returns you to a Story chat without brainstorming; turning it back on reopens your brainstorm chat.
+Starting a `New chat` from a brainstorm chat opens a fresh Story chat whose first brief decides again. Brainstorm chats are saved in the chat `History` under the `Story` filter with their own icon.
 
 ### Poster Mode
 
@@ -384,7 +407,7 @@ The composer placeholder is `Describe a character: 'A brave young woman detectiv
 - The visual-style pill.
 - A gender control offering `Auto`, `Female`, and `Male`. `Auto` (the default) lets the app read the gender from your description and the reference image. Selecting a voice fixes the gender to that voice's, and the control is disabled while one is selected (`Set by the selected voice — clear the voice to choose.`).
 - An `Image` pill for a reference image (`Add reference image`); once set it reads `Reference` with a thumbnail and a clear `×`. You can also drop an image anywhere on the screen — the overlay reads `Use as the reference image` / `The character keeps this face, hair and build.` — or paste an image URL in the pill's popover.
-- A `Voice` pill that opens the voice picker (see "Voice").
+- A `Voice` pill that opens the voice picker (see "Voice"); once a voice is chosen the pill shows its name.
 
 The first message creates the character; every later message in the same chat is a correction that rewrites it, so you refine conversationally ("older", "add a scar", "different jacket"). Each character gets **one reference image** (there is no turnaround or model sheet). When it is done the assistant replies `Created <name>. Available in your library.`, and from then on the character can be pinned in a Story or Poster composer or added to an existing story from the `Add character` modal's `Library` tab.
 
@@ -405,7 +428,7 @@ Canceling affects only the single in-progress chat request. It does not remove p
 
 Yes — you can change the script before you start generating. There are two ways to do it, on two different screens of the creation flow. You can use either one, or both.
 
-**1. Ask the AI in the chat (Story chat, with or without Brainstorm).** While you are still in the chat conversation, keep typing to request changes in natural language — for example, "make scene 2 funnier", "rename the main character to Mia", or "shorten the narration". The assistant rewrites the concept for you and the conversation updates with the result. This is best when you want the AI to rework wording, tone, or whole sections.
+**1. Ask the AI in the chat (Story chat).** While you are still in the chat conversation, keep typing to request changes in natural language — for example, "make scene 2 funnier", "rename the main character to Mia", or "shorten the narration". The assistant rewrites the concept for you and the conversation updates with the result. This is best when you want the AI to rework wording, tone, or whole sections.
 
 **2. Edit by hand on the render-settings screen.** When you continue from the concept, the render-settings screen slides into the main workspace and a `Script` preview panel appears on the right. Click `Edit` at the top-right of that panel to switch it into edit mode. The button changes to `Done`; click it again to apply your changes and leave edit mode. This is best for small, exact fixes, and it sits next to the render settings and the `Generate` button. Use the back arrow in the render-settings header to return to the chat.
 
@@ -428,7 +451,7 @@ Notes:
 
 The creation controls sit in and directly below the chat composer at the bottom of the home screen. Switch modes along the composer's top edge; use the pills and segmented controls below the prompt for style, duration, language, pinned characters, attachments, and Character-mode options.
 
-Only the controls that mean something for the active mode are shown. Poster mode, for example, has no visual-style preset (the look comes from your prompt or the imported artwork) and no language control, but it adds a pipeline toggle, an image-attachment pill, and an aspect-ratio pill. The full pill row, left to right, is: `Options` (phone only), style, `Assets` (Story), the poster pipeline toggle and `Poster image` / `Reference assets` (Poster), aspect ratio (Poster from zero), duration, language, the `Brainstorm` switch (Story), `Characters`, the gender control (`Auto` / `Female` / `Male`), `Image`, and `Voice` (Character), then a credit chip and the send button.
+Only the controls that mean something for the active mode are shown. Poster mode, for example, has no visual-style preset (the look comes from your prompt or the imported artwork) and no language control, but it adds a pipeline toggle, an image-attachment pill, and an aspect-ratio pill. The full pill row, left to right, is: `Options` (phone only), style, `Assets` (Story), the poster pipeline toggle and `Poster image` / `Reference assets` (Poster), aspect ratio (Poster from zero), duration, language, `Characters`, the gender control (`Auto` / `Female` / `Male`), `Image`, and `Voice` (Character), then a credit chip and the send button.
 
 Once a plan exists in the conversation, the aspect-ratio, duration, and language controls lock for that chat.
 
@@ -438,7 +461,7 @@ When the price of the current mode is known, a small `N cr` chip sits next to th
 
 ### Options Sheet (Phone)
 
-On a phone the style, poster pipeline, aspect ratio, language, gender, and duration controls fold into an `Options` pill that opens a bottom sheet with a row per control (`Visual style` opens the style picker). The `Assets`, `Characters`, and `Brainstorm` controls stay in the pill row, and their popovers open as bottom sheets.
+On a phone the style, poster pipeline, aspect ratio, language, gender, and duration controls fold into an `Options` pill that opens a bottom sheet with a row per control (`Visual style` opens the style picker). The `Assets` and `Characters` controls stay in the pill row, and their popovers open as bottom sheets.
 
 ### Assets (Story)
 
@@ -446,19 +469,23 @@ The `Assets` pill attaches up to 8 PNG/JPG reference images — products, wardro
 
 ### Visual Style
 
-The style picker includes presets such as:
+The style pill (it shows the short name of the current style, or `Style`) opens a `Visual style` picker of eleven tiles, each with a one-line tagline, in this order:
 
-- 3D animation.
-- Classic cartoon.
-- Anime.
-- Retro pixel art.
-- Cinematic realistic.
-- Comic/manga.
-- Watercolor.
-- Low poly.
-- Isometric animation.
+| Pill name | Full name | Tagline |
+| --- | --- | --- |
+| `Cinematic` | Cinematic Realistic | Photoreal, filmic lighting |
+| `3D Disney` | 3D Disney-style Animation | Glossy, expressive 3D animation |
+| `Collage` | Editorial Collage (Vox-style) | Cut-paper news explainer collage |
+| `Stickman` | Stickman Animation | Simple stick figures, flat worlds |
+| `Cartoon` | Classic Cartoon (Tom & Jerry) | Bold, bouncy hand-drawn toons |
+| `Anime` | Japanese Anime (Studio Ghibli) | Painterly anime warmth |
+| `Pixel` | Retro Pixel Art | Crunchy retro pixel art |
+| `Comic` | Comic Book / Manga | Inked panels & halftones |
+| `Watercolor` | Artistic Watercolor | Soft, flowing watercolor |
+| `Low Poly` | Low Poly / Geometric | Faceted geometric shapes |
+| `Isometric` | Isometric Animation | Clean isometric dioramas |
 
-The style affects concept writing and visual generation. The style pill opens a `Visual style` picker of nine tiles, each with a one-line tagline, with `Cinematic` and `3D Disney` first.
+`Collage` and `Stickman` are new. The style affects concept writing and visual generation.
 
 You can also change the style while refining a concept in the chat. If you pick a different style and then send a correction, the new style is applied to the refined concept. If you change it more than once during refinement, the most recent selection wins.
 
@@ -496,7 +523,7 @@ The pill locks once a plan exists in that chat. From then on the plan card in th
 
 ### Pinned Characters
 
-In Story mode (with or without `Brainstorm`), you can pin existing library characters. The `Characters` pill (its badge counts the pinned ones) opens the `Pin characters` panel: a header with the pinned count (`2/3` where a limit applies) and a `Create` shortcut that jumps to Character mode, a `Search characters` box, and your library as a list of rows — thumbnail, name, and either the character's description or its type and gender. Pinned rows carry a check and always stay in view; the rest load ten at a time behind a `Load more · N left` button at the foot of the list. The empty state reads `No characters yet` / `Design one once and pin it into any story.` with a `Create a character` button, and a search with no hits reads `No characters match`.
+In Story mode, you can pin existing library characters. The `Characters` pill (its badge counts the pinned ones) opens the `Pin characters` panel: a header with the pinned count (`2/3` where a limit applies) and a `Create` shortcut that jumps to Character mode, a `Search characters` box, and your library as a list of rows — thumbnail, name, and either the character's description or its type and gender. Pinned rows carry a check and always stay in view; the rest load ten at a time behind a `Load more · N left` button at the foot of the list. The empty state reads `No characters yet` / `Design one once and pin it into any story.` with a `Create a character` button, and a search with no hits reads `No characters match`.
 
 Pinned characters are included in the concept so the generated story uses them. Story mode has no limit on how many you pin.
 
@@ -504,16 +531,32 @@ Poster mode can pin characters too, but only in the `From zero` pipeline — a c
 
 ### Voice
 
-When you assign a voice (in `Character` mode, the character editor, or Settings), the app opens the voice picker, headed `Narrator voice`. It has two tabs:
+When you assign a voice (in `Character` mode, the character editor, the `Narrator` card on the canvas, or Settings), the app opens the voice picker. The app never names the voice provider: the voices are simply "the library" and "my voices".
 
-- **`Library`** — the app's fixed narration voices. Each row shows the voice name, a male/female mark, and a short description of how it sounds (for example, "Warm, inviting voice" or "Firm, confident delivery").
-- **`My voices`** — the voices you cloned yourself in `Settings > Voices`, described as `Cloned from your recordings` with their language code, and counted on the tab. The tab only exists when voice cloning is available for your account, and the picker opens on it when the voice currently selected is one of yours. A voice whose model is being rebuilt carries a `Rebuilding` tag; it stays selectable and is rebuilt automatically the next time it narrates.
+The header has two text tabs, `Library` and `My voices` (with a count), when you can keep voices of your own; otherwise it is a plain `Voices` list. A `Clear` link at the top-right removes the selection where a voice is optional; where a voice is required (the `Narrator` card, the default voices in Settings) there is no `Clear`.
 
-Above the list sit a search box (`Filter voices`, or `Filter your voices`), an `All` / `Female` / `Male` filter, and a language filter (`Any language`). The gender filter starts on the gender of whoever the voice is for, and in fields where that gender is fixed it is not offered at all. A voice carrying no language tag is never hidden by the language filter, and the voice you have selected stays visible whatever the filters say.
+- **`Library`** — the app's curated narration voices. While the server narrates on the voice library, this tab shows the multilingual narrators — or, when the picker is opened from the `Narrator` card, the voices native to the script's language. Voices you saved from the `Voice library` are listed under `My voices` instead, so each one appears once. On a server without the voice library this tab is the fixed list of thirty built-in voices.
+- **`My voices`** — your own voices, in two sections when both exist: `Cloned` (the voices you cloned in `Settings > Voices`) and `Saved` (library voices you bookmarked in the `Voice library`). Clones native to the narration language are listed first. A clone whose model is being rebuilt carries a `Rebuilding` tag (`Rebuilt automatically the next time it narrates`) and stays selectable.
 
-Each row has a play button. Click it to hear a short preview of that voice, and click again (or the square) to stop. When a voice is required, the picker hides the `Clear` option; otherwise you can clear the selection to fall back to a default.
+Above the list sits a search box (`Search voices`, or `Search your voices`) with two gender toggles folded into it — their titles read `Female voices only`, `Male voices only`, and `Show every voice`. Where the gender is fixed by the field, a static `Female voices` / `Male voices` mark is shown instead. With no gender chosen, the list is grouped under sticky `Female`, `Male`, and `Other` headers with counts. The arrow keys move between rows and `Enter` picks; the current pick is scrolled into view when the picker opens.
 
-`My voices` also carries a `New voice` link — and, while you have none, `No voices of your own yet` with a `Create a voice` button. Either one closes the picker and opens `Settings > Voices`.
+Each row shows a play button (`Play preview` / `Stop preview`, or `No preview`), the voice name, trait pills — `Female` or `Male`, then the accent with its country flag, `Global` with a globe for a multilingual narrator, or the language with its flag for a clone — and a one-line description. Click the play button to hear a short preview and click it again to stop.
+
+The `Library` tab can also offer `Automatic` rows: in the default-voice fields of Settings a single `Automatic` (`The best library voice for the script's language and accent`), and on the `Narrator` card one per gender (`The default female narrator for the language` / `The default male narrator for the language`). A voice id the library no longer holds is also displayed as `Automatic`.
+
+Empty states: `No voices of your own yet` with `Clone your voice, or save voices from the library.` and a `Clone a voice` button (it opens `Settings > Voices`); `No voices match` / `Try another name or clear the gender.`; and, on a language-scoped library with nothing native, `No <Language> voices on the shelf yet.` with a `Browse <language> voices` button that opens the `Voice library` on that language.
+
+The footer carries `Browse thousands more voices` (compass icon), which opens the `Voice library` explorer described next, and on `My voices` a `Clone` link to `Settings > Voices`.
+
+#### Voice Library (Explorer)
+
+`Browse thousands more voices` at the foot of any picker, `Browse <language> voices`, or `Explore` in `Settings > Voices` opens the `Voice library` dialog — full screen on a phone — subtitled `Every voice can narrate in any language.` It is offered while narration runs on the voice library. It has two tabs, `Explore` and `Saved` (with a count), and a search box (`Search by name or style — warm, deep, calm…`, or `Filter saved voices`).
+
+`Explore` has five filters: `Language` (every narration language, with its flag; it opens on the language of the field you came from), `Accent` (`Any accent` plus the accents the service offers for that language; hidden when there are none), `Gender` (`Any voice` / `Female` / `Male`, locked when the field fixes it), `Best for` (`Any use`, `Storytelling`, `Explainer`, `Conversational`, `Social media`, `Characters`, `Entertainment`, `Advertising`), and `Sort` (`Trending` by default, `Most used`, `Most added`, `Newest`). A `Clear` link appears once a filter is active. Results load thirty at a time as you scroll.
+
+Each row has a preview button, the name, trait pills, and a `<use case> · <tagline>` line. Hover a row for `Use`; click it (or press `Enter`) to pick that voice for the field you came from — the dialog closes and the voice is saved to your shelf at the same time. The bookmark button (`Save voice` / `Remove from saved voices`) saves a voice without picking it. Saved voices appear under `My voices` in every picker and speak every language; removing one from the shelf does not affect scripts that already use it.
+
+Messages: `The voice library could not be reached.` / `Check your connection and try again.` with `Retry`; `No voices match` / `Try another search or clear the filters.`; on `Saved`, `Nothing saved yet` / `Bookmark voices while you explore; they show up under My voices in every picker.` with an `Explore voices` button. The shelf has a cap set by the service — at the cap the dialog says `You already keep N voices. Remove one to save another.`; any other failure reads `That voice could not be saved. Try again.`
 
 ## 9. Character Library
 
@@ -539,7 +582,7 @@ The all-characters view (headed `Characters` with a count) lets you:
 - Open details.
 - Rename characters from their detail view.
 - Preview images (`View image` on a card).
-- Delete characters (`Delete character` on a card). The confirmation reads `Delete character?` — `This permanently removes the character and its generated reference image from your library. This cannot be undone.`
+- Delete characters (`Delete character` on a card). The confirmation is headed `Delete character?` with the character's name, reads `The character and its generated reference image are removed from your library.` with a red `This cannot be undone.` line, and offers `Cancel` / `Delete character` (`Deleting…` while it runs).
 
 When Character mode is open on an empty creation chat, the home screen also shows up to six characters from your cast; use `See all` when more are available.
 
@@ -605,11 +648,10 @@ The default depends on your account: trial accounts (welcome credits, no plan) s
 
 Suggested use:
 
-- Use `Lite` for previews, quick feedback, or when your GPU has less than 31 GB of VRAM (the app shows a `Recommended` badge on `Lite` in that case).
-- Use `Pro` for finished videos when the selected GPU has enough memory.
-- A100 runtimes require `Pro`; the app blocks the `Lite`/FP8 path on an A100 and asks you to switch.
+- Use `Lite` for previews and quick feedback, and on a 24 GB card when time matters.
+- Use `Pro` for finished videos.
 
-On Aificient Cloud the tier is a quality/price knob: `Lite` renders with fewer refinement steps, `Pro` with more (about a third more compute), and `Pro` is priced accordingly.
+On every runtime the tier is a step-count knob, not a precision setting: `Lite` renders each clip with a few fast steps, `Pro` with many more (about a third more compute on Aificient Cloud, where `Pro` is priced accordingly). The engine decides how much of the model to keep on the card from its VRAM, so the picture for a given seed is the same on every GPU — only the time changes. The earlier rule that an A100 could not run `Lite` is gone. What the app does refuse is a GPU that is plainly too small: queueing onto a card under 24 GB (a 3080, a 4070, a T4, a V100, …) fails with `<GPU> has less than 23 GB of VRAM, which MiniMax-H3 cannot render on even with every block streamed. Use Cloud Render, or pick a 24 GB+ GPU (RTX 3090 / 4090 or better).`
 
 ### Images and Audio Only
 
@@ -631,7 +673,7 @@ Common node groups, left to right:
 - Project info.
 - Project assets (the asset base card, right after the project card).
 - Character references (the cast column, with `Add character` under the last card).
-- Script.
+- Narrator (the narrator-voice card; the script text opens from the project card).
 - Scenes.
 - Scene text/details.
 - Images.
@@ -648,23 +690,32 @@ Those node groups are the History flow. A poster project uses the same canvas wi
 
 ### Project Info
 
-Shows:
+The `Project` card shows:
 
 - Project name.
-- Style.
-- Duration.
-- Scene count.
+- `Ns · N scenes`, and the script status icon — `Writing the script…` while the script is being written, or `Script generation failed`.
+- `Style` (long style text is clamped to three lines; hover for the full text).
+- A `View script` button, once the script is complete, that opens the read-only `Script` modal: `Ns · N scenes`, the `Style`, and one block per scene with its number and title, its length, its visual description, and its narration in quotes.
 
-### Script
+### Narrator
 
-Shows script status and can open script details once ready.
+The card between the cast column and the scenes is the project's narrator voice. (It replaced the earlier `Script` card; the script text now opens from the `Project` card's `View script` button, and the narrator block that used to live in the script details lives here.) Its header shows how many scenes are narrated (`N scenes`) and the script status; while the script is being written it reads `Waiting for the script…`, or `Script generation failed`.
 
-Script details can include:
+Once the script is ready it shows:
 
-- Style.
-- Duration.
-- Narrator.
-- Scene list.
+- The current voice's name — or `Automatic`, which means the library voice for the script's language and accent (`The best library voice for the script's language and accent`).
+- The voice's description.
+- Trait chips: `Female` / `Male`, and `Global` (a multilingual voice), the accent with its flag, or the language.
+- A notice box when the service switched the voice while creating the project — for example because the voice you picked does not narrate in the script's language, so the automatic voice for that language is used instead.
+- A full-width `Change voice` button (`Change the narrator voice`; disabled with `Wait for the generation to finish` while a run is active).
+
+`Change voice` opens the voice picker scoped to the script's language, with an `Automatic` row per gender and no `Clear` (see "Voice"). Picking a different voice opens a `Change narrator` confirmation headed with the voice's name and gender:
+
+- `The narrator will speak with <name>` (` — the default <gender> voice for the language` for `Automatic`).
+- If narration exists: `The narration of N scenes is re-recorded`, with `About N credits.` (the audio price times the narrated scenes) and `Scene images and rendered clips are kept; a clip is only re-rendered if its new narration no longer fits in it. The final video is stitched again.` Otherwise: `No narration was recorded yet: every scene is narrated with this voice when you generate.`
+- `Cancel`, and `Change and re-record` (or `Change voice` when nothing was recorded yet).
+
+Confirming saves the narrator and, when narration existed, starts an images-and-audio run right away to re-record it. The change is refused while a generation is running (`Cannot change the narrator while a generation is running`), and if it fails the card reads `The narrator could not be changed.`
 
 ### Scene
 
@@ -689,7 +740,7 @@ The `Assets` card sits in its own column right after the project card and holds 
 
 The header shows the asset count and two buttons:
 
-- `Upload an image` — a file picker for PNG/JPG images (several at a time; they upload one after another). Uploaded assets are ground truth: they are never regenerated.
+- `Upload an image` (tooltip `Upload an image — it's named and described from the picture`) — a file picker for PNG/JPG images (several at a time; they upload one after another). The service looks at each picture and writes the asset's name, kind, and description itself — one small, charged AI call — so the file name never names an asset. Uploaded assets are ground truth: they are never regenerated.
 - `Create from a prompt` (atom icon) — opens `New asset from a prompt` (`The image model renders it in the project's artistic style`), with `Name`, a `Kind` chip row (`Product`, `Wardrobe`, `Location`, `Prop`), and `What it looks like` (`A complete visual brief: shape, colors, materials, branding…`). `Create & generate` creates the entry and renders its image right away.
 
 The empty state reads `Products, wardrobe, locations…` / `Upload an image or create one with AI.`
@@ -706,12 +757,13 @@ Click a tile to open its detail modal, titled with the asset's name and subtitle
 - `Used in` — for example `Scenes 2, 4 · worn by Maya`, or `Nowhere yet — pick it from a scene card, or place it with AI below.`
 - `Generate image` / `Regenerate image` — for generated assets only; uploaded assets have no regenerate button.
 - `Details` — name, kind, and description (`What the models read about this asset. Editing these regenerates nothing.`); a `Save` button appears once something changed.
-- `Place with AI` — describe where the asset belongs (`e.g. "show it wherever the chemist is drinking"`); the model picks the scenes (and the character, for wardrobe) and those scenes regenerate. The result line reads `Now in scenes 2, 3.` or `Not placed in any scene.`, and when something changed the generation run starts automatically.
+- `Place with AI` — describe where the asset belongs (`e.g. "show it wherever the chemist is drinking"`); the model picks the scenes (and the character, for wardrobe) and those scenes regenerate. The result line reads `Now in scenes 2, 3.` or `Not placed in any scene.` (plus `Its details were filled in from its image.` when the service described the asset on the way), and when something changed the generation run starts automatically. If the name or description were filled in while the modal was open, the `Details` fields update unless you had already edited them.
 - `Delete from project` — asks first. If the asset is assigned anywhere, the confirmation spells out what goes with it: the generated image and video of every scene that uses it, and everything featuring any character that wears it (including that character's image); narration and caption timings are kept. An unassigned asset is simply removed. `Keep it` / `Delete asset`.
 
 Notes:
 
-- There is no fixed cap on the asset base itself. The caps are 8 attachments per story request in the composer, 5 assets per scene, and 3 per character. Those two limits are fixed by the service and are not project settings.
+- A project can hold at most 20 assets (`A project can hold at most 20 assets. Delete one to add another.`). The other caps are 8 attachments per story request in the composer, 5 assets per scene, and 3 per character. All of them are fixed by the service and are not project settings.
+- Upload and creation errors are plain sentences in the app's error toast: `The AI couldn't make out that image. Try a clearer picture, or try again in a moment.`, `Only JPG and PNG images can be added.`, `That image is over 20 MB.`, `That file is empty.`, `That took too long. Try again in a moment.`, `The AI isn't available right now. Try again in a moment.`, and for a prompt-made asset `Give the asset a name.`, `Describe what the asset looks like.`, or `That name is too long — shorten it and try again.` Running out of credits opens the out-of-credits card. Anything else reads `The image could not be added.` or `The asset could not be created.`
 - Asset changes are blocked while a task runs (`Cannot update assets while a task is in progress`).
 - Finished project assets also appear in the right sidebar's `Assets` tab under `Project asset`.
 
@@ -764,6 +816,8 @@ Shows a generated scene video clip.
 
 While a clip is waiting in a local, rented, or Aificient Cloud render queue, the node shows a colored `Queued` badge with a small queue icon instead of its normal status icon. Once rendering starts, it switches to the normal active/progress state.
 
+A queued clip also carries a `Remove from queue` button (`Removing...` while it works). On a GPU queue its tooltip reads `Takes this scene's clip out of the GPU's render queue. The other scenes keep rendering.`; on Aificient Cloud, `Takes this scene's clip out of the Aificient Cloud render queue, refunding it. The other scenes keep rendering.` The button is not offered once the clip is rendering. A removed scene is rendered again by `Resume Generation`, which can run beside the live queue (see "Resume Generation").
+
 Actions can include:
 
 - Play/pause.
@@ -788,11 +842,14 @@ Only one stitch runs at a time. If several projects finish rendering around the 
 
 While a stitch is running, the node can report these steps:
 
-- Downloading scene videos.
+- Downloading scene videos (`Downloading scene video N/M`) and, for cloud-rendered scenes, their narration (`Downloading narration N/M`).
 - Analyzing scene videos.
-- Stitching scene videos (with live progress).
+- Stitching scene videos (with live progress). Scenes are normalised two at a time into segments and the crossfades are encoded separately, so a long project needs far less memory than before (about 2.8 GB instead of 6 GB at the peak for thirty 1080p scenes).
+- Joining scene videos.
 - Writing the provenance watermark.
-- Uploading the final video.
+- Uploading the final video, with real upload progress. The file goes straight to storage, so long cuts no longer hit the old 200 MB ceiling; the cap is now 1 GB.
+
+On the **web** the stitch runs on Aificient Cloud instead (`Stitching on Aificient Cloud · <elapsed>`, charged at 0.1 credits per stitch). The earlier web limit of 20 scenes per stitch is gone: the server applies its own limit and shows its own message if a project exceeds it.
 
 Possible states:
 
@@ -906,7 +963,7 @@ You can change:
 - SFX volume — how loud the video model's own soundtrack (ambience and effects) plays under your narration, in the preview and in the final stitch. Default 20%.
 - Transition duration.
 - Whether captions are burned into this project's videos (`Burn-in captions`).
-- Caption position, font (`Bangers`, `Luckiest Guy`, `Anton`, `Poppins`, `Inter`), size, and colors, with a live `Preview` and a `Reset` that returns the style to your preset.
+- Caption position, font, size, and colors, with a live `Preview` (its sample words are in the script's own language and script) and a `Reset` that returns the style to your preset. The `Font` list offers only the fonts that can write the project's language — the ones made for its script first, then the Latin display fonts that also cover it — each drawn in its own face. If the stored font cannot write the language, the picker shows the font that will really be used and notes `<Font> has no <Language> characters, so captions use <Font>.` (see "Caption Fonts" under "Global Settings").
 
 The sticky footer has a `Discard changes` button and a primary button that reads `No changes to apply`, `Apply changes`, `Applying`, then `Applied`. If settings are changed, apply them before rendering video: while there are unsaved changes the `Resume Generation` menu shows `Generation changes pending to be saved!` and its render action is blocked.
 
@@ -923,23 +980,43 @@ Use it after:
 - Adding a character or an asset — including a new character that is **not in any scene yet**: its reference image counts as missing, so the button stays active even on a project whose final video is already finished, and `Images + Audio only` renders it for preview without touching the video.
 - A generation failure.
 - Running images/audio first and rendering video later.
+- Removing a queued clip from a GPU or cloud queue, or cancelling one cloud scene while the others render.
 
 Clicking the button opens the `Generate video on` menu:
 
 - A warning `Generation changes pending to be saved!` when the `Settings` tab has unapplied changes; the render action stays blocked until you apply or discard them.
-- A runtime list — `Aificient Cloud` (with tier, resolution, and estimated credits) and each ready local or rented GPU (with its queue depth). Tick one or more GPUs to split the missing videos across them, or Aificient Cloud by itself. When nothing is available the list reads `No GPU available — start a runtime to render video.`
+- A runtime list — `Aificient Cloud` (with tier, resolution, and estimated credits) and each ready local or rented GPU (with its queue depth). Tick one or more GPUs to split the missing videos across them, or Aificient Cloud by itself. When nothing is available the list reads `No GPU available — start a runtime to render video.` While images or narration are still missing, the `Aificient Cloud` row reads `Lite · 720p · generates the missing images/audio first` (or `Pro · …`) instead of a price: picking it generates those assets first and queues the clips only if every one of them succeeds — like a GPU run, a failed asset stops before any clip is paid for, and the failure is in the generation report.
 - `Add to render queue` (or `Queue on N GPUs`) — renders the missing scene videos on the selected runtime(s). Missing images and audio are generated first automatically.
-- `Images + Audio only` / `Skip video rendering` — generates missing images, character references, project assets, and audio without rendering video. Its tooltip reads `Generate missing images, character references, and audio without rendering video`, or `Images, character references, and audio are already ready` when there is nothing of that kind to do.
+- `Images + Audio only` / `Skip video rendering` — generates missing images, character references, project assets, and audio without rendering video. Its tooltip reads `Generate missing images, character references, and audio without rendering video`, or `Images, character references, and audio are already ready` when there is nothing of that kind to do. It stays available while the cloud queue is busy, so a failed narration can be regenerated while clips render.
 
 The app reuses existing completed assets where possible and only regenerates missing or affected parts.
 
 When every raw clip is ready and only caption burns or the final stitch remain, the button acts directly instead of opening the menu (no GPU is needed for that local work), and it is labelled `Stitch Final Video` when only the stitch is left. Its tooltip tells you why it is lit: `All scene clips are ready — stitch the final video`, `N captioned clips are missing — resume local generation`, or `Some generated assets are missing`.
 
-On a phone the button is a floating `Resume` / `Stitch` pill beside the `Details` pill, and the menu opens as a bottom sheet.
+On a phone the button is a floating `Resume` / `Stitch` pill beside the `Details` pill, and the menu opens as a bottom sheet. While clips render on Aificient Cloud the floating `Cloud` pill (it opens the render queue) shrinks to its icon and count and moves left so the `Resume` pill fits beside it.
 
 On a poster project the same menu offers a single runtime choice plus `Images only` — see "Rendering and Resuming a Poster".
 
 When all raw scene clips are already ready, no GPU choice is needed. The same sidebar action runs the remaining caption burns and final stitch locally. If only the final stitch remains, its label changes to `Stitch Final Video`.
+
+### Resume Beside a Live Cloud Queue
+
+A busy Aificient Cloud queue no longer hides `Resume Generation`. When at least one scene has no clip and is not in the queue — because you removed it, cancelled it, or deleted its clip — the button stays available, with the tooltip `N scene videos are missing and not in the cloud queue — render them while the queue runs`, and the opened menu notes `Renders only the N missing scene videos. The scenes already in the cloud queue keep rendering there; the final video is stitched once every clip is in.` The resumed run renders only those scenes (on the cloud or the GPUs you tick), never pays twice for a scene already queued, waits for the cloud clips, and then runs the captions and the stitch itself. If a cloud job you were waiting on ends without a clip, that scene's video phase reports `The Aificient Cloud render ended without a clip`.
+
+### Generating on Another Device
+
+Every client — this app, the web, the iPhone app — registers the generation runs it starts, so the others can show them. While another device is generating the open project, the sidebar footer shows a sky-blue chip instead of the generate controls: `Generating on <place> N%`, where the place is `<GPU name> · <device>`, `a rented <GPU> · <device>`, or `Aificient Cloud · <device>` (with a phone, cloud, or chip icon). Its tooltip adds the current stage — `Drawing the images`, `Recording the voices`, `Rendering your clips`, `Putting your video together` — and `a new generation of this project waits until it is done.` There is nothing to stop here: the device running it is the one that stops it. `Resume Generation` is hidden meanwhile, and starting a run anyway is refused with `This project is being generated on <place>.` The project row in the left sidebar blinks like any other running project. Nothing about other devices' runs is stored on this one; the list is rebuilt from the server every time the app starts.
+
+### The 1080p Warning
+
+When you queue scene videos at `1080p` onto a GPU that has to stream the model — any card under 40 GB of VRAM, which covers every 24–32 GB card, local or rented — the app asks first. The dialog is titled `1080p will be slow on <card>` (several cards are joined as `A, B and C`) and explains: `It cannot hold the whole model, so every step pulls it back over PCIe — and 1080p renders twice the pixels. Expect clips to take up to twice as long, and anything past ~6 seconds not to fit at all.`
+
+- `Switch to 720p` (`Switching…`) saves the project's resolution as `720p` and then queues the same GPU selection. If the save fails nothing is queued.
+- `Keep 1080p` queues the render as selected.
+- Clicking outside the dialog cancels and queues nothing.
+- `Don't ask again` stops the dialog for good on this computer (for every account); there is no setting to turn it back on.
+
+It never appears for Aificient Cloud, for `Images + Audio only`, or for cards from 40 GB upward (L40S, A100, RTX PRO 6000, H100, H200).
 
 ### What Resume Can Run
 
@@ -1060,18 +1137,32 @@ Reference photos you attach are uploaded to the project asset base first and bec
 
 ### Change a Scene's Cast
 
-Every scene card has a `Cast` strip. `Add cast` / `Edit cast` opens the `Scene N cast` picker — a checklist of `Characters in this project (N in scene)` with avatar, name, and `narrator` / `library character` labels. There is no per-scene limit. As soon as the selection changes the picker warns `This scene regenerates with the new cast` — `Saving deletes this scene's image and videos so the next generation draws exactly these characters. Narration and caption timings are kept.` — and `Save cast` applies it. The scene's `Character Reference` text is kept in step with the new cast. Empty catalogue: `This script has no characters yet — add one from the board first.`
+Every scene card has a `Cast` strip. `Add cast` / `Edit cast` opens the `Scene N cast` picker — a checklist of `Characters in this project (N in scene)` with avatar, name, and `narrator` / `library character` labels. There is no per-scene limit. As soon as the selection changes the picker warns `This scene regenerates with the new cast` — `Saving deletes this scene's image and videos so the next generation draws exactly these characters. Narration and caption timings are kept.` — and `Save cast` applies it. The scene's `Character Reference` text is kept in step with the new cast. Empty catalogue: `This script has no characters yet — add one from the board first.` When your pick **adds** someone the scene did not have, the picker also offers to write them into the scene's text — see "Write Additions into the Scene" below; the button then reads `Save and write in`.
 
 ### Dress a Scene or a Character with Assets
 
 Both scene cards and character cards can carry project assets (see "Project Assets Node (Asset Base)"), through the same picker: a checklist headed `Assets in this project (n/max selected)` with thumbnails, each asset's description or kind, or `Pending generation` for one with no image yet. Entries are disabled once the cap is reached. Buttons: `Cancel` / `Save assets`. If the project has no asset base: `This project has no assets yet — add one from the Assets card first.`
 
-- **Scene assets** — `Add assets` / `Edit assets` on the scene card opens `Scene N assets`. Up to 5 are attached to the image model when the scene image is rendered. Warning: `This scene regenerates with the new set` — `Saving deletes this scene's image and videos so the next generation uses the new references. Narration and caption timings are kept.`
+- **Scene assets** — `Add assets` / `Edit assets` on the scene card opens `Scene N assets`. Up to 5 are attached to the image model when the scene image is rendered. Warning: `This scene regenerates with the new set` — `Saving deletes this scene's image and videos so the next generation uses the new references. Narration and caption timings are kept.` Newly added assets can be written into the scene's text at the same time (`Save and write in`, see below); a character's outfit picker does not offer this.
 - **Character outfit** — `Add outfit` / `Edit outfit` on the character card opens `<Name> · wardrobe` (`Assets applied to this character's appearance`). Up to 3 are attached when the character's reference image is rendered, and travel with the character into every scene they appear in. Warning: `The character regenerates with the new wardrobe` — `Saving deletes this character's image and the media of every scene they appear in, so the next generation applies the new wardrobe everywhere. Narration is kept.` Library (global) characters cannot wear project assets — make a `Project variant` first.
 
 After saving, use `Resume Generation` (or `Images + Audio only`) to rebuild the affected images.
 
 Alternatively, open an asset's detail modal from the `Assets` card and use `Place with AI` to let the model decide which scenes (and which character, for wardrobe) should carry it.
+
+### Write Additions into the Scene
+
+Attaching a character or an asset to a scene only hands the image model a reference. To make the addition actually happen in the shot, the cast and scene-asset pickers can have the AI rewrite the scene's text as well. When your draft adds something the scene did not already hold, a `New in this scene` card appears in the picker with a chip per addition and a switch, `Write them into the scene` (`Write it into the scene` for a single asset), on by default:
+
+- On: `The AI rewrites the scene description and the character reference so the shot shows where they are and what happens.`, with an optional two-line note (`How they appear in the scene`, up to 600 characters) — placeholders such as `Optional — e.g. she walks in from the left and waves` or `Optional — e.g. it sits on the table and she picks it up`. The primary button becomes `Save and write in` (atom icon).
+- Off: `Attached as a reference only — the scene's text stays as it is.`, and the button stays `Save cast` / `Save assets`.
+
+On `Save and write in` the cast or asset list is saved first (`Cast saved` / `Assets saved`), then the modal shows `Writing into the scene` — `Rewriting the scene description and the character reference…` — and cannot be closed until it finishes. The pick is already saved at that point, so a failure never loses it.
+
+- Success reads `Written into the scene`: `<Ana, Leo and the box> are part of the shot now. The scene's image and videos regenerate from the new text; narration is kept.`, with the new `Scene description` and `Character reference` read-only, and `<name> · described from its image` for any asset the service named from its picture. Footer: `Close` / `Regenerate images + audio`.
+- Failure reads `Not written in yet` with the reason and `The scene keeps its text, with them attached as a reference.`; the note box reopens with `Leave as it is` / `Try again`. Reasons: `Wait for the generation to finish, then try again.`, `The AI could not place them in the scene. Try again, or say how they appear.`, `You're out of credits for this rewrite.`, `Scene rewriting isn't available right now.`, or `The scene could not be rewritten. Try again.`
+
+The rewrite is a charged scene rewrite (no price is shown in the picker). No scene is added and numbering does not change; only the scene's description and character reference are rewritten, and its image and clips regenerate on the next run.
 
 ### Project Variant of a Library Character
 
@@ -1081,13 +1172,13 @@ A library character on the canvas is **global**: it cannot be edited, deleted, o
 
 For editable project characters, `Edit` on the card opens the `Edit character` editor with two tabs, `Manual` and `AI`:
 
-- **`Manual`** — the portrait beside `Name`, `Gender`, `Type`, and `Humanized` (`A non-person that behaves like a person`). A `Look` section (`What the image model draws: a stable visual identity, plus the project assets the character wears.`) holds the `Description` and the `Outfit` chips; changing the outfit is saved on its own and regenerates the character and the scenes they appear in. A `Voice` section appears **only if this character is the narrator** (`This character narrates. A new voice re-records the narration and re-renders the videos; artwork stays.`), using the voice picker with previews described under "Voice". Only the fields you actually change are applied, so a voice-only change leaves the rest untouched.
+- **`Manual`** — the portrait beside `Name`, `Gender`, `Type`, and `Humanized` (`A non-person that behaves like a person`). A `Look` section (`What the image model draws: a stable visual identity, plus the project assets the character wears.`) holds the `Description` and the `Outfit` chips; changing the outfit is saved on its own and regenerates the character and the scenes they appear in. A `Voice` section appears **only if this character is the narrator** (`This character narrates. A new voice re-records the narration and re-renders the videos; artwork stays.`), using the voice picker described under "Voice"; its button shows the voice's name, or `Select a voice`. Only the fields you actually change are applied. A voice change is saved through the narrator, exactly like `Change voice` on the `Narrator` card: every narrated scene is re-recorded while scene images and rendered clips are kept.
 - **`AI`** — an `Instruction` (`The model rewrites this character from your note, keeping the identity details image generation relies on.`, e.g. `make her older, silver hair, add a leather jacket`) and a `Keep the current look as reference` toggle: `The current image is saved as a project asset and shown to the image model, so the rewritten character stays recognizable.` That reference uses one outfit slot; when the outfit is full the toggle explains `Outfit is full (n/max): remove an asset to keep the current look as a reference.`, and with no image yet `No reference image yet: the new look is drawn from the description alone.`
 
 What gets invalidated depends on what you change, and the editor's warning box says so before you confirm:
 
 - A visual change (name, gender, type, humanized, description, outfit) or an AI rewrite — `Visuals will be regenerated`: the character's reference image and the visuals of every scene it appears in are deleted; narration and generated audio are kept.
-- A voice-only change — `Audio and video will be regenerated`: narration audio and rendered video for the affected scenes are deleted; scene images and the reference image are kept.
+- A voice-only change — `The narration will be re-recorded`: `The narration of every narrated scene is deleted and recorded again with the new voice; scene images, the reference image and rendered clips are kept.` A clip is re-rendered later only if its new narration no longer fits inside it; the final video is stitched again. Combined with a visual change, the warning ends with `…and the narration of every narrated scene is re-recorded with the new voice.`
 
 Saving is a two-step commit: `Rewrite character`, then `Confirm rewrite` on the `Confirm the rewrite` panel (`The affected visuals are deleted now and rebuilt on the next generation run.`). On success the editor reads `Character updated` and offers `Regenerate images + audio`.
 
@@ -1243,7 +1334,7 @@ The right sidebar of a poster project has three tabs: `Plan`, `Assets`, and `Set
 
 Changes are staged until you select `Apply changes` (or discard them with the circular-arrow button). While there are unsaved changes the footer warns `Unsaved video settings` and the render action is blocked, because a render always uses the **saved** settings. None of the History settings — captions, guidance scales, speech pace, voice delays, transitions — exist for a poster.
 
-The sidebar footer holds the same actions as a History project: `Stop Generation` while a run is active, an `Aificient Cloud` status chip while the clip is in the cloud queue, and otherwise the `Resume Generation` menu.
+The sidebar footer holds the same actions as a History project: `Stop Generation` while a run is active, an `Aificient Cloud` status chip while the clip is in the cloud queue, a `Generating on <place> N%` chip while another device is generating the poster (starting a generation here then fails with `This project is being generated on <place>.`), and otherwise the `Resume Generation` menu.
 
 ### Rendering and Resuming a Poster
 
@@ -1305,7 +1396,7 @@ Sections:
 
 Shows:
 
-- App version (a `v1.6.2`-style chip on the app card).
+- App version (a `v1.6.4`-style chip on the app card).
 - `Updates` — the status line (`You are on the latest version`, `Latest N available`, or `Manual update check`) and a `Check` button that becomes `Update to latest` when a newer version exists.
 - `Introduction tour` / `A short walk through the workspace.` — a `Replay` button that closes Settings and restarts the guided tour on the home screen (see "Introduction Tour").
 - Current subscription and an upgrade action; a violet `Free trial · bills <date>` badge while you are on a free trial.
@@ -1314,7 +1405,7 @@ Shows:
 
 ### Usage
 
-This section shows the credits included with your plan, credits used and remaining, renewal or cancellation information, and usage over time. Depending on the subscription source, it can also provide plan-management, upgrade, or pending-change actions. While you are on welcome credits it shows a `Gift Trial` plan card with `Complimentary access`, its expiry, and `Client since`. Free daily credits and the free trial are described under "Credits, Plans, Free Trial, and Daily Credits".
+This section shows the credits included with your plan, credits used and remaining, renewal or cancellation information, and usage over time. Under the plan name a line says where it is billed — `Billed through Stripe`, `Billed through the App Store` (a plan bought in the iPhone app), or `Complimentary access`. Depending on the subscription source, it can also provide plan-management, upgrade, or pending-change actions: `Manage billing` for a Stripe plan, `Manage in App Store` for an App Store plan (it opens your Apple subscriptions page; see "Plan Cards and App Store Billing"). While you are on welcome credits it shows a `Gift Trial` plan card with `Complimentary access`, its expiry, and `Client since`. Free daily credits and the free trial are described under "Credits, Plans, Free Trial, and Daily Credits".
 
 At the bottom, click **Load latest generation jobs** to open your account-wide Aificient Cloud video render history. This history includes jobs from all projects and lists the newest jobs first.
 
@@ -1381,9 +1472,9 @@ Common options:
 - Max price.
 - Minimum reliability.
 
-Choose the GPU family in the `Create Instance` modal. `GPU Config` shows the selectable families and controls the shared Vast.ai search limits.
+Choose the GPU family in the `Available Instances` modal (`Create instance`). `GPU Config` lists the selectable families — `3090 / 4090 / 5090 / L40S / A100 / RTX 6000 / H100 / H200`, with `RTX 5090` as the default — and controls the shared Vast.ai search limits: `Disk Space` (32–500 GB, default 140), `Max Price` ($0.5–10 per hour, default $3), and `Min Reliability` (50–100%, default 76%). The search also applies floors you cannot lower — 23 GB of GPU memory, an Ampere or newer card, 100 GB of disk, and 32 GB of host RAM.
 
-If offers are too expensive or no offers appear, adjust these settings.
+If offers are too expensive or no offers appear, adjust these settings; the `Change settings` button on the modal's empty state opens this section directly.
 
 ### Model Config
 
@@ -1408,20 +1499,33 @@ Controls:
 
 - Speech pace.
 - SFX volume — the default level of the video model's own soundtrack under the narration (a 0–100% slider; default 20%). New projects start from this value; each project can override it in its own `Settings` tab.
-- Spanish accent — which Spanish the narration speaks (`Castellano (España)`, `Andaluz`, `Canario`, `Latino neutro`, `Mexicano`, `Colombiano`, `Argentino (rioplatense)`, `Chileno`, `Caribeño`, `Peruano`).
 - Default narrator voices.
+- Automatic voice accent — the Spanish and the English accent an `Automatic` narrator speaks with.
 
 #### Default Narrator Voices
 
-This section sets a fallback `Male` and `Female` voice, each chosen with the voice picker (including previews). When a narrator has no voice assigned, the app picks one of these defaults based on the narrator's gender. Assigning a voice to a specific narrator in the character editor overrides the default for that narrator.
+The `Default narrator voices` box (`For narrators with no voice of their own, by gender. Automatic picks the library voice for the script's language and accent.`) has a `Female` and a `Male` row, each with a preview button, the voice's name, trait pills, and description, and a `Change` button that opens the voice picker locked to that gender (no `Clear`). The picker offers an `Automatic` row: leave a default on `Automatic` and the service chooses the library narrator for the script's language and accent.
+
+When a narrator has no voice of its own, the app sends the default for the narrator's gender with the project. If that voice does not speak the script's language, the service uses its automatic voice instead and says so in a notice on the `Narrator` card. A voice assigned to the narrator itself (on the `Narrator` card, or in the character editor) always wins over these defaults.
+
+#### Automatic Voice Accent
+
+The `Automatic voice accent` box has a `Spanish` and an `English` row, each with its flag and a dropdown (`A narrator on Automatic speaks with a voice of this accent. A voice you choose keeps its own.`):
+
+- Spanish: `Castellano (España)`, `Andaluz`, `Canario`, `Latino neutro`, `Mexicano`, `Colombiano`, `Argentino (rioplatense)`, `Chileno`, `Caribeño`, `Peruano`.
+- English: `No preference` (default), `American`, `British`, `Australian`, `Canadian`, `Irish`, `Scottish`, `Indian`, `South African`, `New Zealand`, `US Southern`.
 
 ### Voices
 
 `Settings > Voices` holds the narrator voices you cloned yourself: `Your own narrator voices, cloned from your recordings. Pick them from any voice field; every scene that names one is narrated with it.` The heading carries an `N/M` badge — how many you keep against the number your plan allows (Standard 5, Pro 10, Max 20).
 
-Each voice is a row with a preview button, a male/female mark, its name, and `Clone · <language>` underneath. The pencil renames it; the bin deletes it and asks once first (the button becomes `Delete?` and gives up after a few seconds). A voice the service has to rebuild reads `Rebuilt on next use`, and nothing is required from you.
+Each voice is a row with a preview button, its name, trait pills (the gender, and the language with its flag), and a detail line — `Cloned from your recordings`, plus `No preview` or `Rebuilt on next use` when they apply. The pencil renames it; the bin deletes it and asks once first (the button becomes `Delete?` and gives up after a few seconds). A voice the service has to rebuild reads `Rebuilt on next use`, and nothing is required from you.
 
 Under the list is the create tile — `Clone your first voice` while you have none, `New voice` afterwards. At the cap it turns into `Upgrade to keep more voices` and opens the plans modal instead; on the top plan it simply tells you to delete one to add another. While the server narrates with a different service, the section notes that your voices are not available on it right now.
+
+#### Saved Library Voices
+
+While narration runs on the voice library, a second block, `Saved library voices` (with its own `N/M` badge), lists the narrators you bookmarked in the `Voice library`: `Narrators you picked from the voice library. They show up in every voice picker and speak every language.` Its `Explore` button opens the `Voice library`. Each row has a preview button, the name, trait pills, a `<use case> · <tagline>` line, and a remove button (`Remove from saved voices (scripts that use it keep it)`). While the list is empty it reads `Nothing saved yet — bookmark voices while exploring.`
 
 #### Cloning a Voice
 
@@ -1440,7 +1544,7 @@ Controls the defaults used when creating new projects:
 - Start voice delay.
 - End voice delay.
 - Transition duration.
-- Captions.
+- Captions — the switch, a live preview, `Position`, `Font` (all 51 fonts, see "Caption Fonts"), `Font Size`, and the text, highlight, outline, and background colors. Turning captions on with no font set selects `Bangers`.
 
 Changing these global defaults does not alter an existing project. To change captions, timing, or other video settings for the selected project, use the right scene sidebar's `Settings` tab and apply the changes there.
 
@@ -1457,6 +1561,22 @@ When captions are enabled, you can adjust:
 - Highlight color.
 - Outline color.
 - Optional background color.
+
+#### Caption Fonts
+
+The font catalogue has 51 faces, grouped by the script they are made for:
+
+- `Latin & Cyrillic` (30): Bangers, Montserrat, Bebas Neue, Anton, Luckiest Guy, Poppins, Archivo Black, Lilita One, Titan One, Bungee, Paytone One, Alfa Slab One, Passion One, Kanit, Sigmar One, Bowlby One, Righteous, Carter One, Londrina Solid, Russo One, Rubik Mono One, Seymour One, Play, Black Ops One, Permanent Marker, Chewy, Amatic SC, Lobster, Creepster, Press Start 2P. (Russian is covered by Montserrat, Russo One, Rubik Mono One, Seymour One, Play, Amatic SC, Lobster, Press Start 2P, and the Japanese fonts.)
+- `Japanese` (6): Dela Gothic One, M PLUS Rounded 1c, Zen Maru Gothic, RocknRoll One, Reggae One, DotGothic16.
+- `Korean` (5): Black Han Sans, Do Hyeon, Jua, Bagel Fat One, Gasoek One.
+- `Arabic` (4): Tajawal, Lalezar, Almarai, Rakkas.
+- `Hindi` (6): Mukta, Hind, Khand, Rozha One, Yatra One, Kalam.
+
+`Inter` is no longer offered. The default is `Bangers`. When the chosen font cannot write a project's language, that language's own default is used instead — `Dela Gothic One` for Japanese, `Black Han Sans` for Korean, `Tajawal` for Arabic, `Mukta` for Hindi, `Montserrat` for Russian — both in the project picker (which says so under the field) and at burn time, instead of drawing empty boxes.
+
+The `Font` picker in `Settings > Video Config` lists all 51, each option drawn in its own typeface, with a small grey hint (`Japanese`, `Korean`, `Arabic`, `Hindi`) on the fonts made for a non-Latin script; under it: `A project in a language this font cannot write uses that language's own default instead.` The per-project picker in the right sidebar's `Settings` tab lists only the fonts that can write that project's language. Previews load the faces from the internet on first use; offline, previews fall back to the app's own font and nothing else changes.
+
+Other caption rules that changed with the catalogue: caption size is now independent of the resolution (the same font size takes the same share of the frame at 720p and 1080p — before, it looked about 1.5× larger on a 720p clip); Japanese speech is split into one-line cues at phrase ends rather than by word count; right-to-left languages highlight the current word on the correct side; and sentence ends recognise CJK, Arabic, and Devanagari punctuation.
 
 **How captions are made.** Captions are added *after* a scene's video is
 rendered, not during it. Each scene gets a second box on the board — **raw clip
@@ -1517,13 +1637,19 @@ setting.
 
 Generation and cloud rendering run on **credits**. Your balance, plan, and renewal date live in `Settings > Usage`; the plan line under your name in the left sidebar shows the plan at a glance (for example `Pro · Free trial`, or `Gift Trial` while you are on welcome credits). Credit amounts are shown with up to one decimal (for example `2.5 credits`).
 
+### Plan Cards and App Store Billing
+
+Each card in the plans modal shows the plan's credits, `+N credits every day` where the plan has daily credits, its storage, and a feature list. The first feature is now `Up to N videos` — the plan's credits divided by the price of one 4-second Lite 720p clip, computed from the live price table (the line is simply omitted while prices have not loaded). The rest reads: `Standard` (`What's included`) — `AI script, image & audio generation`, `Cloud video rendering`, `5 cloned voices of your own`, `Reusable character & style library`, `Publish straight to TikTok, Reels & Shorts`; `Pro` (`Everything in Standard, plus`, tagged `Most popular`) — `More monthly credits for bigger projects`, `Priority GPU rendering queue`, `10 cloned voices of your own`, `Priority support`; `Max` (`Everything in Pro, plus`) — `Our highest monthly credit allotment`, `Top-priority rendering at peak times`, `20 cloned voices of your own`, `Early access to new features`, `Dedicated priority support`.
+
+A plan bought in the Aificient iPhone app is **billed through the App Store**, and the web and desktop apps say so wherever billing is managed: a banner at the top of the plans modal — `Your plan is billed through the App Store. To change or cancel it, open your subscriptions in your Apple Account — from the Aificient app on your iPhone, or on the web.` with a `Manage in App Store` button; the current plan's card reads `Manage in App Store` and the other cards `Change in App Store` (`Your plan is billed through the App Store, so it changes there.`), or `Not in the App Store` for a plan Apple does not sell (`This plan isn't sold in the App Store, where your subscription is billed.`). Those cards show the credits the App Store plan grants, which can differ from the web plan. `Settings > Usage` shows `Billed through the App Store` with `Manage in App Store`, a pending change is managed there too, and a cancellation reads `Your subscription is set to cancel <when>. You'll keep full access until then. To keep it, turn renewal back on in the App Store.` Any Stripe-side action on such an account is refused with `Your plan is billed through the App Store. Manage it in your Apple Account's subscriptions.`
+
 ### Welcome Credits
 
 A new account starts with a small welcome gift of credits (`Gift Trial`). It is sized for one or two Lite 720p cloud clips, not a whole video — enough to try the pipeline. While you are on welcome credits with no plan, new stories and posters default to the `Lite` tier, and renders made on gift credits carry a small visible Aificient watermark.
 
 ### Free Trial
 
-When a free trial is on offer for your account, it applies to **one plan** (normally the cheapest): you save a card, receive the trial's credits immediately, nothing is charged for the trial's days, and the plan starts billing when the trial ends unless you cancel. Everywhere in the app a `Start free trial` action is marked with a **flag icon**.
+When a free trial is on offer for your account, it applies to **one plan** (normally the cheapest): you save a card, receive the trial's credits immediately, nothing is charged for the trial's days, and the plan starts billing when the trial ends unless you cancel. `Start free trial` buttons carry a **gift-box glyph**; the sidebar trial card and the trial badges keep a small flag.
 
 Where you meet it:
 
@@ -1545,7 +1671,7 @@ Accounts on an active plan or free trial can claim a free top-up of credits **on
 
 Claiming always takes a click; nothing is credited automatically. Three places offer it:
 
-- **A popup, once per day** — `Your daily credits are ready` / `A fresh top-up lands on <Plan> every single day — today's is waiting.` with a `Claim N credits` button. It opens the first time the app sees an open claim that day on that device, and stays out of the way while the plans modal, an out-of-credits card, a billing result, or the tour is open. After claiming it reads `+N credits added` / `They're in your balance now — N credits to spend.` with `Back to creating`, plus a small confetti payoff. Closing it with `×`, `Esc`, or the backdrop leaves the claim on the sidebar card.
+- **A popup, once per day** — `Your daily credits are ready` / `A fresh top-up lands on <Plan> every single day — today's is waiting.` with a `Claim N credits` button. It opens the first time the app sees an open claim that day on that device, and stays out of the way while the plans modal, an out-of-credits card, a billing result, or the tour is open. After claiming it reads `+N credits added` / `They're in your balance now — N credits to spend.` with a `Claimed` check pill in place of the button and a small confetti payoff, and it closes by itself after about two seconds. Closing it with `×`, `Esc`, or the backdrop leaves the claim on the sidebar card.
 - **The sidebar card** above your profile row — `Daily credits ready` / `Claim N credits`; its tooltip reads `Claim today's N credits — free with your plan, every day at 00:00 CET.` One tap claims. It then reads `+N credits added` / `Back tomorrow at 00:00 CET`, fades out, and reappears on its own after the next reset even in a session left open overnight. This card takes priority over the free-trial card and the desktop-app link.
 - **The out-of-credits card** inside a project, when you hit zero on a plan or trial: `Today's free credits are still unclaimed.` and the primary button becomes `Claim N credits free`. After claiming, the gauge climbs back and the card closes by itself so you can retry the generation.
 
@@ -1554,7 +1680,7 @@ From the second consecutive day the card and popup show a streak (`3-day streak 
 ### Running Out of Credits
 
 - **In the creation chat**, a refused turn gets a plain reply instead of an error bar — `You've used up all the credits on your current plan. Upgrade to keep generating — you'll get more credits instantly.`, `You've used up your welcome credits. Start your free trial to keep generating — you'll get N credits right away.`, or `This account doesn't have any credits yet. …` — followed by a card: `Try <Plan> free for N days` with `Start free trial` and `See all plans` when a trial is on offer, otherwise `Out of credits` / `Upgrade plan` or `No credits yet` / `See plans`.
-- **Inside a project** (a generation run or a cloud render submission), an out-of-credits card takes over with an animated gauge counting down to `0 credits left` and one of: `Keep creating — N days on us` (`Start free trial`), `You've used your trial credits` (`Start my plan now`), `You're out of credits` on a paid plan (`Upgrade plan` — `Move up a tier and the extra credits land instantly — you only pay the difference for the days left.`), or `You're out of credits` with `Choose a plan`. On a plan or trial the daily-claim lifeline described above appears here too. `Not now` closes it.
+- **Inside a project** (a generation run or a cloud render submission), an out-of-credits card takes over with an animated gauge counting down to `0 credits left` and one of: `Keep creating — N days on us` (`Start free trial`), `You've used your trial credits` (`Start my plan now`), `You're out of credits` on a paid plan (`Upgrade plan` — `Move up a tier and the extra credits land instantly — you only pay the difference for the days left.`, or for an App Store plan `Your plan is billed through the App Store: move up a tier there and the extra credits land as soon as Apple confirms it.`), or `You're out of credits` with `Choose a plan`. On a plan or trial the daily-claim lifeline described above appears here too. `Not now` closes it.
 - **Cloud renders** that cannot be fully paid for are sent scene by scene until the balance runs out; the rest are listed in the generation report (`Not enough credits to render this scene. Render it from the scene panel once you have more credits.`).
 
 ## 23. Publishing the Final Video
@@ -1628,6 +1754,8 @@ If an update is available:
 
 If the update fails, the update window shows an error.
 
+Updating no longer signs you out: the stored session is reissued for the new version on the desktop and on the web.
+
 ### What's New Cards
 
 New features announce themselves with a **What's new** card. It opens by itself shortly after sign-in, last of the startup surfaces — after the introduction tour has decided whether it runs and after the daily-credit popup has had its turn — and never on top of another dialog; if something else is open, it waits for a quiet moment.
@@ -1675,13 +1803,17 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Local runtime controls | Left sidebar > `Generation assets` > local GPU. |
 | Rented GPU instance controls | Left sidebar > `Generation assets` > rented instance. |
 | Runtime logs | Open the local GPU or rented-instance detail view from the `Generation assets` flyout. |
-| Rent GPU or add cloud GPU | Left sidebar > `Generation assets` > `Create instance`. If a Vast.ai key is missing, use `Add Vast.ai key` first. |
+| Rent GPU or add cloud GPU | Left sidebar > `Generation assets` > `Create instance` (desktop only). If a Vast.ai key is missing, use `Add Vast.ai key` first. |
+| The other GPU tiers (3090, L40S, A100, H200) | `Create instance`, then the chevron under the four featured cards (`Show 4 more GPUs`). |
+| Copy an instance's or the local runtime's logs | The detail view from `Generation assets`: `Copy logs` on the `Instance logs` panel or the `Error` block. |
 | Download quality indicator / colored status dot on offers | GPU rental modal offers table, in the `Download` column next to each offer's speed and cost. |
 | Introduction tour / guided tour / replay the tour | It runs by itself for a new account on the home screen. To replay: `Settings > General > Introduction tour > Replay`. |
 | The `What's new` card | It opens by itself after sign-in when there is an unseen announcement, once per account. It cannot be reopened afterwards. |
 | Claim daily credits / free daily credits | The `Daily credits ready` card above the profile row in the left sidebar, the once-a-day popup, or the `Claim N credits free` button on the out-of-credits card inside a project. Requires an active plan or trial; resets at 00:00 Europe/Madrid. |
-| Start the free trial | The `Try <Plan> free` card above the profile row in the left sidebar, the tour's closing step, the out-of-credits card, the chat card after a refused turn, or the plans modal — all marked with a flag icon. |
+| Start the free trial | The `Try <Plan> free` card above the profile row in the left sidebar, the tour's closing step, the out-of-credits card, the chat card after a refused turn, or the plans modal — the buttons carry a gift-box glyph. |
 | Plans / compare plans / upgrade | `Settings > Usage`, the profile row in the left sidebar (opens Settings), or any `See plans` / `Compare plans` / `Upgrade plan` link. |
+| Manage or cancel a plan bought in the iPhone app | `Manage in App Store` in `Settings > Usage` or the plans modal; it opens your Apple subscriptions page. |
+| How many videos a plan covers | The `Up to N videos` line at the top of each plan card's feature list (4-second Lite 720p clips). |
 | Credit balance | `Settings > Usage`; the plan line under your name in the left sidebar shows the plan. |
 | Menu on a phone / where did the sidebar go | The menu button at the top-left opens the sidebar as a drawer (phones only). |
 | Aificient Cloud queue on the web | `Aificient Cloud` in the left sidebar (the web replaces `Generation assets` with it). |
@@ -1691,7 +1823,7 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | User asks for | Where to find it |
 | --- | --- |
 | Story mode (formerly Concept) | Left sidebar > `New project`, then choose `Story` in the segmented control above the home-screen composer. |
-| Brainstorm | Left sidebar > `New project`, choose `Story`, then turn on the `Brainstorm` switch below the prompt, after the language control. |
+| Brainstorm | Left sidebar > `New project`, choose `Story`, and ask for ideas (or send a topic) as the first message of a new chat; the assistant brainstorms five directions before writing. There is no switch. |
 | Character mode | Left sidebar > `New project`, then choose `Character` above the composer. |
 | Poster mode | Left sidebar > `New project`, then choose `Poster` above the composer. |
 | Animate a poster I already have | Poster mode, then the `I have a poster` toggle below the prompt, then the `Poster image` pill. |
@@ -1699,10 +1831,10 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Poster reference images | Poster mode > `From zero`, then the `Reference assets` pill below the prompt. |
 | Poster aspect ratio | Poster mode > `From zero`, aspect-ratio pill below the prompt. For an imported poster the ratio comes from the image and cannot be set. |
 | Poster clip length | Poster mode, duration pill below the prompt (5–15 seconds), or later in the project's right sidebar > `Settings` > `Video duration`. |
-| Find inspiration / example videos | Creation home screen in `Story` mode with `Brainstorm` off, the `Find inspiration` button below the composer. |
-| Idea prompt or chat prompt | Creation home screen, `Story` mode (with or without `Brainstorm`), in the bottom composer. |
+| Find inspiration / example videos | Creation home screen in `Story` mode, the `Find inspiration` button below the empty composer. |
+| Idea prompt or chat prompt | Creation home screen, `Story` mode, in the bottom composer. |
 | Character prompt | Creation home screen, `Character` mode, in the bottom composer. |
-| Visual style | Creation home screen, style pill below the prompt. |
+| Visual style | Creation home screen, style pill below the prompt (eleven tiles, including the new `Collage` and `Stickman`). |
 | Duration | Creation home screen, duration pill below the prompt in Story mode. |
 | Language | Creation home screen, language pill below the prompt in Story mode. `Auto` by default — the app reads the language from your prompt — or pick one of the fifteen in the list. |
 | Character gender | Creation home screen, `Character` mode, the gender pill below the prompt (`Auto` / `Female` / `Male`). It is fixed by the voice while one is selected. |
@@ -1710,7 +1842,7 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Character library | `Character list` in the left sidebar, or the `Characters` picker in a Story composer. |
 | Character search, filters, previews, rename, create, and delete | Left sidebar > `Character list`. |
 | Reference image for a character | Creation home screen, `Character` mode, `Image`/`Reference` control below the prompt. |
-| Character voice | Creation home screen, `Character` mode, `Voice` pill below the prompt (`Library` and `My voices` tabs). |
+| Character voice | Creation home screen, `Character` mode, `Voice` pill below the prompt (it shows the chosen voice's name; `Library` and `My voices` tabs, and `Browse thousands more voices` for the `Voice library`). |
 | Generate button for a story | Creation home-screen chat, on the generated story script. |
 | Stop or cancel a brainstorm, story, or character chat request | Creation home-screen chat — while a request is generating, the send button becomes a stop (filled square) button; click it to cancel. |
 | Edit the generated concept (title, characters, scenes, scripts) | Two ways: ask the AI in the `Story` chat, or click `Edit` in the `Script` preview panel on the render-settings screen. |
@@ -1743,12 +1875,14 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Prefetch count | Global `Settings > Model Config`. |
 | Speech pace | Selected project > right sidebar > `Settings`, or global `Settings > Audio Config`. |
 | SFX volume (video-model soundtrack level under the narration) | Selected project > right sidebar > `Settings`, or global `Settings > Audio Config`. |
-| Default narrator voices (male/female fallback) | Global `Settings > Audio Config`, in the `Default Narrator Voices` section. |
+| Default narrator voices (male/female fallback) | Global `Settings > Audio Config`, the `Default narrator voices` box — `Change` per gender, or leave it on `Automatic`. |
+| Narration accent for an automatic voice (Spanish / English) | Global `Settings > Audio Config`, the `Automatic voice accent` box. |
 | Start voice delay or end voice delay | Selected project > right sidebar > `Settings`, or global `Settings > Video Config`. |
 | Transition duration | Selected project > right sidebar > `Settings`, or global `Settings > Video Config`. |
 | Enable or disable captions for an existing project | Select the project > right sidebar > `Settings` > `Captions` > `Burn-in captions`, then apply the changes. |
 | Set caption defaults for new projects | Global `Settings > Video Config`; caption styling appears after captions are enabled. |
-| Change caption position, font, size, colors, outline, or background for an existing project | Select the project > right sidebar > `Settings` > `Captions`, then apply the changes. |
+| Change caption position, font, size, colors, outline, or background for an existing project | Select the project > right sidebar > `Settings` > `Captions`, then apply the changes. The `Font` list shows only fonts that can write the project's language. |
+| Caption fonts for Japanese, Korean, Arabic, Hindi, or Russian | Any caption `Font` picker — the catalogue has 51 fonts grouped by script; a font that cannot write the language is replaced by that language's default automatically. |
 | Generate all missing captioned clips | Right sidebar > `Resume Generation`; when the raw clips are ready, the caption work runs locally without a GPU picker. |
 | Re-burn captions after changing their style | Apply the project caption-style change, then select `Resume Generation`; saved word timings are reused. |
 | Build a missing final video when all required clips are ready | Bottom of the right sidebar > `Stitch Final Video`. Some restored projects may instead offer `Re-stitch with captions` / `Re-stitch without captions` on the Stitch node. |
@@ -1771,6 +1905,10 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Generate the images of pending project assets | They render automatically at the start of the next run; use `Resume Generation` > `Images + Audio only`, or `Generate image` in the asset's detail modal. |
 | Assets per scene / assets per character limits | Fixed by the service (5 per scene, 3 per character); there is no setting for them. The scene and outfit pickers stop at those numbers. |
 | Resume Generation on a phone | The floating `Resume` / `Stitch` pill beside `Details` at the bottom of the screen. |
+| Render the scenes that are missing while the cloud queue is still running | Right sidebar > `Resume Generation` — it stays available when a scene has no clip and is not in the queue (`render them while the queue runs`). |
+| Remove one scene from a GPU or cloud render queue | The `Remove from queue` button on that scene's video node while it is still queued. |
+| The 1080p slow-card warning / `Don't ask again` | It opens by itself when you queue 1080p onto a GPU under 40 GB; `Don't ask again` silences it for this computer and cannot be undone from Settings. |
+| Why the project says `Generating on …` / generation on another device | The sky-blue chip at the bottom of the right sidebar; stop it from the device that is running it. |
 
 ### Project Review And Editing Locations
 
@@ -1787,7 +1925,9 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Scene description, character reference, or script text | Center canvas, in the scene's text/detail nodes. |
 | Rewrite scene text | Click the scene text node on the center canvas, then choose manual edit or AI rewrite. |
 | Edit a project character | Click the character node on the center canvas when the character is editable. |
-| Change a narrator's voice | Click the narrator's character node on the center canvas, then use the `Voice` picker in the character editor (locked for library characters — change those in the library). |
+| Change the narrator's voice | The `Narrator` card on the center canvas > `Change voice`, then `Change and re-record` (or the narrator's character card > `Edit` > `Voice`; locked for library characters — change those in the library). |
+| The script text / script details | `View script` on the `Project` card on the center canvas (read-only). |
+| Which voice the narrator uses, or why it changed | The `Narrator` card on the center canvas — name, description, trait chips, and a notice when the service switched to the automatic voice. |
 | Delete scene image | Scene image node on the center canvas. |
 | Regenerate audio | Audio node on the center canvas. |
 | Delete scene video | Video node on the center canvas. |
@@ -1798,9 +1938,10 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | Download final video | Output node on the center canvas, right scene sidebar > `Assets` > final video, or fullscreen media viewer. |
 | Share media | Fullscreen media viewer, when sharing is supported by the system. |
 | Add a character to an existing story | `Add character` under the last cast card on the center canvas (or the `Add character` card when there is no cast); tabs `Manual`, `AI`, `Library`. |
-| Put a character into a scene / change a scene's cast | The `Cast` strip on the scene card (`Add cast` / `Edit cast`), then `Save cast`. |
+| Put a character into a scene / change a scene's cast | The `Cast` strip on the scene card (`Add cast` / `Edit cast`), then `Save cast` — or `Save and write in` to have the AI write the newcomer into the scene text. |
+| Write a new character or asset into the scene text | The `New in this scene` card inside the scene's cast or asset picker: keep `Write them into the scene` on, optionally say how they appear, then `Save and write in`. |
 | Project assets / asset base | The `Assets` card right after the project card on the center canvas; also listed as `Project asset` in right sidebar > `Assets`. |
-| Upload an image as a project asset | `Upload an image` on the `Assets` card (PNG/JPG). |
+| Upload an image as a project asset | `Upload an image` on the `Assets` card (PNG/JPG, up to 20 MB, 20 assets per project); the service names and describes it from the picture. |
 | Create a project asset with AI | `Create from a prompt` (atom icon) on the `Assets` card. |
 | Edit, regenerate, place, or delete a project asset | Click its tile on the `Assets` card: `Details`, `Generate` / `Regenerate image`, `Place with AI`, `Delete from project`. |
 | Give a character an outfit / wardrobe | The `Outfit` strip on the character card (`Add outfit` / `Edit outfit`), or the `Look` section of the character editor. |
@@ -1835,8 +1976,10 @@ When answering, give the shortest path from a stable area of the app, such as `l
 | GPU family for a rental | Left sidebar > `Generation assets` > `Create instance`, then choose a GPU profile. |
 | Default model quality, guidance, or prefetch | `Settings > Model Config`. |
 | Local runtime download folder | `Settings > Model Config`; stop the local runtime before changing it. |
-| Default speech pace, SFX volume, Spanish accent, or default narrator voices | `Settings > Audio Config`. |
-| Clone my own voice / rename or delete my voices | `Settings > Voices`, or the `My voices` tab of any voice picker, then `New voice`. |
+| Default speech pace, SFX volume, automatic voice accent (Spanish / English), or default narrator voices | `Settings > Audio Config`. |
+| Clone my own voice / rename or delete my voices | `Settings > Voices`, or the `Clone` link on the `My voices` tab of any voice picker. |
+| Browse the voice library / save (bookmark) a library voice | `Browse thousands more voices` at the foot of any voice picker, or `Settings > Voices > Saved library voices > Explore`; bookmark a row with `Save voice`. |
+| Remove a saved library voice | `Settings > Voices > Saved library voices`, the remove button on its row, or `Remove from saved voices` in the `Voice library`. |
 | How many voices my plan keeps | `Settings > Voices` — the `N/M` badge beside the heading (Standard 5, Pro 10, Max 20). |
 | Default voice timing, transition duration, or captions | `Settings > Video Config`. |
 | Replay the introduction tour | `Settings > General`, the `Introduction tour` row, `Replay`. |
@@ -1888,17 +2031,19 @@ The assistant explains how to use the app. It does not change your project, star
 
 Try:
 
-- Check your internet connection.
+- Check your internet connection (`Couldn't reach the server to finish signing in. Check your connection and try again.`).
+- Start again from the app if it says `Sign-in took too long or was already used.` or `That sign-in was not started from this app.`; on the web, finish the sign-in in the same tab you started it in.
 - Try a different sign-in method.
 - If using email, request a new code.
 - If the app says your version cannot sign in, update or reinstall the app.
+- If it says the account is closed and set to be deleted, follow the message: sign in to the iPhone app if the deletion was requested there, or write to info@aificient.io.
 
 ### No GPU is available
 
 Check:
 
 - Local runtime is installed and ready.
-- Your local GPU meets the requirement shown by the app.
+- Your GPU has at least 24 GB of VRAM and the machine at least 24 GB of RAM (the sidebar says `Needs 24 GB VRAM`, the detail view `insufficient VRAM`, or the RAM message appears in the `Error` block when you start it).
 - Vast.ai key is configured if using rented GPUs.
 - A rented instance is running and ready.
 - GPU search filters are not too strict.
@@ -1926,10 +2071,23 @@ Open `Settings > Storage` to see usage, the plan limit, and available space. Rem
 
 Check:
 
-- Your system is supported.
-- Your GPU has enough VRAM.
-- You have enough free disk space.
-- Open runtime details and review the visible error/logs.
+- Your system is supported (Windows desktop app).
+- Your GPU has at least 24 GB of VRAM — `The local runtime needs at least 24 GB of VRAM to render MiniMax-H3. This GPU has N GB.`
+- Your machine has at least 24 GB of system RAM — `This machine has N GB of system RAM. The local runtime needs at least 24 GB — not for the GPU (<GPU> is fine), but because the model's weights stream through it.` A smaller card or less RAM means Aificient Cloud or a rented GPU.
+- You have enough free disk space (40 GB for the install, plus the model download of around 76 GB).
+- Open runtime details and review the visible error/logs (`Copy logs` copies them).
+
+### A render is refused because the GPU is too small
+
+`<GPU> has less than 23 GB of VRAM, which MiniMax-H3 cannot render on even with every block streamed. Use Cloud Render, or pick a 24 GB+ GPU (RTX 3090 / 4090 or better).` appears when the selected runtime's card is plainly under 24 GB. Pick Aificient Cloud or a 24 GB+ GPU.
+
+### The app warns that 1080p will be slow
+
+The `1080p will be slow on <card>` dialog appears when you queue 1080p onto a GPU under 40 GB, which has to stream the model. `Switch to 720p` saves the project at 720p (much cheaper, very similar quality) and queues it; `Keep 1080p` goes ahead; `Don't ask again` silences it on this computer. Clips past about 6 seconds may not fit at 1080p on such a card.
+
+### The sidebar says the project is generating on another device
+
+Another computer, the web, or the iPhone app is generating this project (`Generating on <place> N%`). Wait for it, or stop it from that device; a run started here meanwhile is refused with `This project is being generated on <place>.`
 
 ### Rented GPU offers do not appear
 
@@ -1939,8 +2097,9 @@ Try:
 - Check account balance.
 - Increase max price.
 - Lower minimum reliability.
-- Pick a different GPU family.
-- Reduce disk requirement.
+- Pick a different GPU family (the chevron under the featured cards shows four more).
+- Reduce the disk requirement (the search never goes below 100 GB).
+- Use `Change settings` on the empty-offers state to open `Settings > GPU Config` without closing the modal.
 
 ### Generation is incomplete
 
@@ -1990,7 +2149,19 @@ A card with a `global` badge is a library character: it cannot be changed from i
 
 ### I cannot attach more assets to a story
 
-The composer accepts at most 8 assets per story request, PNG or JPG, up to 20 MB each (`At most 8 assets can be attached to one story.`, `Only N more asset(s) fit — the extras were skipped.`, `Only PNG or JPG images are accepted.`, `Image exceeds the 20MB limit.`). Remove one from the `Assets` panel to add another. Inside a project the asset base itself has no cap, but a scene can carry at most 5 assets and a character at most 3. Those limits are fixed by the service and cannot be changed; unselect one asset in the picker to make room for another.
+The composer accepts at most 8 assets per story request, PNG or JPG, up to 20 MB each (`At most 8 assets can be attached to one story.`, `Only N more asset(s) fit — the extras were skipped.`, `Only PNG or JPG images are accepted.`, `Image exceeds the 20MB limit.`). Remove one from the `Assets` panel to add another. Inside a project the asset base holds at most 20 assets (`A project can hold at most 20 assets. Delete one to add another.`), a scene can carry at most 5 and a character at most 3. Those limits are fixed by the service and cannot be changed; unselect one asset in the picker to make room for another.
+
+### The uploaded asset got a different name, or the upload says the AI couldn't read it
+
+Uploads are named and described by the service from the picture (a small charged call); the file name is never used. Edit the name or description in the asset's `Details` and `Save`. `The AI couldn't make out that image. Try a clearer picture, or try again in a moment.` means the picture could not be described and nothing was stored — try a clearer image.
+
+### Captions use a different font than the one I chose
+
+The chosen font has no characters for the project's language, so the language's default is burned instead (`<Font> has no <Language> characters, so captions use <Font>.` under the project's `Font` field). Pick a font from that language's group — the project picker lists only fonts that can write it.
+
+### My plan is billed through the App Store
+
+A plan bought in the iPhone app can only be changed or cancelled in your Apple subscriptions: use `Manage in App Store` (`Settings > Usage` or the plans modal). Web checkout and Stripe actions are refused with `Your plan is billed through the App Store. Manage it in your Apple Account's subscriptions.`
 
 ### "Cannot update assets while a task is in progress"
 
@@ -2007,6 +2178,18 @@ That asset has no image yet — usually one the script planned. It renders autom
 ### My cloned voice says "Rebuilding" or "Rebuilt on next use"
 
 The voice service dropped the model; nothing of yours is lost. It is rebuilt automatically the next time the voice narrates, and the voice stays selectable meanwhile.
+
+### The narrator does not use the voice I picked
+
+Open the `Narrator` card on the canvas. If the service switched the voice while creating the project — typically because the voice does not narrate in the script's language — the card shows a notice saying so and the narrator is on the automatic voice for that language. Use `Change voice` to pick a voice native to that language (the picker opens on them), or one of the multilingual `Global` voices. The `Automatic voice accent` rows in `Settings > Audio Config` decide which Spanish or English accent an automatic narrator speaks with.
+
+### I cannot save another library voice
+
+The shelf of saved library voices has a cap set by the service (`You already keep N voices. Remove one to save another.`). Remove one from `Settings > Voices > Saved library voices` or with `Remove from saved voices` in the `Voice library`; scripts that already use a removed voice keep it.
+
+### The voice picker says "No <Language> voices on the shelf yet"
+
+The `Narrator` card's picker lists the library voices native to the script's language. When there are none, click `Browse <language> voices` to open the `Voice library` on that language and pick (or save) one; picking a voice there also saves it under `My voices`.
 
 ### The what's new card did not come back
 
@@ -2118,6 +2301,16 @@ Use this when a character must wear the same outfit in every scene.
 3. `Resume Generation > Images + Audio only` to review the new look before spending render time.
 4. `Resume Generation` with a runtime to re-render the affected clips and the final video.
 
+### Swap the Narrator Voice Workflow
+
+Use this when the script is right but the narrator is not.
+
+1. On the canvas, open the `Narrator` card and click `Change voice`.
+2. Pick a voice native to the script's language, a `Global` voice, one of `My voices`, or `Automatic` — or `Browse thousands more voices` and pick one from the `Voice library` (it is saved to your shelf at the same time).
+3. Read the `Change narrator` confirmation: it tells you how many scenes are re-recorded and the approximate credits; images and rendered clips are kept.
+4. `Change and re-record`. The narration is re-recorded straight away.
+5. `Resume Generation` to re-render only the clips whose new narration no longer fits, and to stitch the final video again.
+
 ### Animate an Existing Poster
 
 Use this when you already have finished artwork.
@@ -2158,6 +2351,10 @@ The project assets a character wears, shown as chips on the character card. They
 
 The characters that appear in a scene, shown as chips on the scene card and edited with `Edit cast`. Changing a scene's cast regenerates its image and video; narration is kept.
 
+### Write-in
+
+The option in a scene's cast or asset picker (`Write them into the scene`, `Save and write in`) that has the AI rewrite the scene's description and character reference so a newly added character or asset is actually in the shot, not only attached as a reference. A charged scene rewrite; no scene is added.
+
 ### Global (Library) Character
 
 A character that lives in your library and is referenced by a project rather than owned by it. It shows a `global` badge on the canvas and cannot be edited, deleted, or dressed from inside a project.
@@ -2172,7 +2369,7 @@ The small credit gift a new account starts with — enough for one or two Lite 7
 
 ### Free Trial
 
-A time-limited trial of one plan: save a card, receive the trial's credits at once, pay nothing until the trial ends. Marked everywhere with a flag icon.
+A time-limited trial of one plan: save a card, receive the trial's credits at once, pay nothing until the trial ends. Its buttons carry a gift-box glyph.
 
 ### Daily Credits
 
@@ -2184,7 +2381,15 @@ The seven-step guided walk through the home screen that starts for new accounts 
 
 ### Runtime
 
-A local or rented GPU environment used for video rendering.
+A local or rented GPU environment used for video rendering. It runs the MiniMax-H3 engine, the same one Aificient Cloud uses, and needs a 24 GB GPU (plus 24 GB of system RAM for the local runtime).
+
+### Generation Run
+
+A record, kept by the service, of one project being generated on one device — this app, the web, or the iPhone app. Other devices show it as a `Generating on <place> N%` chip and wait for it; only the device running it can stop it.
+
+### Headroom
+
+The third bar on a GPU rental tier card: how much of the model stays on the card instead of streaming over PCIe each step. Cards under about 40 GB stream and are slower, especially at 1080p.
 
 ### Render Queue
 
@@ -2196,7 +2401,7 @@ The subscription-backed render service available on initial render settings and 
 
 ### History Project
 
-The multi-scene kind of project: a concept becomes a script, scenes, images, narration, clips, and a stitched final video. It is what the `Story` chat produces (with or without `Brainstorm`).
+The multi-scene kind of project: a concept becomes a script, scenes, images, narration, clips, and a stitched final video. It is what the `Story` chat produces (including when it brainstorms first).
 
 ### Poster Project
 
@@ -2246,7 +2451,23 @@ Classifier-Free Guidance. A setting that controls how strictly the AI follows yo
 
 ### Cloned Voice
 
-A narrator voice created from your own recordings in `Settings > Voices`. It appears in the `My voices` tab of every voice picker, and any scene whose narrator names it is narrated with it. How many you can keep depends on your plan.
+A narrator voice created from your own recordings in `Settings > Voices`. It appears under `Cloned` in the `My voices` tab of every voice picker, and any scene whose narrator names it is narrated with it. How many you can keep depends on your plan.
+
+### Saved Voice
+
+A voice from the `Voice library` that you bookmarked (`Save voice`), or picked for a field. Saved voices appear under `Saved` in the `My voices` tab of every picker, speak every language, and are listed in `Settings > Voices > Saved library voices`. The shelf has a cap set by the service.
+
+### Voice Library
+
+The explorer of thousands of narration voices, opened with `Browse thousands more voices` from any voice picker or `Explore` in `Settings > Voices`. It filters by language, accent, gender, use case, and sort order, previews each voice, and lets you pick or save it.
+
+### Automatic Voice
+
+The narrator setting that lets the service choose the library voice for the script's language and accent, honouring the `Automatic voice accent` rows in `Settings > Audio Config`. Shown as `Automatic` on the `Narrator` card and in the pickers.
+
+### Narrator Card
+
+The canvas card between the cast and the scenes that shows the project's narrator voice and offers `Change voice`. Changing the voice re-records the narration; scene images and rendered clips are kept.
 
 ### What's New Card
 
