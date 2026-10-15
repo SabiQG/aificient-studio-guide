@@ -54,7 +54,7 @@ This is the shortest path through a History project. Each step has its own secti
 
 The same app runs as a desktop application (Windows) and in the browser. A native **iPhone app** shares the same account, projects, characters, voices, credits, and plan (see "The iPhone App"). Everything in this guide applies to the desktop and the web unless a note says otherwise. The differences that matter:
 
-- **Web** has no local or rented GPUs. Scene videos render on Aificient Cloud, and so does the final stitch (the desktop stitches locally). GPU rentals are offered from the desktop app, and the `Publish` dialog is desktop-only.
+- **Web** has no local or rented GPUs. Scene videos render on Aificient Cloud, and so does the final stitch (the desktop stitches locally). GPU rentals are offered from the desktop app. The `Publish` dialog works the same on both.
 - **Phone** (a viewport narrower than 768 px) keeps every feature but rearranges it. The left sidebar becomes a drawer behind a menu button at the top-left, most composer pills fold into an `Options` sheet, dropdowns become bottom sheets you can swipe away, and the right project sidebar is reached through a floating `Details` pill. Tablets and larger screens behave like the desktop.
 
 ## 2. Signing In
@@ -3103,19 +3103,21 @@ Desktop alerts can be switched on independently for:
 
 ### Social Accounts
 
-This tab connects the social accounts you publish to — the accounts the Publish dialog uses (see "Publishing the Final Video"). Each platform (TikTok, Instagram, YouTube) has its own row. **TikTok is supported today**; Instagram and YouTube show a `Coming soon` tag.
+This tab connects the social accounts you publish to — the accounts the Publish dialog uses (see "Publishing the Final Video"). The tab reads: "Connect the accounts you publish to. You sign in on TikTok, Google or Instagram itself and authorize Aificient there — we never see your password." Each platform (TikTok, Instagram, YouTube) has its own row with a `Connect` button; a platform whose publishing API has not approved Aificient yet shows `Waiting for TikTok` (or `Waiting for Meta`, `Waiting for YouTube`) instead.
 
-Everything here is **local to this computer**. Connecting an account opens a secure sign-in window, and your session stays on this device — nothing about your accounts is sent to a server.
+`Connect` opens the platform's own sign-in: a popup in the web app, your system browser in the desktop app. Sign in on TikTok, Google, or Instagram and authorize Aificient. The account then appears in the list (the desktop app picks it up when you switch back to it).
+
+- **Instagram** needs a professional (Business or Creator) account.
+- **YouTube** needs a Google account that has a YouTube channel.
 
 | Control | What it does |
 | --- | --- |
-| `Connect` or `Add` | Signs in to an account (`Add` once you already have one). You can connect **multiple TikTok accounts**. |
-| Status dot | Next to each account's avatar and display name. Green for `Connected`; amber for `Session expired` when the login needs to be refreshed. |
-| Amber refresh/reconnect icon | On an account marked `Session expired`: sign in again. |
-| Trash icon (on hover) | Removes the account and forgets its local login. |
-| `Refresh metadata` (bottom-right) | Re-fetches the name, avatar and follower count of your connected accounts without reconnecting them. |
+| `Connect` or `Add` | Opens the platform's sign-in (`Add` once you already have an account there). You can connect **multiple accounts** per platform. |
+| Status dot | Next to each account's avatar and display name. Green for `Connected` (or the `@username`); amber for `Access expired — reconnect` when the platform no longer honours Aificient's access. |
+| Amber refresh/reconnect icon | On an account marked `Access expired — reconnect`: sign in again to give Aificient access. |
+| Trash icon (on hover) | Disconnects the account: revokes Aificient's access and deletes its tokens. |
 
-> **Note:** `Refresh metadata` checks account details and session state, but it does not replace an expired login — use the amber icon for that.
+> **Note:** Access tokens are kept encrypted on Aificient's servers so scheduled posts go out with the app closed. Disconnecting deletes them.
 
 ### Video Config
 
@@ -3440,62 +3442,84 @@ On a plan or trial the daily-claim lifeline described under "Daily Credits" appe
 
 ## 27. Publishing the Final Video
 
-Once a project has a final video, you can post it straight to social media from inside the app. Open the **Publish** dialog with the `Publish` button at the bottom of the right scene sidebar; it becomes active only after the final video exists. Publishing is offered for History projects; posters and UGC ads are downloaded and posted by hand.
+Once a project has a final video, you can post it straight to social media from inside the app. Open the **Publish** dialog with the `Publish` button at the bottom of the right scene sidebar; it becomes active only after the final video exists. Publishing works the same in the desktop app and the web app. It is offered for History projects; posters and UGC ads are downloaded and posted by hand.
 
-Publishing runs **entirely on your own machine**. The app drives a private background browser session that is signed in as your account; nothing about your accounts or your post is sent to an Aificient server. **TikTok is supported today** — Instagram Reels and YouTube Shorts appear as tabs but show a "coming soon" panel.
+Posts go through each network's **official API**, run by Aificient's servers — nothing is automated on your machine. TikTok, Instagram Reels, and YouTube Shorts are all supported. A network that has not approved Aificient's access yet shows a `Pending` tag on its tab, and the tab explains it: `Waiting for <TikTok / Meta / YouTube>'s approval` — `Publishing to <network> is temporarily off`. Download the final video and post it from the network's app in the meantime; publishing switches on once the network approves.
 
-Before you can post, connect at least one account in `Settings > Social Accounts` (see "Social Accounts"). If you have none connected, the dialog links you straight there; you can also reach it any time with the **Manage** link.
+Before you can post, connect at least one account, either in `Settings > Social Accounts` (see "Social Accounts") or from the dialog itself with `Connect <network>` (or `Add another account` once you have one). Either way you sign in on the network's own page and authorize Aificient. While you sign in, the dialog shows `Waiting for <network>…` with a **Cancel** link. Disconnecting an account is done in `Settings > Social Accounts`.
+
+> **Note:** Until a network finishes reviewing Aificient, it may restrict what can be posted. While that applies to TikTok, posts can only be private (`Only me`), and the review step says so.
 
 ### Choosing a Platform
 
-The top of the dialog has a tab per platform (TikTok, Instagram, YouTube). Each platform has its **own composer**, because every platform posts under different rules. Pick a platform, then fill in that platform's post. Only TikTok's composer is active right now.
+The top of the dialog has a tab per platform (TikTok, Instagram, YouTube). Each platform has its **own composer**, because every platform posts under different rules. Pick a platform, then fill in that platform's post.
 
 ### Step 1 — Compose
 
-1. Under **Accounts**, pick the connected account(s) to post to. Only the selected platform's accounts are listed; each shows its avatar and follower count, and selected ones get a check badge.
-2. Under **Caption**, write your caption in the single text box and put your `#hashtags` right inside it (hashtags are highlighted as you type). YouTube also shows a separate Title field.
+1. Under **Post to <network>**, pick the connected account to post to. The selected platform's accounts are listed one per row (avatar, name, `@username`); click a row to select it, and the round marker on the right fills in. `Add another account` at the bottom of the list connects one more. An account whose access expired reads `Access expired` and shows a **Reconnect** button instead. Instagram accepts professional (Business or Creator) accounts only.
+2. Under **Caption**, write your caption in the single text box and put your `#hashtags` right inside it (hashtags are highlighted as you type). YouTube shows **Title & description**, with a required Title field.
 3. Or click **Generate** — the atom button next to the section title — to have the AI draft a caption from your project. It follows the optional **Caption Instructions** you set in `Settings > Model Config`.
-4. Under **Sound**, attach a TikTok sound, or leave it unset to keep your video's original audio.
-5. Check the live **Preview** on the right. It mirrors how the post will look in the feed — the cover, caption, account handle, and the chosen sound spinning on the cover disc.
-6. Click **Prepare publish** to slide to the review step.
+5. Set the network's settings (see the table below).
+6. Check the live **Preview** on the right (hidden on phones). It mirrors how the post will look in the feed — the video, caption, and account handle.
+7. Click **Continue** to slide to the review step. While something is missing, the button stays disabled and the footer names it (for example `Choose who can see this video.` or `Write a caption.`).
 
-The sound picker lets you **search** TikTok's public sound catalog, spot **Trending** sounds, and **preview** any track with the ▶ button before choosing. Once a track is selected it collapses into a row with a **volume** slider, and it plays over your video in the live preview so you can hear the mix. Browsing sounds needs no login.
+The network settings:
+
+| Network | Settings |
+| --- | --- |
+| TikTok (`Post to TikTok`) | Built from TikTok's own options for that account, under `Posting as <name>`. **Who can see this video** — `Everyone`, `Friends`, `Followers`, or `Only me`, whichever TikTok allows that account; there is no default, so you must pick one. **Allow users to** — `Comment`, `Duet`, `Stitch` (greyed out when turned off in your TikTok settings). **Disclosure** — `AI-generated content` (on by default; adds TikTok's AI-generated label) and `Disclose video content`, which reveals `Your brand` (labeled "Promotional content") and `Branded content` (labeled "Paid partnership"; `Only me` is then not allowed). |
+| YouTube | `Public` (globe), `Unlisted` (link — only people with the link see it), or `Private` (lock); `Altered or synthetic content` (on by default); `Made for kids`. |
+| Instagram | `Also share to your feed` (on by default) — shows the Reel in your profile grid too. |
+
+A video longer than TikTok allows for the account is refused: `This video is Ns; TikTok lets this account post up to Ns.`
+
+TikTok posts go straight to your profile; there is no option to send a video to your TikTok drafts.
 
 ### Step 2 — Review
 
 The review step is a read-only recap plus the last two choices:
 
-1. Check **Posting to**, **Caption**, and **Sound** — a summary of what you set in compose.
-2. Choose the **Thumbnail (cover)**, the exact frame used as the cover. Drag the film-strip timeline to scrub anywhere in the video, or use the left/right peeks to nudge frame by frame. The chosen frame shows as a "Cover" preview.
-3. Choose **When to publish**: **Publish now** or **Schedule**. Scheduling reveals a date/time picker; the time must be at least ~20 minutes in the future.
-4. Click **Publish now** / **Schedule** to start the hand-off, or **Back** to return to compose.
+1. Check **Posting to** and **Caption** (or **Title & description**) — a summary of what you set in compose.
+2. Choose the **Cover** (YouTube calls it **Thumbnail**). Every network offers the same two buttons:
+   - **From the video** — pick the exact frame. Drag the film-strip timeline to scrub anywhere in the video, or use the left/right peeks to nudge three frames at a time.
+   - **Upload image** — click the empty 9:16 frame (`Choose an image`) and pick a JPG or PNG; it shows as the cover, with **Replace** and **Remove**. Large images are resized for you. Not available on TikTok (the button is greyed out): TikTok only lets apps pick a frame of the video.
 
-### Upload Progress
+   On Instagram an uploaded image becomes the Reel's cover. On YouTube the frame or image becomes the video's thumbnail; YouTube only shows custom thumbnails from **verified channels**, so on an unverified channel the video still goes out and YouTube keeps its own thumbnail (see "After You Confirm"). Without a cover image, Instagram uses a frame of the video and YouTube picks the thumbnail itself.
+3. Choose **When to publish**: **Now** or **Schedule**. Scheduling reveals a date/time picker; the time must be at least ~5 minutes ahead and no more than 60 days out. Aificient posts it at that time, even with the app closed.
+4. Click **Publish now** / **Schedule** to confirm, or **Back** to return to compose.
 
-As soon as you confirm, a progress screen takes over the dialog and **locks the form** so nothing changes mid-post. It shows the platform badge in a spinning ring, the **current step**, the account, and elapsed time, plus a row of step icons that fill in (and turn green) as the upload advances:
+The review step also shows the network's terms: "By posting, you agree to TikTok's Music Usage Confirmation" (plus the Branded Content Policy for branded content), or "By publishing, you agree to the YouTube Terms of Service".
 
-1. Preparing the video.
-2. Opening TikTok Studio.
-3. Uploading.
-4. Caption.
-5. Cover.
-6. Sound.
-7. Publishing or scheduling.
+### After You Confirm
 
-A **Cancel** button stops the background browser hand-off.
+The form is replaced by the post's live progress, with the preview still on the right. **Posting to** shows the account; **Progress** is a list of steps that tick off as the network reports back:
 
-The progress is **saved app-wide**, not just in the dialog. You can close the Publish window and keep working — the post keeps going, and reopening Publish resumes the same live progress until it finishes.
+| Network | Steps |
+| --- | --- |
+| TikTok | `Uploading to TikTok` → `TikTok is processing the video` → `Published` |
+| Instagram | `Uploading to Instagram` → `Instagram is processing the Reel` → `Published` |
+| YouTube | `Uploading to YouTube` → `Published` |
 
-| Result | What you see | What to do |
-| --- | --- | --- |
-| **Success** | "Published to TikTok", or "Scheduled on …" with the time. | **Post another** clears the form for a fresh post; **Done** closes the dialog. |
-| **Couldn't finish** | A short reason and the step it stopped at. | Your caption, sound, and cover are kept, so **Back to editor** lets you try again. |
+The dialog only says it is done once the network confirms it: the footer then reads `Done — it's live on <network>.` and offers **Post somewhere else** and **View post**. Until then it reads `You can close this window — it keeps going on Aificient's servers.` — the upload runs on Aificient's servers, so you can close the dialog or the app and follow the post in **Posts**.
 
-### Publish History
+- A transient refusal shows `<network> didn't take it on the first try — retrying in a moment.` and is retried automatically.
+- If the post fails, the step it stopped on turns red with the reason, and **Edit and try again** takes you back to the review step with everything as you left it.
+- A scheduled post shows **Scheduled** with the date and time instead of the steps; you can cancel it from **Posts** until then.
+- An amber note appears when the post went out but a side step did not, for example `YouTube kept its own thumbnail: custom thumbnails need a verified channel (youtube.com/verify)`.
 
-The **History** button (top-right of the dialog) lists past and prepared posts, with links to live posts and the option to cancel a queued one. It is hidden while an upload is in progress.
+On YouTube with **From the video**, the app reads the video once when you confirm to capture the frame, so confirming can take a few seconds.
 
-> **Note:** TikTok publishing automates the real TikTok Studio composer in the background, so your video is uploaded with the caption, cover, and sound attached, and the post is grouped under the chosen sound. TikTok changes its site often; if a step cannot be completed automatically, the upload stops and shows an error — try again.
+### Posts
+
+The **Posts** button (top-right of the dialog) lists this project's posts. It refreshes on its own while a post is in flight.
+
+| Status | Meaning |
+| --- | --- |
+| `Scheduled` | Waiting for its time. **Cancel** stops it while it has not started. |
+| `Uploading` / `Processing` | Aificient is sending the video, or the network is still processing it. |
+| `Published` | Live; **View** opens the post. An amber line under it notes a side step that did not go through (such as a YouTube thumbnail). |
+| `Failed` | The error text is shown under the post. Transient errors are retried automatically (`Retrying soon`). |
+| `Canceled` | You cancelled it before it started. |
 
 ## 28. Updates
 
@@ -3892,13 +3916,13 @@ Use this section to answer questions such as "Where is X?", "How do I open X?", 
 | Poster render settings (mode Lite/Pro, resolution, clip duration, runtime) | The settings screen after `Create project` on a poster plan, or later in the poster project's right sidebar > `Settings` tab, then `Apply changes`. |
 | Where a poster animation renders, or render it later | Poster render-settings screen > `Runtime` (one GPU or Aificient Cloud); later, the poster project's right sidebar > `Resume Generation` > pick a runtime > `Add to render queue`. |
 | Generate the poster images without the animation | Poster render-settings screen > `Images only`, or right sidebar > `Resume Generation` > `Images only`. |
-| Publish | Bottom area of the right scene sidebar for the selected project. Opens the Publish dialog to post the final video to TikTok, Instagram Reels, or YouTube Shorts. Enabled once the project has a final video. |
+| Publish | Bottom area of the right scene sidebar for the selected project, in the desktop and web apps. Opens the Publish dialog to post the final video to TikTok, Instagram Reels, or YouTube Shorts. Enabled once the project has a final video. |
+| Connect an account while publishing | Publish dialog, compose step, `Connect <network>` or `Add account` under the account section. |
 | Generate an AI caption | Publish dialog, compose step, the `Generate` (atom) button next to the caption section. |
-| Add or change a TikTok sound | Publish dialog, compose step, the `Sound` section picker. |
-| Choose the cover / thumbnail frame | Publish dialog, review step (after `Prepare publish`), the `Thumbnail` section. |
+| Choose the cover | Publish dialog, review step (after `Continue`), the `Cover` section (`Thumbnail` on YouTube): a frame of the video, or an uploaded image on Instagram and YouTube. |
 | Schedule a post for later | Publish dialog, review step, `When to publish` > `Schedule`. |
-| Cancel an in-progress upload | Publish dialog upload progress screen, the `Cancel` button. |
-| Publish history (past/queued posts) | Publish dialog, `History` button at the top-right. |
+| Cancel a scheduled post | Publish dialog, `Posts`, `Cancel` on a scheduled post that has not started. |
+| Posts (past, scheduled, and failed posts) | Publish dialog, `Posts` button at the top-right. |
 
 ### Project Review And Editing Locations
 
@@ -3958,9 +3982,8 @@ Use this section to answer questions such as "Where is X?", "How do I open X?", 
 | Daily credits amount for a plan | The `+N credits every day` row on each plan card in the plans modal. |
 | Storage used, limit, or available space | `Settings > Storage`. |
 | Desktop notification preferences | `Settings > Notifications`. |
-| Connect or remove a social account (TikTok, etc.) | `Settings > Social Accounts`. |
-| Reconnect an account marked `Session expired` | `Settings > Social Accounts`, then select the amber refresh/reconnect icon on that account. |
-| Refresh account name, avatar, or follower count | `Settings > Social Accounts`, `Refresh metadata`. |
+| Connect or disconnect a social account (TikTok, Instagram, YouTube) | `Settings > Social Accounts`. |
+| Reconnect an account marked `Access expired — reconnect` | `Settings > Social Accounts`, then select the amber refresh/reconnect icon on that account, or `Reconnect` on the account in the Publish dialog. |
 | Vast.ai key, API key, or Vast.ai balance | `Settings > API Keys`. |
 | GPU rental disk space, max price, or reliability filters | `Settings > GPU Config`. |
 | GPU family for a rental | Left sidebar > `Generation assets` > `Create instance`, then choose a GPU profile. |
@@ -4379,23 +4402,28 @@ Each entry names a symptom, why it happens, and what to do. Entries run by theme
 
 ### Publishing to social accounts
 
-For the full walkthrough of the Publish dialog (compose, review, scheduling, and live upload progress), see "Publishing the Final Video".
+For the full walkthrough of the Publish dialog (compose, review, scheduling, and Posts), see "Publishing the Final Video".
 
-**Why:** A missing final video, an account that is not connected or has expired, or a TikTok page change mid-upload.
+**Why:** A missing final video, an account that is not connected or whose access expired, a network not switched on yet, or an error reported by the network.
 
 **Fix:** match your case:
 
 | Problem | What to do |
 | --- | --- |
 | The `Publish` button is greyed out | It only activates once the project has a final video. Finish video generation first. |
-| No accounts to post to | Connect one in `Settings > Social Accounts` (TikTok is the only platform you can connect today). The dialog links you there, and the **Manage** link opens it any time. |
-| An account shows "Session expired" | Open `Settings > Social Accounts`, select the amber refresh/reconnect icon on that account, and sign in again. `Refresh metadata` can re-check the account, but an expired login still requires reconnection. |
-| The upload stopped with an error | TikTok changes its site often, so a step may occasionally fail to complete automatically. Your caption, sound, and cover are kept: choose **Back to editor** and try again. If it keeps failing, confirm the account still shows `Connected`. |
-| I closed the Publish window mid-upload | The post keeps running and its progress is saved app-wide. Reopen `Publish` to watch it resume until it finishes. |
-| I want to stop a post | Use **Cancel** on the upload progress screen (it stops the background hand-off), or cancel a queued or scheduled post from the **History** view. |
-| Scheduling won't accept my time | Scheduled posts must be at least ~20 minutes in the future; pick a later time. |
+| No accounts to post to | Click `Connect <network>` in the dialog, or connect one in `Settings > Social Accounts`. The **Manage** link opens the settings any time. Instagram needs a professional (Business or Creator) account; YouTube needs a Google account with a channel. |
+| The desktop app does not show the account I just connected | Finish signing in in the browser window that opened, then switch back to the app; it picks the account up then. |
+| A network's tab shows `Pending` / `Publishing to … is temporarily off` | That network (TikTok, Meta for Instagram, or YouTube) is still reviewing Aificient's access to its publishing API. Post the downloaded video by hand until it is approved. |
+| An account shows "Access expired — reconnect" | The network stopped honouring Aificient's access. Click **Reconnect** (in the dialog) or the amber refresh/reconnect icon in `Settings > Social Accounts`, and sign in again. |
+| `Continue` stays disabled | The footer names what is missing — for example `Choose who can see this video.`, `Write a caption.`, or `Add a title.` |
+| TikTok only offers `Only me` | Until TikTok finishes reviewing Aificient, posts can only be private (`Only me`), and the TikTok account itself must be set to private. |
+| TikTok refuses the video as too long | TikTok sets a maximum length per account; the dialog shows it. Post a shorter video. |
+| A post shows `Failed` | Read the error text under it in **Posts**. Transient errors are retried automatically (`Retrying soon`); otherwise fix the cause and post again. |
+| I closed the Publish window or the app | The post keeps going on Aificient's servers. Reopen `Publish` > **Posts** to follow it. |
+| I want to stop a post | **Cancel** a scheduled post in **Posts** before it starts. A post that is already uploading cannot be stopped. |
+| Scheduling won't accept my time | Scheduled posts must be at least ~5 minutes ahead and no more than 60 days out. |
 
-> **Note:** Publishing runs entirely on your own machine through a private background browser session. Nothing about your accounts or posts is sent to an Aificient server.
+> **Note:** Publishing goes through each network's official API, run by Aificient's servers. You sign in on the network itself, so Aificient never sees your password; access tokens are kept encrypted on Aificient's servers and deleted when you disconnect.
 
 ### Rename project fails
 
